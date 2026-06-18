@@ -1,0 +1,72 @@
+---
+name: auditing-domain-rules
+description: >-
+  Use to check whether the foundational rules (the domain glossary and framework
+  charter under .claude/rules/common/) still match the current code, and to
+  correct them when they drift. Triggers on: "audit the rules", "is the glossary
+  still accurate", "the framework rule looks stale", "rule drift", "check the
+  base rules", "update the glossary".
+---
+
+# Auditing Domain Rules
+
+Verify the foundational rules — the domain glossary and framework charter — against the current code, report the drift, then correct it. **A wrong rule is worse than no rule**: it actively misleads the next session by laundering a stale claim as truth.
+
+**Every concrete thing a rule asserts — a symbol, path, route, type, command, or ownership-table cell — is a structural claim, and editing a rule doc is editing code.** Re-verify each against the code *this session*; a claim that greps to nothing is a hallucination, not a detail. Memory does not count — the file is right by definition, your recollection is not.
+
+Pairs with `bootstrapping-domain-rules` (which creates these docs) and mirrors `spec-drift-audit` (same discipline, applied to specs). For the general rule shape, see `writing-rules`.
+
+## When to use
+
+- Periodic maintenance of `.claude/rules/common/` (glossary, framework) — especially after refactors, renames, or dependency/command changes.
+- A rule "looks off" or contradicts something you just saw in the code.
+- Before relying on a foundational rule for a non-trivial task.
+
+## When NOT to use
+
+- The docs don't exist yet — that is `bootstrapping-domain-rules`.
+- Auditing shipped code against a spec — that is `spec-drift-audit`.
+
+## Process
+
+1. **Enumerate every concrete claim.** Walk the doc and list each verifiable assertion: every path, route/constant, type/enum, command, and ownership-table cell. The unflagged majority matters as much as anything that "looks" stale.
+2. **Verify each against current code.** `grep`/`read` for the real symbol/path/command — do not stop at the one obvious drift. Record the result per claim.
+3. **Classify each claim:**
+   - **Confirmed** — matches the code.
+   - **Stale doc** — code is correct, the doc is out of date (renamed route, moved path, changed command).
+   - **Code drift** — the doc states an intended rule and the code violated it (an unauthorized divergence). The fix may be to revert the *code*, not the doc.
+   - **Hallucination** — the claim greps to nothing in either; it never existed or both moved.
+4. **Decide direction before editing** (the source-of-truth call): for *stale doc* and *hallucination*, fix the doc. For *code drift*, do NOT silently rewrite the rule to bless the divergence — surface it as a decision: revert the code to the rule, or change the rule deliberately?
+
+## Report format
+
+Produce a report before editing (see [references/audit-report-example.md](references/audit-report-example.md)):
+
+1. **Claims checked** — table: claim → what the code shows → status (Confirmed / Stale doc / Code drift / Hallucination).
+2. **Summary** — counts per status.
+3. **Decisions needed** — each Code-drift item as a "revert code, or change the rule?" choice for the user.
+
+## Apply the corrections
+
+- **Stale doc / hallucination:** fix the specific cell/line — a surgical edit, not a rewrite of the whole doc. Re-verify the corrected claim.
+- **Code drift:** apply only what the user chose.
+- Leave Confirmed claims untouched.
+- After editing, re-run the enumerate→verify pass on what you changed; the diff should touch only the drifted claims.
+
+## Red Flags — STOP
+
+- "I read it, it looks consistent" — no per-claim verification = the audit did not happen.
+- Verifying only the claim that was pointed out, leaving the rest of the doc unchecked.
+- Assuming every disagreement means the doc is stale — it can mean the code drifted from the rule.
+- Silently rewriting the rule to match drifted code instead of surfacing the decision.
+- Rewriting the whole doc when two cells were wrong.
+- "I remember this symbol exists" — verify by read, or it is unverified.
+
+## Rationalizations
+
+| Excuse | Reality |
+|--------|---------|
+| "It looks accurate." | Looks ≠ verified. Grep each claim; the stale one is usually the cell you'd have skipped. |
+| "Only the flagged row is wrong." | Nothing flags the others. The audit covers every claim or it isn't an audit. |
+| "Code changed, so the doc is stale." | Maybe — or the code drifted from an intended rule. Decide direction; don't auto-bless the code. |
+| "I'll just rewrite the doc fresh." | A rewrite re-introduces unverified prose. Fix the drifted claims surgically. |

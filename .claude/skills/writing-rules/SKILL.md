@@ -3,8 +3,8 @@ name: writing-rules
 description: >-
   Use when writing or editing a project rule under .claude/rules/, capturing a
   convention so the agent stops repeating a mistake, or promoting a recurring
-  lesson into a durable rule. Triggers on: "write a rule", "add a rule", "make
-  a .claude/rules", "enforce this convention", "stop doing X", "turn this into a rule".
+  lesson into a durable rule. Triggers on: "write a rule", "add a rule",
+  "enforce this convention", "stop doing X", "turn this into a rule".
 ---
 
 # Writing Rules
@@ -25,6 +25,7 @@ Project-agnostic: match the repo's existing rule conventions (frontmatter keys, 
 
 - A one-off preference for a single task — just say it in the prompt.
 - Something mechanically enforceable by a linter/formatter/types — automate it; rules are for judgment a tool can't make.
+- No foundational rules yet (domain glossary / framework charter) — create those with `bootstrapping-domain-rules` first; this skill is for the ordinary rules that hang off them.
 
 ## Rule anatomy (the recipe)
 
