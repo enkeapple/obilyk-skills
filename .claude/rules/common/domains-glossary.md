@@ -10,7 +10,7 @@ STOP and read this before acting whenever a prompt or your own draft uses any of
 - **"design" / "spec" / "plan"** — three distinct artifacts in the chain, not synonyms.
 - **"the vault" / "this repo" vs "consumer repo" / "target repo" / "the app"**.
 - **"validator" / "validators" / "checks"**, **"bootstrap" vs "audit"**, **"lesson" vs "rule"**, **"AUTHOR / AUDIT / APPLY"**.
-- Anytime you read or edit `.claude/skills/**`, `.claude/rules/**`, `.claude/hooks/**`, or `.claude/skills-routing.json`.
+- Anytime you read or edit `.claude/skills/**`, `.claude/rules/**`, `hooks/**` (surfaced via `.claude/hooks/**`), or `.claude/skills-routing.json`.
 
 ## Why
 
@@ -26,7 +26,7 @@ Ownership table — do not infer from a filename:
 | --- | --- | --- | --- | --- |
 | 1 | **skill** | source `skills/*/<name>/SKILL.md` (+ `references/*.md`); discovered via flat symlink `.claude/skills/<name>` | invoked via the `Skill` tool | a routable capability; `name:` MUST equal the directory name and the symlink name |
 | 2 | **rule** | `.claude/rules/common/*.md` | loaded on demand, never auto-injected | a convention/process doc the agent reads when relevant |
-| 3 | **hook** | `.claude/hooks/*.sh` | runs on tool events | a gate/logger (`detect-bypass`, `skill-gate`, `token-guard`, `lessons-nudge`, …) |
+| 3 | **hook** | source `hooks/*/<name>.sh`; surfaced via flat symlink `.claude/hooks/<name>.sh`, wired by `settings.json` | runs on tool events | a gate/logger (`detect-bypass`, `skill-gate`, `token-guard`, `lessons-nudge`, …) |
 | 4 | **routing** | `.claude/skills-routing.json` | read by the hooks | trigger-phrase → skill map; `skill-routing-sync.md` keeps it true |
 | 5 | **the SDD chain** | skills #1 | `grilling → writing-specs → writing-plans → tdd → spec-drift-audit` | the APPLY-mode pipeline run on a consumer repo |
 | 6 | **validators** | root [CLAUDE.md](../../../CLAUDE.md) → "Common commands" | frontmatter ≤1024, name regex, reference links resolve, fence balance, word count | structural checks on a skill change — **not** a test suite |

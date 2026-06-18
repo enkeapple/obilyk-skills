@@ -4,6 +4,20 @@ Append-only. New entries go at the top of `## Entries`. When a `Cause-tag` recur
 
 ## Entries
 
+### 2026-06-19 — Handed the human a multi-line `&&` block to run via `!`; the paste broke twice before I switched to a script file
+
+- **Cause-tag:** `human-handoff-command-fragility`
+- **What happened:** The hook-migration plan had a `[HUMAN]`-run step: `git mv` 12 files + run the linker. I gave the human a multi-line, `\`-continued `&&` chain to paste after `!`. First paste fired only `git mv .claude/hooks` (continuation lost → usage error); the single-physical-line `&&` retry hit `zsh: parse error near &&` (paste truncation again). Two wasted round-trips. Only when I wrote the steps into `scripts/migrate-hooks.sh` and had the human run `!bash scripts/migrate-hooks.sh` (one short token) did it work first try.
+- **Fix / rule:** A command handed to the human for `!`-execution must be a SINGLE short line with no `\` continuations and no long `&&` chains — terminal paste mangles multi-line and over-long lines. For anything beyond one trivial command, write a throwaway script (Claude can `Write` it even when the commands themselves are guard-blocked for Claude to *run*) and hand the human a one-token `bash scripts/<x>.sh`. Delete the scratch script after.
+- **Prevention:** In `writing-plans`, when a step is `[HUMAN]`-run and has >1 command, emit it as a script-file + a one-line invocation, never as a pasteable multi-line block. Grep the plan for `[HUMAN]` steps containing `&&` or a trailing `\` — rewrite each to a script invocation.
+
+### 2026-06-19 — `git mv` + symlink at the IDENTICAL old path registers as add+typechange, not a rename (history check needs a blob compare)
+
+- **Cause-tag:** `git-symlink-shadows-rename`
+- **What happened:** Verifying "history preserved" after the hook move, `git diff --cached --find-renames` returned ZERO renames and `git status` showed ` T .claude/hooks/<name>.sh` (typechange). Alarming — the skills migration had shown clean `R100` renames. Root cause: for skills the moved unit was a *directory* and the symlink took a *new* leaf path, so the old file path was deleted → git paired it as a rename. For hooks the symlink occupies the **exact same path** as the old file (`.claude/hooks/<name>.sh`), so the old path is not deleted — it becomes a symlink (mode 120000) — and git sees "new file added under `hooks/` + old path typechanged to symlink", which rename detection does not pair. History is still intact: `git rev-parse HEAD:.claude/hooks/<name>.sh` == `git rev-parse :hooks/<cat>/<name>.sh` (identical blob `3cee0a7…`), so `git log --follow` traces it by content.
+- **Fix / rule:** "No `R` in `git status`" does NOT mean history was lost. When a migration places a symlink at the same path a real file used to occupy, verify history by **blob-identity** (`git rev-parse HEAD:<old>` == `git rev-parse :<new>`), not by rename detection. The end state (real file added at new path, old path staged as a 120000 symlink) is correct and committable.
+- **Prevention:** For any "move + symlink-back" migration, pick the history check by shape: dir-move with symlink at a new name → expect `R100`; file-move with symlink at the identical old path → expect add+typechange, confirm via blob-equality instead.
+
 ### 2026-06-19 — Patching docs for a layout change, baked the volatile `<category>` level into 7 places where only the stable invariant matters
 
 - **Cause-tag:** `doc-over-coupled-volatile-detail`

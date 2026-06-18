@@ -16,7 +16,7 @@ Authoring or changing a skill runs through **RED → GREEN → REFACTOR → VALI
 
 ## What this project is
 
-Agnostic skills authored under `skills/` (grouped into category folders) and discovered by Claude Code through flat symlinks in `.claude/skills/`, plus the harness around them: `.claude/hooks/` (gates + logging), `.claude/rules/common/` (framework + domain glossary), `.claude/skills-routing.json`, `.claude/state/`. No application code, no `package.json`, no build.
+Agnostic skills authored under `skills/` (grouped into category folders) and discovered by Claude Code through flat symlinks in `.claude/skills/`, plus the harness around them: hooks authored under `hooks/` and surfaced via flat symlinks in `.claude/hooks/` (gates + logging), `.claude/rules/common/` (framework + domain glossary), `.claude/skills-routing.json`, `.claude/state/`. No application code, no `package.json`, no build.
 
 ## Common commands
 
