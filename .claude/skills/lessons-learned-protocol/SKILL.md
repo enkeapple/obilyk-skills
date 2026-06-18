@@ -60,7 +60,9 @@ When the same cause-tag reaches the threshold, it is a pattern, not a one-off. D
 
 If the reviewer says **Promote**, apply its output:
 
-1. Write the **actionable** rule it drafted to the target `.claude/rules/<...>.md` (a story is not a rule — "Before X always Y" / "X is forbidden, use Y because Z" / "When you see X run Y").
+1. **Author the rule with the `writing-rules` skill**, feeding it the reviewer's drafted rule text and target path as the starting point. It owns the rule's shape — `paths` scoping, `## When`, the ✅/❌ example, the Review Checklist.
+
+   > REQUIRED SUB-SKILL: Use `writing-rules` to write the promoted rule file at `.claude/rules/<...>.md`. Do not hand-author it here — this skill owns the *promotion decision and bookkeeping*; `writing-rules` owns the *rule's shape*.
 2. Append a back-reference to each contributing entry: `→ promoted to rules/<...>.md`.
 3. Add a ledger line under `## Promoted clusters`: `- <cause-tag> → rules/<...>.md (YYYY-MM-DD)`. This is what the scan reads to know the cluster is resolved.
 4. Commit the new rule and the back-references + ledger line together.
