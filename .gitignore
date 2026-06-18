@@ -1,4 +1,3 @@
-**/.claude/state/
-projects/**/state/
-projects/**/skills/_metrics.jsonl
+.claude/state/
+.claude/skills/_metrics.jsonl
 
