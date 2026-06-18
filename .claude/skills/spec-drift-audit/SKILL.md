@@ -69,27 +69,26 @@ End with choices for the user, not edits:
 
 The user picks. The audit does not edit code.
 
-## Red Flags — STOP
+## Red Flags — if you catch yourself here, STOP
 
-- "I read the diff, it looks fine." — No report = the audit did not happen.
-- "I'll just fix the mismatch while I'm here." — That is a separate, user-authorized task. Report first.
-- Checking only the first out-of-scope bullet and moving on.
-- Treating a verification command as passed without running it.
-- Reporting in prose instead of the classified report format.
+Fast trip-wires: the moment you notice one, the audit is about to fail silently. The counter to each is its row in **Rationalizations** below.
+
+- "I read the diff, it looks fine."
+- Reaching to fix a mismatch while you are here.
+- Checking only the first out-of-scope bullet.
+- Marking a verification command passed without running it.
+- Reporting in prose instead of the classified format.
+- "It mostly matches."
 
 ## Rationalizations
 
+Every excuse means the same thing: **report the drift; do not fix it.**
+
 | Excuse | Reality |
 |--------|---------|
+| "I read the diff, it looks fine." | No report written = the audit did not happen. The deliverable is the classified report, not a verdict. |
 | "It's a tiny mismatch, I'll just fix it." | Then report it and let the user approve the one-line fix. A silent fix hides the drift and the decision. |
 | "The obvious violation is the only one." | Agents reliably miss the second out-of-scope hit. Sweep every bullet, every time. |
 | "Verification will pass, I'll skip running it." | "Will pass" is a guess. Run it; paste the output. The rename you missed often fails here. |
 | "Prose is clearer than a table." | Prose hides severity and lets items slip. The classified report is the deliverable. |
 | "It mostly matches, call it OK." | "Mostly" is not a classification. Every difference gets a label and a severity. |
-
-## Anti-patterns
-
-- Suggesting or applying fixes instead of documenting drift — the audit is read-only by design.
-- Treating internal-type schema drift as critical — only external interfaces matter at this severity.
-- Stopping the out-of-scope sweep at the first violation found.
-- A report with no Summary counts — the reader cannot see the shape of the drift at a glance.
