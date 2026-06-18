@@ -1,12 +1,13 @@
 # Rule Template
 
-Copy this, fill every section, keep the order. Frontmatter is required — `description` + `paths` are what scope the rule. Match the repo's existing frontmatter keys/folder layout if it has a convention.
+Copy this and fill the sections — the order is conventional, not a gate. `description` is required; `paths` is **optional** (include it to scope an area-specific rule, omit it for an always-on rule). Match the repo's existing frontmatter keys/folder layout if it has a convention.
 
 ## Template
 
 ```markdown
 ---
 description: '<one line: what this rule enforces + its key points>'
+# paths — optional: include to scope an area-specific rule; omit entirely for an always-on rule
 paths:
   - '<glob the rule applies to, e.g. **/*.{ts,tsx}>'
 ---

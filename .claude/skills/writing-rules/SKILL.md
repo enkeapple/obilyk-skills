@@ -9,9 +9,9 @@ description: >-
 
 # Writing Rules
 
-A rule is a small, **path-scoped, actionable** instruction that loads when relevant and tells the agent what to do or avoid — with the concrete code to pattern-match against.
+A rule is a small, **actionable** instruction that loads when relevant and tells the agent what to do or avoid — with the concrete code to pattern-match against. It is either **scoped** to the files it governs (via `paths`) or **always-on** (no `paths`) — both are valid.
 
-**Core contract: a rule has frontmatter that scopes it (`description` + `paths`), and a body of actionable instructions with real examples — not a prose essay.** If a rule has no `paths`, it cannot be scoped and will either nag everywhere or never load. If its body describes a topic instead of prescribing actions, it is a doc, not a rule.
+**Core contract: a rule has a `description`, an optional `paths` to scope it, and a body of actionable instructions with real examples — not a prose essay.** `paths` scopes an *area-specific* rule to the files it governs; **omit it for a genuinely always-on rule** (a framework charter, a repo-wide convention) that should load every session. The real failure is an *area-specific* rule left unscoped so it nags everywhere — not the mere absence of `paths`. If its body describes a topic instead of prescribing actions, it is a doc, not a rule.
 
 Project-agnostic: match the repo's existing rule conventions (frontmatter keys, folder layout) when it has them. The full anatomy and a filled example are in [references/rule-template.md](references/rule-template.md).
 
@@ -29,11 +29,11 @@ Project-agnostic: match the repo's existing rule conventions (frontmatter keys, 
 
 ## Rule anatomy (the recipe)
 
-Every rule has, in order:
+A rule has these parts. **This is a recipe, not a gate:** the order is conventional and parts are skippable — a rule that is *actionable and correctly scoped* is valid even if it varies the section order, merges sections, or omits an optional one. Do NOT skip, reject, or rewrite a substantively-sound rule over cosmetic template deviation — only its substance decides validity (actionable? scoped right? has an example?).
 
-1. **Frontmatter (required).**
-   - `description:` — one line: what the rule enforces + its key points. This is what a loader reads to decide relevance.
-   - `paths:` — glob(s) the rule applies to (e.g. `'**/*.{ts,tsx}'`, `'**/api/**'`). **This is the scoping mechanism** — it keeps the rule from loading where it is irrelevant. Scope as tightly as the rule truly applies; a genuinely always-on rule uses a broad glob, but most rules do not.
+1. **Frontmatter.**
+   - `description:` (**required**) — one line: what the rule enforces + its key points. This is what a loader reads to decide relevance.
+   - `paths:` (**optional**) — glob(s) the rule applies to (e.g. `'**/*.{ts,tsx}'`, `'**/api/**'`). **This is the scoping mechanism** — it keeps an area-specific rule from loading where it is irrelevant. Include it, scoped as tightly as the rule applies, for an area-specific rule; **omit it for a genuinely always-on rule** that must load every session (a framework charter, a repo-wide convention). Most rules are area-specific and want `paths`; foundational ones are always-on and have none.
 2. **`## When`** — the triggering condition in one or two sentences: the situation in which an agent must apply this.
 3. **`## Implementation`** — the actual instructions. Actionable, with a real ✅/❌ code pair from (or close to) the codebase. Use imperatives and one of these forms:
    - "Before X, always Y."
@@ -76,7 +76,7 @@ Before saving, check it against the Review Checklist below. For a rule that will
 
 ## Review Checklist
 
-- Frontmatter has `description` and `paths`; `paths` is scoped as tightly as the rule applies.
+- Frontmatter has a `description`. An area-specific rule has `paths` scoped as tightly as it applies; an always-on rule omits `paths` deliberately.
 - There is a `## When` and a `## Review Checklist`.
 - Implementation is imperative with a real ✅/❌ example — not a topic explanation.
 - Exceptions / when-NOT-to-apply are stated explicitly.
@@ -84,9 +84,10 @@ Before saving, check it against the Review Checklist below. For a rule that will
 
 ## Red Flags — STOP
 
-- No frontmatter, or `paths` missing — the rule can't be scoped (nags everywhere or never loads).
+- No `description` in the frontmatter — the loader can't judge relevance. (Missing `paths` is *not* a defect by itself — that is exactly how an always-on rule is written.)
 - The body explains a topic instead of prescribing actions.
 - No ✅/❌ example for a code rule.
 - No Review Checklist.
-- Defaulting to a global/broad `paths` for a rule that only applies to one area.
+- An *area-specific* rule left always-on — a broad/global `paths`, or no `paths` at all — so it nags outside its area.
+- Skipping or rejecting an otherwise-sound rule because its layout doesn't match the template exactly.
 - A "rule" that is really a story or a rationale with no instruction.

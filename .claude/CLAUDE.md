@@ -93,6 +93,6 @@ A bottleneck/failure → an entry in [lessons-learned.md](./lessons-learned.md) 
 
 - Skill-authoring methodology: `writing-great-skills`
 - Process basics (Implementation/Suspicion protocols, evidence-based verification, question discipline): [rules/common/framework.md](./rules/common/framework.md)
-- Domain glossary: [rules/common/document-domains.md](./rules/common/document-domains.md)
+- Domain glossary: [rules/common/domains-glossary.md](./rules/common/domains-glossary.md)
 - Domain rules (on demand): [rules/](./rules/) · Lessons: [lessons-learned.md](./lessons-learned.md)
 - Skill registry: [skills-routing.json](./skills-routing.json) · Hooks: [hooks/](./hooks/) · Runtime state (gitignored): `.claude/state/`

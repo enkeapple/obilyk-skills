@@ -20,8 +20,8 @@ Subagent (general-purpose):
 
     | Category | What to look for |
     |----------|------------------|
-    | Frontmatter | Has `description` (one line) and `paths`. |
-    | Scoping | `paths` is as tight as the rule truly applies — not a broad/global glob for an area-specific rule. Flag over-broad scope (it will nag everywhere). |
+    | Frontmatter | Has a `description` (one line). `paths` only if the rule is area-specific. |
+    | Scoping | An always-on rule legitimately has no `paths` — do NOT flag its absence. For an *area-specific* rule, `paths` is present and as tight as it applies — flag missing or over-broad scope (it will nag everywhere). |
     | Actionable | Implementation is imperative with a real ✅/❌ example — not a topic explanation or rationale-only. |
     | When + Checklist | Has a `## When` and a `## Review Checklist`. |
     | Exceptions | States when NOT to apply, so it isn't over-applied. |
@@ -30,10 +30,11 @@ Subagent (general-purpose):
 
     ## Calibration
 
-    Only flag what would make the rule misfire: missing/over-broad `paths`,
-    a body with no actionable instruction, no example for a code rule, or
-    duplication of an existing rule. Minor wording is not an issue.
-    Approve unless there is a real defect.
+    Only flag what would make the rule misfire: an area-specific rule left
+    unscoped or over-broad, a body with no actionable instruction, no example
+    for a code rule, or duplication of an existing rule. A missing `paths` on
+    an always-on rule is NOT a defect. Minor wording or section-order deviation
+    is not an issue. Approve unless there is a real defect.
 
     ## Output format
 

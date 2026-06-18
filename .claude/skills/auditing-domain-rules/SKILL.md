@@ -14,7 +14,7 @@ Verify the foundational rules — the domain glossary and framework charter — 
 
 **Every concrete thing a rule asserts — a symbol, path, route, type, command, or ownership-table cell — is a structural claim, and editing a rule doc is editing code.** Re-verify each against the code *this session*; a claim that greps to nothing is a hallucination, not a detail. Memory does not count — the file is right by definition, your recollection is not.
 
-Pairs with `bootstrapping-domain-rules` (which creates these docs) and mirrors `spec-drift-audit` (same discipline, applied to specs). For the general rule shape, see `writing-rules`.
+Pairs with `bootstrapping-domain-rules`, which creates the foundational docs this skill keeps true.
 
 ## When to use
 

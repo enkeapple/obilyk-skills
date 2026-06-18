@@ -17,7 +17,7 @@ Create the two foundational, always-on rules every other rule hangs off, by defa
 
 **Core principle: these are built from the real codebase, not from boilerplate.** A glossary that invents entities, or a charter of generic platitudes, is worse than none — it launders guesses into a "source of truth". Discover first; write only what the code confirms.
 
-These are foundational rules — `writing-rules` covers the general rule anatomy (frontmatter, `## When`, actionable body, Review Checklist); this skill is about the two specific docs and what each must contain. Read `writing-rules` for the shared shape.
+These are foundational, always-on rules. This skill owns the two specific docs and exactly what each must contain — their full anatomy and filled examples are self-contained in the templates referenced below.
 
 ## When to use
 
@@ -28,7 +28,7 @@ These are foundational rules — `writing-rules` covers the general rule anatomy
 ## When NOT to use
 
 - The docs already exist and just need correcting — that is `auditing-domain-rules`.
-- A single narrow convention — that is one ordinary rule (`writing-rules`), not a foundational doc.
+- A single narrow convention — that is one ordinary, area-scoped rule, not a foundational doc.
 
 ## Discover first (non-negotiable)
 

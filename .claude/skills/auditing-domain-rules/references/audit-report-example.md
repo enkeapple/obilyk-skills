@@ -3,7 +3,7 @@
 A concrete reference for the report shape. Plain text, produced before editing. Every status is backed by a grep/read run this session — not from memory.
 
 ```text
-# Domain-Rules Audit — document-domains.md
+# Domain-Rules Audit — domains-glossary.md
 
 ## Claims checked
 | Claim (doc says) | Code shows (grep/read) | Status |

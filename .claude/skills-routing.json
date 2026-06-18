@@ -2,19 +2,207 @@
   "version": 1,
   "ruleGates": {},
   "skills": {
+    "grilling": {
+      "triggers": [
+        "help me think (this )?through",
+        "brainstorm",
+        "let'?s (design|discuss|think)",
+        "grill me",
+        "stress[- ]test",
+        "I want to (add|build|implement|create)",
+        "should (we|i)",
+        "what'?s the best (approach|way)",
+        "refactor",
+        "migrate",
+        "think this through",
+        "work through the idea",
+        "пробрейнштормить",
+        "брейншторм",
+        "давай (поду|обсуд|спроект)",
+        "проработать иде",
+        "обсудить дизайн",
+        "продумать",
+        "разобрать иде",
+        "стоит ли"
+      ],
+      "files": [".claude/skills/grilling/SKILL.md"]
+    },
+    "writing-specs": {
+      "triggers": [
+        "write a spec",
+        "spec this out",
+        "create a spec",
+        "specif(y|ication)",
+        "turn this design into a spec",
+        "finish this half[- ]done feature",
+        "reverse[- ]engineer the spec",
+        "написать специф",
+        "составить спе(ку|цификаци)",
+        "оформить специф",
+        "спецификаци"
+      ],
+      "files": [".claude/skills/writing-specs/SKILL.md"]
+    },
+    "writing-plans": {
+      "triggers": [
+        "write a plan",
+        "implementation plan",
+        "break (this|it) (down )?into (tasks|steps)",
+        "plan (this|it) out",
+        "task breakdown",
+        "lay out the steps",
+        "написать план",
+        "план реализаци",
+        "разбить на (задач|шаг)",
+        "распланировать",
+        "составить план"
+      ],
+      "files": [".claude/skills/writing-plans/SKILL.md"]
+    },
+    "tdd": {
+      "triggers": [
+        "fix (this|the) bug",
+        "red[- ]green[- ]refactor",
+        "write (a )?tests?",
+        "add a test",
+        "TDD",
+        "test[- ]first",
+        "test[- ]driven",
+        "failing test",
+        "написать тест",
+        "тест[- ]сначала",
+        "исправить баг",
+        "пофиксить баг",
+        "починить баг"
+      ],
+      "files": [".claude/skills/tdd/SKILL.md"]
+    },
+    "spec-drift-audit": {
+      "triggers": [
+        "audit the spec",
+        "spec drift",
+        "does the code match the spec",
+        "match(es)? the spec",
+        "verify (the )?spec",
+        "spec compliance",
+        "check what we built",
+        "did we build what we agreed",
+        "сверить со спе(кой|цификаци)",
+        "соответстви.* спе(ке|цификаци)",
+        "дрейф спе",
+        "проверить.* спе(ку|цификаци)"
+      ],
+      "files": [".claude/skills/spec-drift-audit/SKILL.md"]
+    },
+    "writing-rules": {
+      "triggers": [
+        "write a rule",
+        "add a rule",
+        "create a rule",
+        "make this a rule",
+        "turn this into a rule",
+        "enforce (this )?convention",
+        "stop doing",
+        "promote.* (to a )?rule",
+        "написать правил",
+        "добавить правил",
+        "создать (правил|рул)",
+        "закрепить правил",
+        "оформить правил"
+      ],
+      "files": [".claude/skills/writing-rules/SKILL.md"]
+    },
+    "lessons-learned-protocol": {
+      "triggers": [
+        "lesson learned",
+        "capture this",
+        "note this for next time",
+        "this happened before",
+        "should this be a rule",
+        "remember this",
+        "log this lesson",
+        "записать урок",
+        "запомнить на будущ",
+        "захватить урок",
+        "это уже было",
+        "извлечь урок"
+      ],
+      "files": [".claude/skills/lessons-learned-protocol/SKILL.md"]
+    },
+    "bootstrapping-claude-md": {
+      "triggers": [
+        "set up CLAUDE.md",
+        "initialize CLAUDE.md",
+        "create (the )?(project'?s )?CLAUDE.md",
+        "bootstrap the engineering system",
+        "give Claude a persona",
+        "create the project'?s Claude config",
+        "настроить CLAUDE.md",
+        "создать CLAUDE.md",
+        "инициализировать CLAUDE.md"
+      ],
+      "files": [".claude/skills/bootstrapping-claude-md/SKILL.md"]
+    },
+    "auditing-claude-md": {
+      "triggers": [
+        "audit CLAUDE.md",
+        "is CLAUDE.md accurate",
+        "CLAUDE.md (look(s)? stale|drift)",
+        "review CLAUDE.md",
+        "update the engineering system",
+        "check the operating manual",
+        "проверить CLAUDE.md",
+        "обновить CLAUDE.md",
+        "CLAUDE.md устарел"
+      ],
+      "files": [".claude/skills/auditing-claude-md/SKILL.md"]
+    },
+    "bootstrapping-domain-rules": {
+      "triggers": [
+        "set up the base rules",
+        "create (a )?domain glossary",
+        "write the framework rules",
+        "bootstrap .claude/rules",
+        "how should Claude work here",
+        "create base rules",
+        "настроить базовые правил",
+        "создать глоссари",
+        "базовые правил"
+      ],
+      "files": [".claude/skills/bootstrapping-domain-rules/SKILL.md"]
+    },
+    "auditing-domain-rules": {
+      "triggers": [
+        "audit the rules",
+        "is the glossary (still )?accurate",
+        "the framework rule looks stale",
+        "rule drift",
+        "check the base rules",
+        "update the glossary",
+        "review the rules",
+        "проверить (базовые )?правил",
+        "обновить глоссари",
+        "правила устарел"
+      ],
+      "files": [".claude/skills/auditing-domain-rules/SKILL.md"]
+    },
     "handoff": {
       "triggers": [
         "handoff",
         "hand off",
         "session handoff",
-        "save the plan",
+        "save (the )?(plan|progress)",
         "persist (the )?plan",
         "plan file",
         "context limit",
         "running out of context",
+        "wrap up the session",
         "compact",
-        "resume snapshot",
-        "передать сесси"
+        "resume (snapshot|in a new session)",
+        "передать сесси",
+        "сохранить план",
+        "контекст заканчивается",
+        "сворачива"
       ],
       "files": [".claude/skills/handoff/SKILL.md"]
     }
