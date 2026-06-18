@@ -1,11 +1,11 @@
 ---
 name: writing-specs
 description: >-
-  Use when starting any non-trivial feature, refactor, or migration, before
-  writing implementation code, or when continuing a half-finished feature, or
-  when you feel pressure to "just start coding" or "skip the ceremony".
-  Triggers on: "implement", "build a", "let's add", "refactor X", "migrate Y",
-  "finish this half-done feature".
+  Use before writing implementation code for any non-trivial feature, refactor,
+  migration, or half-finished feature you're continuing — or when you feel
+  pressure to "just start coding" or "skip the ceremony". Triggers on:
+  "implement", "build a", "refactor X", "migrate Y", "finish this half-done
+  feature".
 ---
 
 # Writing Specs
@@ -67,19 +67,21 @@ The copy-paste template lives in [references/spec-template.md](references/spec-t
 
 For anything beyond a small spec, dispatch an independent reviewer subagent for a cold second pass before you start coding — use [references/spec-reviewer-prompt.md](references/spec-reviewer-prompt.md). Fix any issues it finds and re-review; do not code against a spec with open issues.
 
-## Red Flags — STOP, you are skipping the spec
+## Red Flags — if you catch yourself here, STOP
 
-- "We don't have time for ceremony / the demo is in an hour."
-- "I'll just write a quick plan in the chat."
-- "I'll start with the obvious part and spec the rest later."
-- Leaving TODO/TBD in place of a scope decision.
-- Describing the contract verbally instead of in a code block in a file.
-- "It's basically the same as X" — without writing down what is *different* (Out of scope).
-- "It's 40% done, I'll just finish it" — without reverse-engineering the spec first.
+Fast trip-wires: the moment you notice one, you are about to skip the spec. The counter to each is its row in **Rationalizations** below.
 
-**All of these mean: write the spec first.**
+- Time pressure ("demo in an hour").
+- A verbal plan in chat instead of a file.
+- Starting with "the obvious part", speccing the rest later.
+- TODO/TBD where a scope decision belongs.
+- A contract described in prose, not a code block.
+- "It's basically the same as X" — the *difference* unwritten.
+- "It's 40% done, I'll just finish it."
 
 ## Rationalizations
+
+Every excuse means the same thing: **write the spec first.**
 
 | Excuse | Reality |
 |--------|---------|
@@ -89,10 +91,5 @@ For anything beyond a small spec, dispatch an independent reviewer subagent for 
 | "The code is 40% done, just finish it." | You cannot finish what you have not scoped. Reverse-engineer the spec from the existing code first; half-built code with no spec is where churn hides. |
 | "I'll read the code first, then maybe spec." | Discovery *feeds* the spec — do both, but the spec is the output. Reading without writing the contract down means re-deriving it three times. |
 | "It's obvious / too simple to spec." | Then the spec is 15 lines and costs nothing. If it is genuinely a one-liner, see "When NOT to use". |
-
-## Anti-patterns
-
-- "We'll figure out the API shape during implementation." — No. Pin it in Contracts.
-- A spec that is mostly prose with no code blocks — Contracts must be concrete.
-- A spec with no Out-of-scope list — guarantees scope creep.
-- A spec written after the code is half-done and not labeled as such — write it first, or mark it explicitly as a retroactive design doc.
+| "It's basically the same as X." | Then write down what is *different* — the diff is the spec, the sameness goes in Out-of-scope. Unwritten "same as X" is where churn hides. |
+| "We'll figure out the API shape during implementation." | Pin it in Contracts now, as a code block in the file. A contract described in prose gets re-derived — differently — by every caller. |
