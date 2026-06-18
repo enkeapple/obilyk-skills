@@ -43,7 +43,7 @@ A question you can answer from the repo is a wasted turn. Before asking:
 ## Good vs bad questions
 
 | Good | Bad |
-|---|---|
+| --- | --- |
 | Concrete, one decision, with a recommendation and a default. | A broad topic ("how should auth work?") with no framing. |
 | About intent / priorities / trade-offs the user owns. | About facts the codebase already answers. |
 | Multiple-choice with a lead option. | Open-ended essay prompt that stalls the user. |

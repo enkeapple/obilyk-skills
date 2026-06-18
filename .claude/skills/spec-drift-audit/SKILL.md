@@ -85,7 +85,7 @@ Fast trip-wires: the moment you notice one, the audit is about to fail silently.
 Every excuse means the same thing: **report the drift; do not fix it.**
 
 | Excuse | Reality |
-|--------|---------|
+| -------- | --------- |
 | "I read the diff, it looks fine." | No report written = the audit did not happen. The deliverable is the classified report, not a verdict. |
 | "It's a tiny mismatch, I'll just fix it." | Then report it and let the user approve the one-line fix. A silent fix hides the drift and the decision. |
 | "The obvious violation is the only one." | Agents reliably miss the second out-of-scope hit. Sweep every bullet, every time. |

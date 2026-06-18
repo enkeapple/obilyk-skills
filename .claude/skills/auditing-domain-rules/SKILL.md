@@ -65,7 +65,7 @@ Produce a report before editing (see [references/audit-report-example.md](refere
 ## Rationalizations
 
 | Excuse | Reality |
-|--------|---------|
+| -------- | --------- |
 | "It looks accurate." | Looks ≠ verified. Grep each claim; the stale one is usually the cell you'd have skipped. |
 | "Only the flagged row is wrong." | Nothing flags the others. The audit covers every claim or it isn't an audit. |
 | "Code changed, so the doc is stale." | Maybe — or the code drifted from an intended rule. Decide direction; don't auto-bless the code. |

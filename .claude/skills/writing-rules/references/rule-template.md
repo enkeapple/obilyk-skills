@@ -4,7 +4,7 @@ Copy this and fill the sections — the order is conventional, not a gate. `desc
 
 ## Template
 
-```markdown
+````markdown
 ---
 description: '<one line: what this rule enforces + its key points>'
 # paths — optional: include to scope an area-specific rule; omit entirely for an always-on rule
@@ -39,13 +39,13 @@ paths:
 
 - <a grep-able or quick check that confirms compliance>
 - <another check>
-```
+````
 
 ## Filled example
 
 A concrete rule at the level of detail expected. Note the scoped `paths`, the `## When`, the ✅/❌ pair, the explicit exception, and the checklist.
 
-```markdown
+````markdown
 ---
 description: 'Import workspace packages only from their public barrel; deep subpath imports are forbidden. Missing export → add it to the barrel.'
 paths:
@@ -82,4 +82,4 @@ import { Button } from '@ui';
 
 - No import matches `from '@<pkg>/...'` with a subpath (grep: `rg "from '@[a-z]+/"`).
 - Any newly needed symbol was added to the barrel, not deep-imported.
-```
+````

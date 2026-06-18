@@ -4,7 +4,7 @@ Use this when a cause-tag cluster reaches the threshold and you need an independ
 
 **Dispatch after:** the promotion-debt scan flags a cause-tag at count ≥ 3 (or your chosen threshold) with no ledger line.
 
-```markdown
+````markdown
 Subagent (general-purpose):
   description: "Review lessons cluster for promotion"
   prompt: |
@@ -58,7 +58,7 @@ Subagent (general-purpose):
       ```
     - Ledger line: `- <tag> → rules/<home>/<topic>.md (YYYY-MM-DD)`
     - Back-reference to add to each contributing entry: `→ promoted to rules/<home>/<topic>.md`
-```
+````
 
 **Reviewer returns:** Decision, Reason, and (when promoting) the target file, the actionable rule text, the ledger line, and the back-reference. You then apply those edits and commit them together.
 

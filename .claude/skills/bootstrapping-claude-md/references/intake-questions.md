@@ -21,7 +21,7 @@ Ask these before writing either CLAUDE.md. One question at a time, lead with a r
 ## Turn answers into sections
 
 | Intake answer | Lands in |
-|---|---|
+| --- | --- |
 | What the app is | root `CLAUDE.md` → "What this project is" |
 | Managing position | `.claude/CLAUDE.md` → **Role** |
 | Real commands | root → "Common commands"; checklist verification rows |

@@ -5,7 +5,7 @@ A test verifies **behavior through the public interface**. It reads like a speci
 ## The three properties
 
 | Property | Good | Bad |
-|----------|------|-----|
+| ---------- | ------ | ----- |
 | **Behavioral** | Asserts what the system does via its public API. | Asserts on private state, internal call order, or a mock's call log. |
 | **Minimal** | One behavior per test. An "and" in the name means split it. | `test("validates email and domain and whitespace")` |
 | **Intent-revealing** | Name states the behavior: `rejects an expired coupon`. | `test("test1")`, `test("works")` |
@@ -46,7 +46,7 @@ test("retry returns the value after one transient failure", async () => {
 Hard-to-test code is telling you the design is hard to use. Don't fight the test — fix the design:
 
 | Symptom | What it means |
-|---------|---------------|
+| --------- | --------------- |
 | Must mock everything | Code too coupled — use dependency injection. |
 | Huge setup | Extract helpers; if still complex, the interface is doing too much. |
 | Can't assert without reaching inside | The behavior isn't exposed through the public interface — it should be. |

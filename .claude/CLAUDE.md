@@ -47,7 +47,7 @@ Applying the chain (APPLY): run one skill at a time, each handing its artifact t
 Not complete until each row is `[x]` or `[N/A]`-with-reason, evidence pasted:
 
 | # | Item | Done when |
-|---|---|---|
+| --- | --- | --- |
 | 1 | RED observed | Baseline subagent run failed as expected (or `[N/A]` — control showed no failure, so no skill written) |
 | 2 | GREEN confirmed | Subagent run WITH the skill complies on the same scenarios |
 | 3 | Form matches failure | Discipline → prohibition+table+red-flags; shaping → positive recipe |

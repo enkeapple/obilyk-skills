@@ -25,7 +25,7 @@ No build / dev / test pipeline — this is a skills vault, not an app. Verificat
 ## Skill routing
 
 | Task | Skill |
-|---|---|
+| --- | --- |
 | Turn a fuzzy idea into a shared, concrete design | `grilling` |
 | Turn an approved design into a concrete spec | `writing-specs` |
 | Turn a spec into a task-by-task implementation plan | `writing-plans` |
@@ -42,7 +42,7 @@ When a user prompt contains a registered trigger and the corresponding skill is 
 ## Where rules live
 
 | Layer | Folder |
-|---|---|
+| --- | --- |
 | Cross-cutting process & policy (framework, domain glossary) | [.claude/rules/common/](./.claude/rules/common/) |
 
 Rules load on demand, not auto-injected. Bootstrap them in a consumer repo with `bootstrapping-domain-rules`; keep them true with `auditing-domain-rules`.

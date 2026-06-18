@@ -62,7 +62,7 @@ Produce a report before editing (see [references/audit-report-example.md](refere
 ## Rationalizations
 
 | Excuse | Reality |
-|--------|---------|
+| -------- | --------- |
 | "The commands look right." | Looks ≠ runs. Check each against `package.json`; the stale one is the row you'd skip. |
 | "Only the flagged line is wrong." | Nothing flags the rest. The audit covers every command, path, and pointer in both files. |
 | "Repo changed, so the doc is stale." | Maybe — or the repo drifted from an intended rule. Decide direction; don't auto-bless the code. |

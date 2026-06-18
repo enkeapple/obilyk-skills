@@ -106,7 +106,7 @@ Fast trip-wires: the moment you notice one, you are about to skip the spec. The 
 Every excuse means the same thing: **write the spec first.**
 
 | Excuse | Reality |
-|--------|---------|
+| -------- | --------- |
 | "No time, demo in an hour." | The spec is the *fastest safe path*. Ten lines pinning the contract prevents the parallel/conflicting implementation you rewrite at 11pm. Time pressure is exactly when unscoped churn hurts most. |
 | "I'll write a quick verbal plan instead." | A plan in chat is not reviewable, not diffable, and gone next session. The spec *is* the plan, persisted. |
 | "I'll leave the cut parts as TODOs." | TODOs are silent scope. Move each one to the Out-of-scope list so the cut is a recorded decision, not a leak. |

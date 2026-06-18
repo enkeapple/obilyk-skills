@@ -47,7 +47,7 @@ A rule has these parts. **This is a recipe, not a gate:** the order is conventio
 A rule reads like an instruction someone can follow and check, not an explanation of a topic.
 
 | Rule (do this) | Doc (not a rule) |
-|---|---|
+| --- | --- |
 | "Store money as integer minor units paired with an ISO-4217 code; never `number`." | "Floating point has precision issues, which is why money is tricky…" |
 | "Import only from a package's barrel; if a symbol isn't exported, add it to the barrel — don't deep-import." | "We value encapsulation in our packages." |
 

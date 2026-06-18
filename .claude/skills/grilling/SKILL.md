@@ -59,7 +59,7 @@ When the design is approved, do **not** write code, tickets, or an implementatio
 ## Rationalizations
 
 | Excuse | Reality |
-|--------|---------|
+| -------- | --------- |
 | "It's simple, I'll just build it." | Simple ideas hide the most unexamined assumptions. Present a 3-sentence design and get approval. |
 | "Faster to ask everything at once." | A wall of questions is bewildering and gets half-answered. One at a time converges faster. |
 | "I'll just propose my design." | A design dropped before understanding is a guess. Grill first; let answers shape it. |

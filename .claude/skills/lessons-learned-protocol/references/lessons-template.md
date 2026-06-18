@@ -18,7 +18,7 @@ The **Cause-tag** is the load-bearing field: reuse an existing tag for a matchin
 ## Good vs bad lessons
 
 | Good (an instruction) | Bad (a story) |
-|---|---|
+| --- | --- |
 | "Assumed `useGetUser` existed; real hook is `useGetUserById`. Prevention: grep the export before importing." | "I made a typo in a hook name." |
 | "Upgrading lib X broke a transitive peer dep; build failed. Prevention: check the full peer tree before any bump." | "Be careful with dependency upgrades." |
 

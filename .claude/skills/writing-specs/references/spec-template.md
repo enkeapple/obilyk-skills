@@ -6,7 +6,7 @@ Language- and framework-agnostic. Replace `<lang>` with the project's language a
 
 ## Template
 
-```markdown
+````markdown
 # <Topic>
 
 ## Goal
@@ -40,7 +40,7 @@ Language- and framework-agnostic. Replace `<lang>` with the project's language a
 
 ## Risks
 - <known unknown> — mitigation: <how it is handled / confirmed>
-```
+````
 
 ## Variants (same template, two extra notes)
 
@@ -53,7 +53,7 @@ Don't restructure the template for these — just add to the sections you alread
 
 A neutral reference for the level of detail expected.
 
-```markdown
+````markdown
 # Export items list to CSV
 
 ## Goal
@@ -94,4 +94,4 @@ Let a user download the current items list as a CSV file from the list screen.
 
 ## Risks
 - Very large lists could time out or exhaust memory — mitigation: stream rows instead of buffering the whole file.
-```
+````

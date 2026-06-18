@@ -26,7 +26,7 @@ Thinking "skip TDD just this once"? That is the rationalization. Don't.
 
 ## The Iron Law
 
-```
+```text
 NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST
 ```
 
@@ -54,7 +54,7 @@ Run RED → GREEN → REFACTOR for **one** behavior, then repeat for the next.
 
 Do **not** write all the tests first and then all the implementation. That "write every test, then write every impl" approach produces tests of *imagined* behavior — they test the shape of things, pass when behavior breaks, and outrun what you've actually learned.
 
-```
+```text
 WRONG (horizontal):  RED: test1,test2,test3  →  GREEN: impl1,impl2,impl3
 RIGHT (vertical):    test1→impl1  →  test2→impl2  →  test3→impl3
 ```
@@ -70,7 +70,7 @@ test("parseDuration reads a single unit", () => {
 });
 ```
 
-```
+```text
 // 2. Verify RED:  <test command>  →  FAIL: parseDuration is not defined
 ```
 
@@ -83,7 +83,7 @@ export function parseDuration(input: string): number {
 }
 ```
 
-```
+```text
 // 4. Verify GREEN:  <test command>  →  PASS
 ```
 
@@ -109,7 +109,7 @@ Run this every loop. Can't tick all six? You skipped a step — redo the cycle, 
 ## Rationalizations
 
 | Excuse | Reality |
-|--------|---------|
+| -------- | --------- |
 | "Too simple to test." | Simple code breaks. The test takes 30 seconds. |
 | "I'll test after." | Tests written after code pass immediately — that proves nothing. You never saw them catch anything. |
 | "Tests-after achieve the same goal." | Tests-after answer "what does this do?"; tests-first answer "what should this do?" Tests-after are biased by the code you already wrote. |

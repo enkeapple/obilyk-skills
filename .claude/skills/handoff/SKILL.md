@@ -19,7 +19,7 @@ This skill owns creation of the session's temporary documents. Rules invoke it i
 There are **two distinct documents** — do not merge them:
 
 | Doc | Captures | Written when | Lifecycle |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | **Plan** (`plan-<slug>.md`) | the *contract*: goal, affected layers, contracts, out-of-scope | plan-file threshold met, after user approval | deleted after VERIFY + Checklist walk |
 | **Handoff** (`handoff-<slug>.md`) | the *state*: what's actually done, what compiles, what's next | turn ends incomplete OR context nears limit | consumed/overwritten by the next session |
 
