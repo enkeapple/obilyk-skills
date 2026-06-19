@@ -2,6 +2,21 @@
   "version": 1,
   "ruleGates": {},
   "skills": {
+    "resolving-requirements": {
+      "triggers": [
+        "[A-Z][A-Z0-9]+-\\d+",
+        "get (the )?requirements",
+        "pull (the )?requirements",
+        "resolve (the )?(ticket|requirements|spec)",
+        "start (the )?(design|work) (for|on) [A-Z]",
+        "fetch (the )?(story|ticket)",
+        "достань требовани",
+        "подтяни требовани",
+        "резолвни тикет",
+        "начни работу над"
+      ],
+      "files": [".claude/skills/resolving-requirements/SKILL.md"]
+    },
     "grilling": {
       "triggers": [
         "help me think (this )?through",

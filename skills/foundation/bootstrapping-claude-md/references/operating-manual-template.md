@@ -80,10 +80,32 @@ The human owns the commit. Autonomous: Read/Edit/Write in the working tree, read
 
 ## Status block (end of turn)
 
-```text
-Mode · Plan (path or "trivial") · Changed files · Verification (real output) · Completeness Checklist (per row) · Pending lessons · Next
+Emit it as **rendered markdown** (NOT inside a code fence — the terminal renders GFM): a `##` title, a one-line verdict, then `###` categories with bullet items. Verdict first so the outcome reads before the detail; no emoji (see Communication). Fill the `<…>` slots:
+
+```markdown
+## Turn summary
+
+> **Result:** DONE | IN PROGRESS | BLOCKED  ·  **Mode:** <modes>
+
+### Changed
+
+- `<file>` — <what changed, one line per item>   (omit this whole section on a read-only turn)
+
+### Verified
+
+- **<typecheck cmd>** — <pass/fail one-liner; paste raw failing output in a fenced block under this list, or N/A>
+- **<lint cmd>** — <…>
+- **<test cmd, or "N/A — no suite">** — <…>
+- **Checklist** — <X of N rows [x]>; remaining: <list or "none">
+
+### Follow-ups
+
+- **Pending lessons** — <captured this turn via the lessons skill, or none>
+- **Next** — <next step, or handoff-doc path on a session hand-off>
 ```
-Walk every row; `[x]` needs pasted evidence, `[N/A]` a reason. Any `[ ]` → no commit proposal.
+
+- **`Result`** must agree with the Checklist — never `DONE` while a row is `[ ]`; `IN PROGRESS` while work remains; `BLOCKED` when you need the human (a business/scope decision or a git-boundary action), named on the `Next` line. Any `[ ]` → no commit proposal.
+- Drop the `Changed` section entirely on a read-only turn rather than writing "nothing"; when a check fails, paste its raw output in a fenced block under the `Verified` list — don't summarize the failure away.
 
 ## Skill discipline
 

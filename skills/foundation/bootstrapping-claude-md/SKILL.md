@@ -65,5 +65,6 @@ Document how work survives the context limit, because long tasks will hit it. Th
 - One mega-file instead of the entry-point + operating-manual split.
 - A non-negotiable or pointer that tells the agent to `append`/`Edit` a skill-owned artifact (e.g. the lessons log) directly when the repo has the skill that owns it — that bypasses the skill; route through the `Skill` tool instead.
 - A pipeline with no Completeness Checklist, or verification rows with invented commands.
+- A flat single-line status block (fields joined by `·`/`,`) instead of the structured, verdict-first markdown form in the template — or reaching for emoji to make it scannable, which breaks the manual's own "no emoji" rule.
 - No session-handoff flow — long tasks will silently lose state at the context limit.
 - Any stack/command/path claim not verified by a read this session.

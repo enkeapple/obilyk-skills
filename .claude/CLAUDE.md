@@ -71,15 +71,34 @@ The human owns the commit. Autonomous: Read/Edit/Write in the working tree, read
 
 ## Status block (end of turn)
 
-```text
-Mode: AUTHOR | AUDIT | APPLY
-Changed: <skill/file>:<what>
-RED/GREEN: <baseline failure → with-skill compliance, or N/A>
-Validators: <pasted result>
-Checklist: [x]/[N/A] per row; remaining: <list or "none">
-Pending lessons: <captured this turn, or "none">
-Next: <next step, or handoff-doc path on a session hand-off>
-```
+Emit it as **rendered markdown** (NOT inside a code fence — the terminal renders GFM): a `##` title, a one-line verdict, then `###` categories with bullet items. Verdict first so the human reads the outcome before the detail. No emoji (see Communication). Reproduce the structure below, filling the `<…>` slots:
+
+````markdown
+## Turn summary
+
+> **Result:** DONE | IN PROGRESS | BLOCKED  ·  **Mode:** AUTHOR | AUDIT | APPLY
+
+### Changed
+
+- `<skill/file>` — <what changed, one line per item>   _(omit this whole section if read-only)_
+
+### Verified
+
+- **RED → GREEN** — <baseline failure → with-skill compliance, or N/A>
+- **Validators** — <pass/fail one-liner; on failure paste the output in a fenced block below this list, or N/A — no skill change>
+- **Checklist** — <X of N rows [x]>; remaining: <list or "none">
+
+### Follow-ups
+
+- **Pending lessons** — <captured this turn via lessons-learned-protocol, or none>
+- **Next** — <next step, or handoff-doc path on a session hand-off>
+````
+
+Rules for the slots:
+
+- **`Result`** — `DONE` only when every checklist row is `[x]`/`[N/A]`; `IN PROGRESS` while work remains; `BLOCKED` when you need the human (a scope decision or a git-boundary action) — name what on the `Next` line. The verdict must agree with the `Checklist` item; never `DONE` over an unfinished row.
+- **`Changed`** — drop the section entirely on a read-only turn rather than writing "nothing".
+- **`Verified`** — keep each line to a one-liner; when validators fail, paste their raw output in a ` ```text ` block right under the list so the failure is visible, not summarized away.
 
 ## Skill discipline
 

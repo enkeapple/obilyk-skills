@@ -28,7 +28,7 @@ Ownership table — do not infer from a filename:
 | 2 | **rule** | `.claude/rules/common/*.md` | loaded on demand, never auto-injected | a convention/process doc the agent reads when relevant |
 | 3 | **hook** | source `hooks/*/<name>.sh`; surfaced via flat symlink `.claude/hooks/<name>.sh`, wired by `settings.json` | runs on tool events | a gate/logger (`detect-bypass`, `skill-gate`, `token-guard`, `lessons-nudge`, …) |
 | 4 | **routing** | `.claude/skills-routing.json` | read by the hooks | trigger-phrase → skill map; `skill-routing-sync.md` keeps it true |
-| 5 | **the SDD chain** | skills #1 | `grilling → writing-specs → writing-plans → tdd → spec-drift-audit` | the APPLY-mode pipeline run on a consumer repo |
+| 5 | **the SDD chain** | skills #1 | `resolving-requirements → grilling → writing-specs → writing-plans → tdd → spec-drift-audit` | the APPLY-mode pipeline run on a consumer repo (`resolving-requirements` is the front door: it resolves a ticket-ID/URL input into a faithful requirements bundle; a ready free-text idea enters at `grilling`) |
 | 6 | **validators** | root [CLAUDE.md](../../../CLAUDE.md) → "Common commands" | frontmatter ≤1024, name regex, reference links resolve, fence balance, word count | structural checks on a skill change — **not** a test suite |
 | 7 | **lessons** | [lessons-learned.md](../../lessons-learned.md) | append-only log | captured bottleneck; 3× same cause-tag → promoted to a rule |
 

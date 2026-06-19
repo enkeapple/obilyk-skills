@@ -26,6 +26,7 @@ No build / dev / test pipeline — this is a skills vault, not an app. Verificat
 
 | Task | Skill |
 | --- | --- |
+| Resolve a ticket ID / URL into a faithful requirements bundle before design | `resolving-requirements` |
 | Turn a fuzzy idea into a shared, concrete design | `grilling` |
 | Turn an approved design into a concrete spec | `writing-specs` |
 | Turn a spec into a task-by-task implementation plan | `writing-plans` |
