@@ -70,9 +70,20 @@ When a concern is genuinely large (an "API layer", an "auth/session layer"), it 
 
 Shared concepts (the auth token, cache tags) are cross-linked once between the files, never duplicated. If two sub-rules would always load together on the same `paths`, they are one rule — merge them.
 
-## Self-review / reviewer
+## Two-layer review — self first, then an independent cold pass
 
-Before saving, check it against the Review Checklist below. For a rule that will be widely loaded or promoted from a lesson, dispatch an independent reviewer using [references/rule-reviewer-prompt.md](references/rule-reviewer-prompt.md) — it checks scoping, actionability, and duplication of existing rules.
+Two layers catching **different** defect classes (plus a third, the efficacy test below). Keep the first two disjoint or the cold pass is wasted load.
+
+### Self-review (author pass — cheap, every time)
+
+Before saving, check the rule against the Review Checklist below: the **form** is right — `description` present, `## When` and `## Review Checklist` present, an imperative ✅/❌ example, one topic. These you can verify from the rule text itself.
+
+### Independent cold reviewer (the author-blind pass)
+
+For a rule that will be widely loaded or promoted from a lesson, dispatch an **independent reviewer — a fresh subagent with zero shared context, given the existing rules directory** — using [references/rule-reviewer-prompt.md](references/rule-reviewer-prompt.md). Its remit is what you cannot judge from inside your own context, not a re-run of the form checklist:
+
+- **Duplication, re-derived:** you are anchored on the rule you just wrote and won't notice it restates a neighbor; a reader holding the whole rules set will. Cross-link, don't fork.
+- **Scoping & applicability:** would the `paths` nag outside its area, and would two agents reading this cold apply it two ways? You can't feel your own assumptions; a cold reader trips on them.
 
 ## Test the rule on a cold agent (empirical RED/GREEN)
 

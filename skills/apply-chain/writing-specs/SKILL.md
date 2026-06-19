@@ -71,13 +71,28 @@ Remember: real file paths, real type/signature code in Contracts, real commands 
 4. Self-review (below). Save the spec.
 5. **User Review Gate, then Implementation hand-off** (below) — do not implement from the spec directly.
 
-## Self-review (before showing the user)
+## Two-layer review — self first, then an independent cold pass
+
+The two layers catch **different** classes of defect; they are not the same check run twice. Keep their remits disjoint, or the cold pass is wasted load.
+
+### Self-review (author pass — cheap, every time)
+
+Checks you can make against the spec **itself**, with the context you already hold — catch your own slips before you spend a dispatch:
 
 - No Placeholders (above) — every contract, path, edge case, and command is concrete.
 - Out-of-scope list is non-empty.
-- A reviewer can pick this up cold and know what to build.
+- All 8 required sections present and internally consistent.
 
-For anything beyond a small spec, dispatch an independent reviewer subagent for a cold second pass before you start coding — use [references/spec-reviewer-prompt.md](references/spec-reviewer-prompt.md). Fix any issues it finds and re-review; do not code against a spec with open issues.
+This pass cannot catch what you are blind to: a requirement you *misread* yields a spec that is internally clean and self-reviews green — the same wrong premise wrote it and checked it.
+
+### Independent cold reviewer (the author-blind pass)
+
+For anything beyond a small spec, dispatch an **independent reviewer — a fresh subagent with zero shared context** — using [references/spec-reviewer-prompt.md](references/spec-reviewer-prompt.md). Its remit is the class your self-review structurally cannot reach, so it is **not** a second run of the checklist above:
+
+- **Conformance to source:** hand it the original request / approved design *alongside* the spec. It re-derives what was asked from the source and flags where the spec diverges (the consistent-but-wrong misread). Without the source on its desk it cannot do this — pass it in.
+- **Ambiguity:** any requirement two engineers would build differently.
+
+Fix what it finds and re-review; do not code against a spec with open issues.
 
 ## User Review Gate
 

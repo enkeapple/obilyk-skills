@@ -40,6 +40,13 @@ the readiness check in 4 different shapes (a shaping failure). Ship a positive
 recipe for one fixed readiness-block shape; GREEN = the shape converges across reps.
 ```
 
+**Two-layer review variant — a cold pass is a no-op unless it is *differently informed*.** When a review has an author self-review *and* an independent cold reviewer, the cold layer earns its load only if its remit is disjoint — not a fresh agent re-running the same checklist. Two structural requirements:
+
+- **Feed the cold reviewer the source, not just the artifact.** Its unique value is re-deriving intent from the *source the artifact came from* (the request/design for a spec, the spec for a plan, the existing-rules set for a rule) and flagging divergence — the misread the author is blind to. Given only the produced artifact, it collapses into a second internal-completeness pass.
+- **Split the checklists by reachability:** self = checks the author can make against the artifact itself (placeholders, internal consistency, naming); cold = the author-blind class (conformance to source, ambiguity two readers would split on). Overlapping checklists are the redundancy that reads as theatre.
+
+RED it with a **clean misread** — an artifact internally consistent but wrong against its source. If the cold reviewer, given only the artifact, approves it, the layer is a no-op: wire the source in, make the remits disjoint, and re-RED.
+
 **Caveat — a contaminated discipline control reads as a false "no failure."** A subagent spawned in this repo inherits the vault's operating manual ([framework.md](./framework.md): the Iron Law, read-before-assert, the chain), so a discipline-RED run that "complies" may be obeying the force-injected manual, not your skill — agents will even cite "the vault's discipline" verbatim. To measure a true discipline baseline, use an environment WITHOUT that injection (a controlled system prompt, or a real consumer repo). Shaping failures (output-shape variance) stay cleanly measurable in-repo regardless. If you cannot reproduce the discipline failure at all, do not build the gate — find the shaping / efficacy failure that is reproducible, or write nothing.
 
 ## Edge Cases
@@ -55,3 +62,4 @@ recipe for one fixed readiness-block shape; GREEN = the shape converges across r
 - [ ] GREEN is calibrated to the reproduced failure (shape convergence / efficacy / step taken), not to the skill's stated purpose.
 - [ ] For a discipline target, did not trust an in-vault Agent-tool "compliance" as the baseline (it may be inherited `framework.md`) — got a clean baseline or pivoted.
 - [ ] Did not duplicate `writing-great-skills`' methodology content; cross-linked it instead.
+- [ ] For a two-layer review (self + cold reviewer): the cold layer is fed the SOURCE the artifact derives from (not just the artifact), its checklist is disjoint from the self-review's (author-reachable vs author-blind), and a clean-misread RED confirms it catches a consistent-but-wrong artifact.

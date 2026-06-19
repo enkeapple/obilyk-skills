@@ -81,13 +81,25 @@ The baseline failure is not lazy "TODO" markers — it is *describing instead of
 - A type / function / command named but never defined or shown in any task.
 - "Find the command in package.json" — look it up now and write the exact command.
 
-## Self-review (run yourself, fix inline)
+## Two-layer review — self first, then an independent cold pass
 
-1. **Spec coverage:** for each spec requirement, point to the task that implements it. Add tasks for any gaps.
-2. **Show-don't-describe scan:** every code step has a code block; every command step has the exact command + expected output; every task has a commit step.
-3. **Type consistency:** the names/signatures used in later tasks match what earlier tasks produced (a `clearLayers()` in Task 3 vs `clearFullLayers()` in Task 7 is a bug).
+The two layers catch **different** defect classes; keep their remits disjoint or the cold pass is wasted load.
 
-For anything beyond a small plan, dispatch an independent reviewer subagent before execution — use [references/plan-reviewer-prompt.md](references/plan-reviewer-prompt.md). Fix issues and re-review.
+### Self-review (author pass — cheap, every time)
+
+Mechanical checks against the plan **text itself**, with the context you already hold:
+
+1. **Show-don't-describe scan:** every code step has a code block; every command step has the exact command + expected output; every task has a commit step.
+2. **Type consistency:** the names/signatures used in later tasks match what earlier tasks produced (a `clearLayers()` in Task 3 vs `clearFullLayers()` in Task 7 is a bug).
+
+### Independent cold reviewer (the author-blind pass)
+
+For anything beyond a small plan, dispatch an **independent reviewer — a fresh subagent with zero shared context, handed the spec** — using [references/plan-reviewer-prompt.md](references/plan-reviewer-prompt.md). Its remit is what you cannot judge from inside your own context, so it is **not** a re-run of the scan above:
+
+- **Spec coverage, re-derived:** it reads the spec independently and checks each requirement maps to a task — you *believe* you covered it; it verifies you did. A gap you can't see is one you didn't know you left.
+- **Zero-context buildability:** could an engineer with no context follow this task-by-task, possibly out of order, without getting stuck or guessing? You hold the context, so you cannot feel its absence — only a cold reader can.
+
+Fix issues and re-review.
 
 ## Execution handoff
 
