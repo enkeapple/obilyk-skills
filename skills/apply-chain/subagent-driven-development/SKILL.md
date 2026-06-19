@@ -22,6 +22,8 @@ Execute an approved plan by dispatching a **fresh subagent per task**, with a tw
 
 **Project-agnostic:** discover the repo's real test/build/commit commands, paths, and layout from the target repo — this skill names none. Each subagent writes code test-first via `test-driven-development`; this skill orchestrates, it does not replace the test discipline.
 
+**Progress:** this is the chain's *implement* phase; its single task-list item is driven per [phase-task-visualization](../../../.claude/rules/common/phase-task-visualization.md). That phase item is distinct from the per-task ledger below — when a phase list already renders, keep the ledger in plan-file markers so the two don't collide.
+
 ## When to use
 
 ```dot

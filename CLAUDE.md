@@ -10,7 +10,7 @@ Authoring or changing a skill runs through **RED → GREEN → REFACTOR → VALI
 
 - **No skill (or skill edit) without a failing test first.** Run the baseline subagent scenarios and watch them fail (RED) before writing. Wrote it first? Delete it, start over.
 - **Agnostic by default.** A skill never hard-depends on one project's stack, paths, or commands — the consumer repo fills specifics.
-- **Capture bottlenecks the same turn.** Friction in a skill or a hand-off → a `writing-lessons` entry now; recurring (3×) → `writing-rules`.
+- **Capture a qualifying lesson the same turn.** Only when it passes the (A)+(B) bar — a concrete reusable check AND a recurring/non-obvious class (most turns produce none); `writing-lessons` owns the bar. Recurring (3×) → `writing-rules`.
 - **Verify before "done".** Validators pass AND a GREEN subagent run confirms the behavior — code/markdown existing is not "done".
 - **Skill names are structural claims.** A reference to a skill must match its real dir/`name` in `.claude/skills/*` — verify, don't recall.
 

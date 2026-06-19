@@ -15,6 +15,8 @@ Write a comprehensive implementation plan assuming the engineer executing it has
 
 This consumes a spec written via the **writing-specs** skill. Project-agnostic: discover real commands, paths, and test syntax from the repo; copy the spec's contracts and constraints verbatim.
 
+**Progress:** before your first artifact, reflect this phase in the task list per [phase-task-visualization](../../../.claude/rules/common/phase-task-visualization.md) — under `sdd-lifecycle` update the existing item; run standalone, seed a single item for this phase.
+
 ## When to use
 
 - You have an approved spec/requirements and are about to write implementation code.

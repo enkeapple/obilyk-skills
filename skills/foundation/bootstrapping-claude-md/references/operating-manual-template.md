@@ -29,7 +29,7 @@ These survive context pressure and are model-agnostic. If the rest of this file 
 2. **Search-before-ask.** Decide and proceed with a one-line justification. No A/B/C/D menus on technically-derivable choices. Asking is the last step, for genuine business decisions or git-boundary actions.
 3. **Walk-the-Checklist.** "Done" = every Completeness Checklist row `[x]` or `[N/A]`-with-reason, evidence pasted. Code compiling is not done. No `Suggested commit:` while any row is `[ ]`.
 4. **No local memory — facts go to git.** Never `Write` to the per-user memory dir (`~/.claude/projects/**/memory/`, `MEMORY.md`) — it is not in git and invisible to teammates. Durable knowledge goes to git-tracked stores: an incident/learned fact → [lessons-learned.md](./lessons-learned.md); a recurring root cause (3+) → a rule under `.claude/rules/`; a future-feature contract → a spec.
-5. **Capture the lesson, in git, same turn.** When a turn exposes a non-obvious failure (hallucinated symbol, missed duplication, wrong-domain edit, contract contradicting an assumption) or the owner corrects/confirms a non-obvious choice, capture it the SAME turn — deferring loses it. If the repo has a lessons-capture skill (e.g. `writing-lessons`), capture by **invoking that skill (the `Skill` tool)**, not by editing [lessons-learned.md](./lessons-learned.md) directly — a direct edit bypasses the skill's cause-tag/promotion discipline; absent such a skill, append to the log. Every status block carries a `Pending lessons` line.
+5. **Capture a qualifying lesson, in git, same turn.** Capture only when BOTH hold: (A) you can name a concrete check/Prevention a future session will run, AND (B) it is a non-obvious failure *class* that would recur (hallucinated symbol, missed duplication, wrong-domain edit, contract contradicting an assumption) or the owner corrects/confirms a non-obvious choice. If all you'd write is "today I did X" with no reusable check, do not capture — **most turns produce no lesson, and that is normal.** When a turn qualifies, capture it the SAME turn — deferring loses it. If the repo has a lessons-capture skill (e.g. `writing-lessons`), capture by **invoking that skill (the `Skill` tool)**, not by editing [lessons-learned.md](./lessons-learned.md) directly — a direct edit bypasses the skill's cause-tag/promotion discipline; absent such a skill, append to the log.
 
 These five are universal. **Repo-specific, infrastructure-tied invariants go below in their own sections, not here** — e.g. a skill-gate / rule-gate harness (→ Skill discipline), a model-pinning protocol, a memory-write gate. Add a sixth non-negotiable only if it is genuinely load-bearing every session AND not already enforced by a hook documented elsewhere.
 
@@ -100,7 +100,7 @@ Emit it as **rendered markdown** (NOT inside a code fence — the terminal rende
 
 ### Follow-ups
 
-- **Pending lessons** — <captured this turn via the lessons skill, or none>
+- **Pending lessons** — <captured this turn via the lessons skill if a turn met the bar, else "none" (typical)>
 - **Next** — <next step, or handoff-doc path on a session hand-off>
 ```
 

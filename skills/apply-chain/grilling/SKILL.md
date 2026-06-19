@@ -21,6 +21,8 @@ Interview the user relentlessly until a fuzzy idea becomes a shared, concrete de
 Do NOT write code, scaffold, split tickets, or invoke an implementation/planning skill until the design is shared AND the user approves it. This holds for every task, however simple. "Too simple to design" is the rationalization that wastes the most work — the design can be three sentences, but it gets presented and approved.
 </HARD-GATE>
 
+**Progress:** before your first artifact, reflect this phase in the task list per [phase-task-visualization](../../../.claude/rules/common/phase-task-visualization.md) — under `sdd-lifecycle` update the existing item; run standalone, seed a single item for this phase.
+
 ## The interview loop
 
 Walk the decision tree, resolving dependencies one at a time. The full technique — depth-first ordering, the recommended-answer pattern, explore-vs-ask, good/bad questions, knowing when to stop — is in [references/interview-playbook.md](references/interview-playbook.md).

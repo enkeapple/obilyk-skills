@@ -16,6 +16,8 @@ Write a small spec before writing code. The spec is the artifact that gates impl
 
 Project-agnostic: fill the blanks (paths, commands, type syntax) from the repo you are in.
 
+**Progress:** before your first artifact, reflect this phase in the task list per [phase-task-visualization](../../../.claude/rules/common/phase-task-visualization.md) — under `sdd-lifecycle` update the existing item; run standalone, seed a single item for this phase.
+
 ## When to use
 
 - Any change touching 2+ files across layers (e.g. UI + state, endpoint + client, schema + handler).

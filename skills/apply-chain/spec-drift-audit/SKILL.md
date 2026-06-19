@@ -16,6 +16,8 @@ A read-only comparison between an approved spec and the current code. It produce
 
 This pairs with a spec written via the **writing-specs** skill and assumes its section shape (Goal, Scope, Out of scope, Contracts, Files touched, Edge cases, Verification, Risks). Project-agnostic: discover real commands and paths from the repo.
 
+**Progress:** before your first artifact, reflect this phase in the task list per [phase-task-visualization](../../../.claude/rules/common/phase-task-visualization.md) — under `sdd-lifecycle` update the existing item; run standalone, seed a single item for this phase.
+
 ## When to use
 
 - After implementation completes, before opening a PR — confirm what shipped matches what was approved.

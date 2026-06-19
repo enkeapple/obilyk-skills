@@ -18,14 +18,27 @@ Project-agnostic: paths and rule topics adapt to the repo. A filled example is i
 
 ## When to use
 
+Capture a lesson only when **both** conditions hold (the bar):
+
+- **(A) Reusable check** — you can name a concrete check / Prevention a future session will actually run.
+- **(B) Recurring class** — it is an error *class* a competent future agent would repeat (non-obvious; plausibly recurs), not a one-off tied to this exact spot.
+
+Turns that pass the bar look like:
+
 - A non-obvious bug got fixed, or a wrong assumption was caught mid-task ("I thought function X existed").
-- A hallucinated symbol/API, or a test that passed for the wrong reason.
+- A hallucinated symbol/API/skill-name, or a test that passed for the wrong reason.
 - A library/version pitfall bit you.
 - You notice you are hitting a problem you have seen before — check the log and the recurrence count.
 
+These genuine-failure classes are MUST-capture — do not let the bar talk you out of them.
+
 ## When NOT to use
 
-- Routine typos or changelog-style notes ("today I fixed X") — the git log already does that.
+Most turns produce no lesson — that is normal, not a skipped step. Do not capture when:
+
+- The negative test fires: all you'd write is "today I did X" with no reusable check (fails (A)).
+- A one-off tied to this exact spot that a future agent would not repeat (fails (B)).
+- Routine typos or changelog-style notes — the git log already does that.
 - A lesson already encoded in `.claude/rules/` — re-capturing wastes the log.
 
 ## Two levels — keep the log quiet

@@ -15,6 +15,8 @@ Turn whatever the user hands you into a **resolved requirements bundle** that `g
 
 **Core principle:** requirements are *sourced*, never *authored*. Your job is faithful retrieval + provenance, not summary. A paraphrased acceptance criterion is a changed acceptance criterion.
 
+**Progress:** before your first artifact, reflect this phase in the task list per [phase-task-visualization](../../../.claude/rules/common/phase-task-visualization.md) — under `sdd-lifecycle` update the existing item; run standalone, seed a single item for this phase.
+
 ## Two input modes
 
 | Input | Mode | What you do |

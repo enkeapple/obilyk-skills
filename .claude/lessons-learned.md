@@ -4,6 +4,14 @@ Append-only — never rewrite or delete an entry; new entries go at the top of `
 
 ## Entries
 
+### 2026-06-19 — "Render SDD phases as a task list" was a no-op for the lifecycle case (harness already does it) but a real efficacy fix standalone
+
+- **Cause-tag:** `skill-value-vs-noop` (4th instance)
+- **What happened:** Asked to make the SDD skills show phases "like a plan with items, orange per phase". RED with the skills as-is: a capable agent ALREADY seeds an orange `TaskCreate` phase list on a full `sdd-lifecycle` run (the harness nudges `TaskCreate`/`TaskUpdate`), so a literal "create a task list" instruction would be a no-op there — but it varied the shape every run (6 items dropping `resolving-requirements` vs 7; ad-hoc labels/glyphs; `completed` flipped on "artifact produced" not on approval). The SAME behaviour was ABSENT standalone: a lone `writing-specs` agent refused any list ("below where a todo list earns its keep"). One instruction is thus a no-op in the rich case and a genuine efficacy fix in the thin case.
+- **Fix / rule:** RED a visual/affordance instruction against the HARNESS DEFAULT, not a blank slate — the harness's own tool nudges are a baseline contaminant the same way `framework.md` injection is for a discipline control (cross-ref `red-scenario-contamination` + scoping-skill-value's caveat). Scope to what reproduces: shape-convergence (a fixed canonical label set + the status-to-approval binding) for the case the default already fires; an explicit efficacy instruction only for the sub-threshold case where it does not. Shipped one source-of-truth rule `phase-task-visualization.md` + thin pointers from `sdd-lifecycle` and the phase skills; GREEN = the 7-item shape converged across reps (skipped entry phase kept-not-dropped) and standalone now seeds exactly one item.
+- **Prevention:** Before adding any "show/render/display/track" affordance to a skill, run RED with the harness's default tools available; if a capable agent already produces the affordance, the load-bearing value is its SHAPE (a fixed recipe + completion-to-gate binding), not "make it happen" — reserve the efficacy instruction for the context where the default measurably does NOT fire (sub-threshold / standalone).
+- → promoted to rules/common/scoping-skill-value.md
+
 ### 2026-06-19 — Nearly added a second execution-flow fork to pre-implementation-protocol; the orchestration choice already lived in writing-plans
 
 - **Cause-tag:** `chain-handoff-duplication`

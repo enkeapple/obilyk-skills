@@ -17,6 +17,8 @@ Reading code, running `grep`, opening files is expected at this step — that is
 
 Project-agnostic: discover the real commands, paths, and test syntax from the target repo. The signatures and commands shown below are **illustrative** — copy the consumer repo's actual ones.
 
+**Progress:** before emitting the Readiness block, reflect this phase in the task list per [phase-task-visualization](../../../.claude/rules/common/phase-task-visualization.md) — under `sdd-lifecycle` update the existing item; run standalone, seed a single item for this phase.
+
 ## The observable fork
 
 Fill the block for the path that matches what is on disk:

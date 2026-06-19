@@ -45,6 +45,10 @@ Route the input to its entry phase, then gate from there:
 
 The chain **closes** on `spec-drift-audit` — the **verify** phase: after implementation and before the commit, it checks the shipped code against the approved spec. It is the terminal step, never an entry into a build.
 
+## Progress list
+
+Before the first phase, seed a single harness task list with the **canonical 7-phase items** (entry phases ahead of the classified start marked skipped, never dropped), then drive its statuses as you advance. The exact label set, the one-`in_progress` rule, the create-or-update logic, and the binding of `completed` to explicit approval live in [phase-task-visualization](../../../.claude/rules/common/phase-task-visualization.md) — read it. An item turns `completed` only when the user approves that phase's artifact, so the list mirrors the gate below rather than running ahead of it.
+
 ## The gate — the load-bearing rule
 
 After each phase: **present its artifact, then STOP.** Advance to the next phase only on the user's explicit approval of *that* artifact. Never auto-advance — not when confident, not because the previous phase was approved, not because the next phase is "just an elaboration". One approval unlocks exactly one phase.
