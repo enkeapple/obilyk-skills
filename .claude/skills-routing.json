@@ -17,6 +17,21 @@
       ],
       "files": [".claude/skills/resolving-requirements/SKILL.md"]
     },
+    "sdd-lifecycle": {
+      "triggers": [
+        "lifecycle",
+        "run the (full )?workflow",
+        "start the sdd flow",
+        "kick off the pipeline",
+        "full pipeline",
+        "the whole flow",
+        "запусти воркфлоу",
+        "прогон по циклу",
+        "весь цикл",
+        "начать цикл"
+      ],
+      "files": [".claude/skills/sdd-lifecycle/SKILL.md"]
+    },
     "grilling": {
       "triggers": [
         "help me think (this )?through",

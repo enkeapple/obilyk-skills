@@ -26,6 +26,7 @@ No build / dev / test pipeline — this is a skills vault, not an app. Verificat
 
 | Task | Skill |
 | --- | --- |
+| Run the full gated SDD pipeline end-to-end on a change (front door) | `sdd-lifecycle` |
 | Resolve a ticket ID / URL into a faithful requirements bundle before design | `resolving-requirements` |
 | Turn a fuzzy idea into a shared, concrete design | `grilling` |
 | Turn an approved design into a concrete spec | `writing-specs` |
