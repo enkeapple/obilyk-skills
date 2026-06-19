@@ -54,4 +54,4 @@ What is NOT in any of these domains (must not be conflated): <neighbours that sh
 ## Notes
 
 - The `## When` section is the load-bearing part: if it doesn't name the trigger words and paths, the glossary never loads at the moment of confusion.
-- Every cell in the ownership table is a structural claim — it must match the code you read this session. A glossary cell that greps to nothing is a hallucination; `auditing-domain-rules` exists to catch exactly that.
+- Every cell in the ownership table is a structural claim — it must match the code you read this session. A glossary cell that greps to nothing is a hallucination; `auditing-glossary` exists to catch exactly that.

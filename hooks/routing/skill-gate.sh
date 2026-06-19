@@ -23,7 +23,7 @@
 #   2. Rule-gate (ruleGates in skills-routing.json): edit matches a gate by path OR the user
 #      prompt matches its promptTriggers, and the gate's rule file was not Read this turn
 #      (turn-reads.json) -> deny until it is. Covers rule files that carry no skill body
-#      (e.g. domains-glossary.md) and so were never enforced before an edit.
+#      (e.g. glossary.md) and so were never enforced before an edit.
 set -uo pipefail
 
 STATE_DIR="${CLAUDE_PROJECT_DIR:-.}/.claude/state"
@@ -96,7 +96,7 @@ fi
 # editGlobs OR the last user prompt matches one of its promptTriggers. If it fires and the
 # gate's rule file was NOT Read this turn (turn-reads.json, written by detect-bypass.sh), DENY
 # until the rule is loaded into context. This closes the gap where rule files like
-# domains-glossary.md carry no skill body and so were never enforced before any edit.
+# glossary.md carry no skill body and so were never enforced before any edit.
 [[ -f "$TURN_READS_FILE" ]] || echo '[]' > "$TURN_READS_FILE"
 PROMPT=""
 [[ -f "$LAST_PROMPT_FILE" ]] && PROMPT=$(cat "$LAST_PROMPT_FILE" 2>/dev/null || echo "")

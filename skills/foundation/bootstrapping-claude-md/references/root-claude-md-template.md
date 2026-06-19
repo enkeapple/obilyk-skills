@@ -72,7 +72,8 @@ One row per rule folder the repo actually has:
 
 | Layer | Folder |
 |---|---|
-| Cross-cutting process & policy (framework, code style, file org, security, error handling, domain glossary) | [.claude/rules/common/](./.claude/rules/common/) |
+| Domain rules (glossary, framework charter) | [.claude/rules/domains/](./.claude/rules/domains/) |
+| Cross-cutting process & policy (code style, file org, security, error handling) | [.claude/rules/common/](./.claude/rules/common/) |
 | <framework/runtime patterns> | [.claude/rules/<area>/](./.claude/rules/<area>/) |
 | <language idioms> | [.claude/rules/<area>/](./.claude/rules/<area>/) |
 | <data / API layer> | [.claude/rules/<area>/](./.claude/rules/<area>/) |
@@ -81,7 +82,7 @@ One row per rule folder the repo actually has:
 
 Full operating manual (system prompt for HOW to work): [.claude/CLAUDE.md](./.claude/CLAUDE.md). Covers <the manual's actual sections — e.g. the Role/persona, Non-negotiables, operating modes, the <PIPELINE> workflow, the Completeness Checklist, plan persistence & session-handoff, search-before-ask, git boundary, status-block format>.
 
-Process basics (<Implementation Protocol, Suspicion Protocol, evidence-based verification, question discipline>): [.claude/rules/common/framework.md](./.claude/rules/common/framework.md).
+Process basics (<Implementation Protocol, Suspicion Protocol, evidence-based verification, question discipline>): [.claude/rules/domains/framework.md](./.claude/rules/domains/framework.md).
 ```
 
 ## Notes

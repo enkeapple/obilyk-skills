@@ -14,7 +14,7 @@ Verify the two CLAUDE.md files — the root entry point and `.claude/CLAUDE.md` 
 
 **Every concrete thing these files assert — a command, a file/folder path, a stack version, a routed skill/command, a cross-link — is a structural claim, and editing CLAUDE.md is editing code.** Re-verify each against the repo this session; a command not in `package.json`, a pointer to a missing folder, a stack version that disagrees with the lockfile are drift, not detail. Memory is not evidence.
 
-Mirrors `auditing-domain-rules` (same discipline, applied to the foundational rules). Pairs with `bootstrapping-claude-md` (which creates these files).
+Mirrors `auditing-glossary` (same discipline, applied to the foundational rules). Pairs with `bootstrapping-claude-md` (which creates these files).
 
 ## When to use
 
@@ -24,7 +24,7 @@ Mirrors `auditing-domain-rules` (same discipline, applied to the foundational ru
 ## When NOT to use
 
 - The files don't exist yet → `bootstrapping-claude-md`.
-- Auditing `.claude/rules/` content → `auditing-domain-rules`.
+- Auditing `.claude/rules/` content → `auditing-glossary`.
 
 ## Process
 
@@ -60,6 +60,7 @@ Produce a report before editing (see [references/audit-report-example.md](refere
 - "I remember this script exists" — verify against `package.json`, or it is unverified.
 - A non-negotiable/pointer instructing a direct `append`/`Edit` to a skill-owned artifact (e.g. `lessons-learned.md`, a plan file) when the repo HAS the skill that owns it — that bypasses the skill; the manual must route through the `Skill` tool.
 - A non-negotiable/pointer that requires a lesson on "any friction" or every turn, or a `Pending lessons` line with no "none" default — the capture criterion is over-broad and will flood the log; the manual must gate capture on the (A)+(B) bar (a concrete reusable check AND a recurring/non-obvious class).
+- A Lessons-promotion-path that calls the log **append-only** / says to "mark each entry `→ promoted`" instead of **deleting** the contributing entries on promotion and recording the tag in a `## Promoted clusters` ledger — that is the stale model; the manual must describe the transient backlog (delete on promotion, git keeps history).
 
 ## Rationalizations
 
@@ -71,3 +72,4 @@ Produce a report before editing (see [references/audit-report-example.md](refere
 | "The two files say it differently, I'll leave both." | Two copies drift apart — that's how they got here. One source; the other points to it. |
 | "It says append to the lessons log — that's how capture works." | If the repo has a lessons-capture skill, a direct append bypasses it (skips cause-tag/promotion discipline). The manual must route capture through the `Skill` tool; flag the direct-edit wording as drift. |
 | "It captures on any friction — that's just being thorough." | An over-broad bar floods the log with one-offs and trains the agent to ignore it. Capture must be gated on (A) a concrete reusable check AND (B) a recurring/non-obvious class; most turns produce none. Flag the "any friction"/every-turn wording as drift. |
+| "The log is append-only — promoted lessons stay as history." | git is the history. The current model is a transient backlog: promotion deletes the contributing entries and records the tag in `## Promoted clusters`. A manual still saying append-only / "mark → promoted" is stale; flag it. |

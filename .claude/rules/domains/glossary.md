@@ -16,7 +16,7 @@ STOP and read this before acting whenever a prompt or your own draft uses any of
 
 This vault has no application code — its "domain" is the SDD skill framework itself, and several of its core words collide with their ordinary software meaning. The dangerous one is **"test"**: a reader who hears "write a failing test first" (Iron Law) and reaches for a unit-test runner is lost — there is no `pnpm`, no Vitest, no suite here. The RED/GREEN test is a *subagent pressure run*. Getting this wrong turns the whole discipline into theatre.
 
-**Source-of-truth principle:** if code/skills on disk disagree with this file, fix THIS file first, then reconcile the code — never let the two silently diverge. A glossary cell that greps to nothing is a defect (`auditing-domain-rules` catches it).
+**Source-of-truth principle:** if code/skills on disk disagree with this file, fix THIS file first, then reconcile the code — never let the two silently diverge. A glossary cell that greps to nothing is a defect (`auditing-glossary` catches it).
 
 ## Implementation
 
@@ -25,12 +25,12 @@ Ownership table — do not infer from a filename:
 | # | Concept | Lives in | Surface / artifact | What it represents |
 | --- | --- | --- | --- | --- |
 | 1 | **skill** | source `skills/*/<name>/SKILL.md` (+ `references/*.md`); discovered via flat symlink `.claude/skills/<name>` | invoked via the `Skill` tool | a routable capability; `name:` MUST equal the directory name and the symlink name |
-| 2 | **rule** | `.claude/rules/common/*.md` | loaded on demand, never auto-injected | a convention/process doc the agent reads when relevant |
+| 2 | **rule** | `.claude/rules/<area>/*.md` (`common/` = cross-cutting; `domains/` = glossary + framework) | loaded on demand, never auto-injected | a convention/process doc the agent reads when relevant |
 | 3 | **hook** | source `hooks/*/<name>.sh`; surfaced via flat symlink `.claude/hooks/<name>.sh`, wired by `settings.json` | runs on tool events | a gate/logger (`detect-bypass`, `skill-gate`, `token-guard`, `lessons-nudge`, …) |
 | 4 | **routing** | `.claude/skills-routing.json` | read by the hooks | trigger-phrase → skill map; `skill-routing-sync.md` keeps it true |
 | 5 | **the SDD chain** | skills #1 | `resolving-requirements → grilling → writing-specs → writing-plans → pre-implementation-protocol → (inline-driven-development \| subagent-driven-development) → spec-drift-audit` | the APPLY-mode pipeline run on a consumer repo (`resolving-requirements` is the front door: it resolves a ticket-ID/URL input into a faithful requirements bundle; a ready free-text idea enters at `grilling`; `pre-implementation-protocol` is the readiness gate between a written plan and execution; execution runs via `inline-driven-development` (solo, in-session) or `subagent-driven-development` (fresh subagent per task), each writing code test-first via `test-driven-development`; a no-plan single-behavior change enters execution directly at `test-driven-development`) |
 | 6 | **validators** | root [CLAUDE.md](../../../CLAUDE.md) → "Common commands" | frontmatter ≤1024, name regex, reference links resolve, fence balance, word count | structural checks on a skill change — **not** a test suite |
-| 7 | **lessons** | [lessons-learned.md](../../lessons-learned.md) | append-only log | captured bottleneck; 3× same cause-tag → promoted to a rule |
+| 7 | **lessons** | [lessons-learned.md](../../lessons-learned.md) | transient candidate-rules backlog (un-promoted only); git = archive | captured bottleneck; on promotion (3×) its entries are deleted and the tag recorded in `## Promoted clusters` |
 
 Term-disambiguation rules — what each word maps to, and how to resolve the ambiguous ones:
 
@@ -39,7 +39,7 @@ Term-disambiguation rules — what each word maps to, and how to resolve the amb
 - **"the vault" / "this repo"** — always this repo: the skills are the *product*. **"consumer / target repo" / "the app"** — a separate codebase the chain is APPLIED to; it supplies the stack, paths, and commands the agnostic skills never bake in.
 - **"design" → "spec" → "plan"** — ordered, distinct artifacts: `grilling` produces a **design**; `writing-specs` turns it into a **spec**; `writing-plans` turns that into a task-by-task **plan**. Do not use them interchangeably.
 - **"bootstrap" vs "audit"** — `bootstrapping-*` creates a doc from scratch; `auditing-*` checks an existing doc for drift. Two skills per target (CLAUDE.md, domain-rules).
-- **"lesson" vs "rule"** — a **lesson** is one entry in `lessons-learned.md`; it becomes a **rule** only after the same cause-tag recurs 3× and is promoted via `writing-rules`.
+- **"lesson" vs "rule"** — a **lesson** is one entry in `lessons-learned.md`; it becomes a **rule** only after the same cause-tag recurs 3× and is promoted via `writing-rules`, at which point its lesson entries are deleted from the backlog (git keeps them).
 
 What is NOT in this domain (must not be conflated): there is **no** `package.json` / build / dev / unit-test pipeline, **no** `src/`, **no** simulator. Verification here = validators + subagent runs only. `writing-great-skills` is a reference skill (`disable-model-invocation: true`) — it is NOT trigger-routed and has no entry in `skills-routing.json`.
 

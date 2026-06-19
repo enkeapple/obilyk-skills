@@ -1,30 +1,30 @@
 ---
-name: auditing-domain-rules
+name: auditing-glossary
 description: >-
   Use to check whether the foundational rules (the domain glossary and framework
-  charter under .claude/rules/common/) still match the current code, and to
+  charter under .claude/rules/domains/) still match the current code, and to
   correct them when they drift. Triggers on: "audit the rules", "is the glossary
   still accurate", "the framework rule looks stale", "rule drift", "check the
   base rules", "update the glossary".
 ---
 
-# Auditing Domain Rules
+# Auditing Glossary
 
 Verify the foundational rules — the domain glossary and framework charter — against the current code, report the drift, then correct it. **A wrong rule is worse than no rule**: it actively misleads the next session by laundering a stale claim as truth.
 
 **Every concrete thing a rule asserts — a symbol, path, route, type, command, or ownership-table cell — is a structural claim, and editing a rule doc is editing code.** Re-verify each against the code *this session*; a claim that greps to nothing is a hallucination, not a detail. Memory does not count — the file is right by definition, your recollection is not.
 
-Pairs with `bootstrapping-domain-rules`, which creates the foundational docs this skill keeps true.
+Pairs with `bootstrapping-glossary`, which creates the foundational docs this skill keeps true.
 
 ## When to use
 
-- Periodic maintenance of `.claude/rules/common/` (glossary, framework) — especially after refactors, renames, or dependency/command changes.
+- Periodic maintenance of `.claude/rules/domains/` (glossary, framework) — especially after refactors, renames, or dependency/command changes.
 - A rule "looks off" or contradicts something you just saw in the code.
 - Before relying on a foundational rule for a non-trivial task.
 
 ## When NOT to use
 
-- The docs don't exist yet — that is `bootstrapping-domain-rules`.
+- The docs don't exist yet — that is `bootstrapping-glossary`.
 - Auditing shipped code against a spec — that is `spec-drift-audit`.
 
 ## Process

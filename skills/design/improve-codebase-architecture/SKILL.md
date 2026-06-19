@@ -60,7 +60,7 @@ Once the user picks a candidate, run the `grilling` skill to walk the design tre
 
 Side effects happen inline as decisions crystallize — keep the project's domain model current as you go:
 
-- **Naming a deepened module after a concept not in the domain glossary?** Add the term to the glossary. If the project has no glossary yet, create the base set with the `bootstrapping-domain-rules` skill; if it has one, sharpen the entry with `auditing-domain-rules`.
-- **Sharpening a fuzzy term during the conversation?** Update the glossary right there (via `auditing-domain-rules`).
+- **Naming a deepened module after a concept not in the domain glossary?** Add the term to the glossary. If the project has no glossary yet, create the base set with the `bootstrapping-glossary` skill; if it has one, sharpen the entry with `auditing-glossary`.
+- **Sharpening a fuzzy term during the conversation?** Update the glossary right there (via `auditing-glossary`).
 - **User rejects the candidate with a load-bearing reason?** Offer an ADR, framed as: _"Want me to record this as an ADR so future architecture reviews don't re-suggest it?"_ Only offer when the reason would actually be needed by a future explorer to avoid re-suggesting the same thing — skip ephemeral reasons ("not worth it right now") and self-evident ones.
 - **Want to explore alternative interfaces for the deepened module?** Run the `codebase-design` skill and use its design-it-twice parallel sub-agent pattern.

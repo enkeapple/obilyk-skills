@@ -106,12 +106,12 @@ Skills are routed by [skills-routing.json](./skills-routing.json) (trigger keywo
 
 ## Lessons promotion path
 
-A bottleneck/failure → an entry in [lessons-learned.md](./lessons-learned.md) (use `writing-lessons`). Same root cause 3+ times → an actionable rule under `.claude/rules/` (use `writing-rules`). Mark each contributing entry `→ promoted to rules/<file>.md`.
+A qualifying lesson → an entry in [lessons-learned.md](./lessons-learned.md) (use `writing-lessons`). Same root cause 3+ times → an actionable rule under `.claude/rules/` (use `writing-rules`); promotion **deletes** the contributing entries from the backlog and records the tag in `## Promoted clusters` (git keeps the history).
 
 ## Pointers
 
 - Skill-authoring methodology: `writing-great-skills`
-- Process basics (Implementation/Suspicion protocols, evidence-based verification, question discipline): [rules/common/framework.md](./rules/common/framework.md)
-- Domain glossary: [rules/common/domains-glossary.md](./rules/common/domains-glossary.md)
+- Process basics (Implementation/Suspicion protocols, evidence-based verification, question discipline): [rules/domains/framework.md](./rules/domains/framework.md)
+- Domain glossary: [rules/domains/glossary.md](./rules/domains/glossary.md)
 - Domain rules (on demand): [rules/](./rules/) · Lessons: [lessons-learned.md](./lessons-learned.md)
 - Skill registry: [skills-routing.json](./skills-routing.json) · Hooks: [hooks/](./hooks/) · Runtime state (gitignored): `.claude/state/`

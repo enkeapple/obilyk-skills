@@ -25,7 +25,7 @@ Project-agnostic: match the repo's existing rule conventions (frontmatter keys, 
 
 - A one-off preference for a single task — just say it in the prompt.
 - Something mechanically enforceable by a linter/formatter/types — automate it; rules are for judgment a tool can't make.
-- No foundational rules yet (domain glossary / framework charter) — create those with `bootstrapping-domain-rules` first; this skill is for the ordinary rules that hang off them.
+- No foundational rules yet (domain glossary / framework charter) — create those with `bootstrapping-glossary` first; this skill is for the ordinary rules that hang off them.
 
 ## Rule anatomy (the recipe)
 

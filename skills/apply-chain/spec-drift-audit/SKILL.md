@@ -60,16 +60,17 @@ Produce a report with these sections, in order (see [references/report-example.m
 3. **Contract drift** — per contract: spec shape → code shape → classification + severity.
 4. **Out-of-scope check** — per out-of-scope bullet: touched? where? classification.
 5. **Summary** — counts per classification.
+6. **Recommended disposition** — per finding, the audit's recommended action (Fix code / Amend spec / Accept) with a one-line reason.
 
 ## Required decision after the report
 
-End with choices for the user, not edits:
+End with **one** decision, not edits and not a question per finding. Having recorded a recommended disposition per finding (Report item 6), present archetype **C-drift** per [interactive-gates](../../../.claude/rules/common/interactive-gates.md):
 
-- Each silent expansion → "remove it, or document it in the spec — which?"
-- Each missed scope → "implement now, or move to a follow-up spec — which?"
-- Each external-interface schema drift → "revert to spec, or bump the spec — which?"
+- `Apply recommended` → apply the per-finding recommended dispositions.
+- `Adjust per-finding` → walk findings one by one.
+- `Stop` → take no action now.
 
-The user picks. The audit does not edit code.
+The user picks. The audit itself still does not edit code — applying a disposition is the follow-up task the user authorizes here.
 
 ## Red Flags — if you catch yourself here, STOP
 

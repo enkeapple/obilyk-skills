@@ -30,9 +30,15 @@ A concrete reference for the report format and the level of detail expected. Pla
 - 2 external-interface schema drifts (nextCursor→cursor, hasMore)
 - Verification: FAILING (typecheck)
 
-## Decisions for the user
-- Load more button: implement now, or move to a follow-up spec?
-- sort param + sortItems(): remove, or document in the spec and split into its own PR?
-- Avatar in Row: remove, or document in the spec?
-- nextCursor→cursor + hasMore: revert to the spec contract, or bump the spec?
+## Recommended disposition
+- Load more button (missed scope): Fix code — implement per spec.
+- sort param + sortItems() (silent expansion, out of scope): Fix code — remove.
+- Avatar in Row (silent expansion): Fix code — remove.
+- nextCursor→cursor + hasMore (schema drift, external): Fix code — revert to spec contract.
+
+## Decision
+Presented as one batched picker (interactive-gates archetype C-drift):
+- Apply recommended → apply all four dispositions above.
+- Adjust per-finding → walk the four findings one by one.
+- Stop → take no action now.
 ```

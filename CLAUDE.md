@@ -16,7 +16,7 @@ Authoring or changing a skill runs through **RED → GREEN → REFACTOR → VALI
 
 ## What this project is
 
-Agnostic skills authored under `skills/` (grouped into category folders) and discovered by Claude Code through flat symlinks in `.claude/skills/`, plus the harness around them: hooks authored under `hooks/` and surfaced via flat symlinks in `.claude/hooks/` (gates + logging), `.claude/rules/common/` (framework + domain glossary), `.claude/skills-routing.json`, `.claude/state/`. No application code, no `package.json`, no build.
+Agnostic skills authored under `skills/` (grouped into category folders) and discovered by Claude Code through flat symlinks in `.claude/skills/`, plus the harness around them: hooks authored under `hooks/` and surfaced via flat symlinks in `.claude/hooks/` (gates + logging), `.claude/rules/domains/` (framework + domain glossary) and `.claude/rules/common/` (cross-cutting rules), `.claude/skills-routing.json`, `.claude/state/`. No application code, no `package.json`, no build.
 
 ## Common commands
 
@@ -37,7 +37,7 @@ No build / dev / test pipeline — this is a skills vault, not an app. Verificat
 | Execute an approved plan via a fresh subagent per task (independent tasks) | `subagent-driven-development` |
 | Check shipped code against an approved spec | `spec-drift-audit` |
 | Create / audit the two CLAUDE.md files | `bootstrapping-claude-md` / `auditing-claude-md` |
-| Create / audit the base domain rules (glossary, framework) | `bootstrapping-domain-rules` / `auditing-domain-rules` |
+| Create / audit the base domain rules (glossary, framework) | `bootstrapping-glossary` / `auditing-glossary` |
 | Capture a lesson; promote a recurring one to a rule | `writing-lessons` → `writing-rules` |
 | Author or change any skill (test-first) | `writing-great-skills` |
 | Approaching the context limit / ending with unfinished work | `handoff` |
@@ -48,12 +48,13 @@ When a user prompt contains a registered trigger and the corresponding skill is 
 
 | Layer | Folder |
 | --- | --- |
-| Cross-cutting process & policy (framework, domain glossary) | [.claude/rules/common/](./.claude/rules/common/) |
+| Domain rules (glossary, framework charter) | [.claude/rules/domains/](./.claude/rules/domains/) |
+| Cross-cutting process & policy (code style, routing-sync, file org, …) | [.claude/rules/common/](./.claude/rules/common/) |
 
-Rules load on demand, not auto-injected. Bootstrap them in a consumer repo with `bootstrapping-domain-rules`; keep them true with `auditing-domain-rules`.
+Rules load on demand, not auto-injected. Bootstrap them in a consumer repo with `bootstrapping-glossary`; keep them true with `auditing-glossary`.
 
 ## Engineering system
 
 Full operating manual (system prompt for HOW to work): [.claude/CLAUDE.md](./.claude/CLAUDE.md). Covers the **Role** (Principal AI/Workflow Engineer), the **Non-negotiables** (Iron Law, agnostic-by-default, read-before-assert, validate-before-done, capture-bottlenecks), the **operating modes** (AUTHOR / AUDIT / APPLY), the **RED → GREEN → REFACTOR → VALIDATE** authoring workflow, the **Completeness Checklist** for a skill change, the **session-handoff** flow, search-before-ask, the git boundary, and the status-block format.
 
-Process basics (Implementation Protocol, Suspicion Protocol, evidence-based verification, question discipline): [.claude/rules/common/framework.md](./.claude/rules/common/framework.md). Domain glossary: [.claude/rules/common/domains-glossary.md](./.claude/rules/common/domains-glossary.md).
+Process basics (Implementation Protocol, Suspicion Protocol, evidence-based verification, question discipline): [.claude/rules/domains/framework.md](./.claude/rules/domains/framework.md). Domain glossary: [.claude/rules/domains/glossary.md](./.claude/rules/domains/glossary.md).

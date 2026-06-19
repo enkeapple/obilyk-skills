@@ -229,7 +229,7 @@
       ],
       "files": [".claude/skills/auditing-claude-md/SKILL.md"]
     },
-    "bootstrapping-domain-rules": {
+    "bootstrapping-glossary": {
       "triggers": [
         "set up the base rules",
         "create (a )?domain glossary",
@@ -241,9 +241,9 @@
         "создать глоссари",
         "базовые правил"
       ],
-      "files": [".claude/skills/bootstrapping-domain-rules/SKILL.md"]
+      "files": [".claude/skills/bootstrapping-glossary/SKILL.md"]
     },
-    "auditing-domain-rules": {
+    "auditing-glossary": {
       "triggers": [
         "audit the rules",
         "is the glossary (still )?accurate",
@@ -256,7 +256,7 @@
         "обновить глоссари",
         "правила устарел"
       ],
-      "files": [".claude/skills/auditing-domain-rules/SKILL.md"]
+      "files": [".claude/skills/auditing-glossary/SKILL.md"]
     },
     "handoff": {
       "triggers": [

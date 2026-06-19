@@ -72,6 +72,7 @@ After the block, hand off.
 
 - **Upstream:** the plan comes from `writing-plans` (which produces it from a `writing-specs` spec).
 - **Downstream — REQUIRED SUB-SKILL:** execute via the chosen flow — `inline-driven-development` (solo, in-session) or `subagent-driven-development` (fresh subagent per task); a no-plan single-behavior change goes straight to `test-driven-development`. Each writes code test-first, one task at a time, RED → GREEN → REFACTOR per behavior. This skill produces the readiness block; the execution flow writes the code.
+- **Gate presentation:** present the readiness verdict as archetype **C-readiness** per [interactive-gates](../../../.claude/rules/common/interactive-gates.md) — `Proceed` (begin implementation) vs `Not ready` (list gaps, return to the plan) — before handing to the execution flow.
 
 ## Slot checklist
 

@@ -12,7 +12,7 @@ Authoring or editing any skill — `.claude/skills/<name>/SKILL.md` or its `refe
 
 ## Canonical Source — Do Not Duplicate
 
-The **"agnostic by default" policy** — *that* a skill must never hard-depend on one project's stack, paths, or commands, and that project leakage is a defect — lives in [.claude/CLAUDE.md](../../CLAUDE.md) → "Non-negotiables" #2 and is enforced as a check in [framework.md](./framework.md) → "Suspicion Protocol" #2 and the Completeness Checklist (row 5). Those are the single source of truth for the *what* and *why*. This rule only adds the *how*: the concrete moves that make a skill agnostic and the grep checks that catch a leak. When the two overlap, CLAUDE.md wins.
+The **"agnostic by default" policy** — *that* a skill must never hard-depend on one project's stack, paths, or commands, and that project leakage is a defect — lives in [.claude/CLAUDE.md](../../CLAUDE.md) → "Non-negotiables" #2 and is enforced as a check in [framework.md](../domains/framework.md) → "Suspicion Protocol" #2 and the Completeness Checklist (row 5). Those are the single source of truth for the *what* and *why*. This rule only adds the *how*: the concrete moves that make a skill agnostic and the grep checks that catch a leak. When the two overlap, CLAUDE.md wins.
 
 ## Implementation
 

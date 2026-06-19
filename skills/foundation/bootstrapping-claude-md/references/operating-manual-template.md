@@ -64,7 +64,7 @@ Not done until each row is `[x]` or `[N/A]`-with-reason, evidence pasted:
 
 ## Plan persistence
 
-The plan-file threshold (`<shared contract / data shape / route / >2 features>`) is defined in [rules/common/framework.md](./rules/common/framework.md). Temp-file creation is owned by the `handoff` skill — never hand-write `/tmp`. Invoke it when the threshold is met (persist the plan) or when a turn ends incomplete / context nears the limit (write the handoff doc). The status block's `Next:` points at that doc. <!-- name the handoff skill the repo actually has -->
+The plan-file threshold (`<shared contract / data shape / route / >2 features>`) is defined in [rules/domains/framework.md](./rules/domains/framework.md). Temp-file creation is owned by the `handoff` skill — never hand-write `/tmp`. Invoke it when the threshold is met (persist the plan) or when a turn ends incomplete / context nears the limit (write the handoff doc). The status block's `Next:` points at that doc. <!-- name the handoff skill the repo actually has -->
 
 ## Search-before-ask
 
@@ -118,11 +118,11 @@ Skills carry domain rules, routed by [skills-routing.json](./skills-routing.json
 
 ## Lessons promotion path
 
-A non-obvious failure → a captured lesson; same root cause hits 3+ → an actionable rule under `.claude/rules/` (see `writing-rules`); mark each contributing entry `→ promoted to rules/<file>.md`. If the repo has a lessons-capture skill (e.g. `writing-lessons`), it owns these mechanics — invoke it (the `Skill` tool) to capture and to run the promotion check; do not hand-edit [lessons-learned.md](./lessons-learned.md), which skips that discipline.
+A non-obvious failure → a captured lesson in the backlog; same root cause hits 3+ → an actionable rule under `.claude/rules/` (see `writing-rules`). On promotion the contributing entries are **deleted** from the log and the tag recorded in a `## Promoted clusters` ledger — git keeps the history (`git log -S '<cause-tag>'`), so the log stays a transient backlog of un-promoted candidates, not an append-only archive. If the repo has a lessons-capture skill (e.g. `writing-lessons`), it owns these mechanics — invoke it (the `Skill` tool) to capture and to promote; do not hand-edit [lessons-learned.md](./lessons-learned.md), which skips that discipline.
 
 ## Pointers
-- Process basics: [rules/common/framework.md](./rules/common/framework.md)
-- Domain glossary: [rules/common/<glossary>.md](./rules/common/)
+- Process basics: [rules/domains/framework.md](./rules/domains/framework.md)
+- Domain glossary: [rules/domains/<glossary>.md](./rules/domains/)
 - Domain rules (on demand): [rules/](./rules/) · Lessons: [lessons-learned.md](./lessons-learned.md)
 - Skill registry: [skills-routing.json](./skills-routing.json) · Hooks: [hooks/](./hooks/) · Runtime state (gitignored): `.claude/state/`
 ````

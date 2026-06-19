@@ -51,7 +51,7 @@ Before the first phase, seed a single harness task list with the **canonical 7-p
 
 ## The gate — the load-bearing rule
 
-After each phase: **present its artifact, then STOP.** Advance to the next phase only on the user's explicit approval of *that* artifact. Never auto-advance — not when confident, not because the previous phase was approved, not because the next phase is "just an elaboration". One approval unlocks exactly one phase.
+After each phase: **present its artifact, then STOP.** Advance to the next phase only on the user's explicit approval of *that* artifact. Never auto-advance — not when confident, not because the previous phase was approved, not because the next phase is "just an elaboration". One approval unlocks exactly one phase. Present that approval choice as archetype A per [interactive-gates](../../../.claude/rules/common/interactive-gates.md).
 
 If a later phase reveals an earlier artifact is wrong, **loop back**: return to that phase, fix it, and re-advance with fresh approval — do not patch forward.
 
@@ -60,6 +60,10 @@ If a later phase reveals an earlier artifact is wrong, **loop back**: return to 
 - **`skip <phase>`** — its artifact already exists on disk; verify it is current, then start at the next phase.
 - **`from <phase>`** — begin mid-chain (e.g. a plan is ready → `from pre-implementation-protocol`).
 - **`redo <phase>`** — a later phase exposed a defect upstream; return, fix, re-advance from there.
+
+## Execution-mode fork
+
+After the plan is approved and before execution, present the inline-vs-subagent choice as archetype **B** per [interactive-gates](../../../.claude/rules/common/interactive-gates.md): `inline-driven-development` (coupled tasks / small plan) vs `subagent-driven-development` (independent tasks). This is a presentation point only — the chosen flow owns the execution.
 
 ## Rationalizations
 

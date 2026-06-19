@@ -17,7 +17,7 @@ Set up the two-file CLAUDE.md system every other instruction hangs off:
 
 **Core principle: interview the human for the initial facts, then ground everything else in the actual repo — never invent.** A CLAUDE.md that guesses the stack, the commands, or the test setup makes the agent work *worse*. Ask what only the human knows; discover the rest by reading.
 
-This mirrors `bootstrapping-domain-rules` (which builds `.claude/rules/`); the CLAUDE.md files point at those rules. For the intake interview style (one question at a time, with a recommended answer), borrow from `grilling`. For the session-handoff mechanics, wire to the `handoff` skill.
+This mirrors `bootstrapping-glossary` (which builds `.claude/rules/`); the CLAUDE.md files point at those rules. For the intake interview style (one question at a time, with a recommended answer), borrow from `grilling`. For the session-handoff mechanics, wire to the `handoff` skill.
 
 ## When to use
 
@@ -27,7 +27,7 @@ This mirrors `bootstrapping-domain-rules` (which builds `.claude/rules/`); the C
 ## When NOT to use
 
 - The files exist and just need correcting → `auditing-claude-md`.
-- A single convention or domain rule → `writing-rules` / `bootstrapping-domain-rules`.
+- A single convention or domain rule → `writing-rules` / `bootstrapping-glossary`.
 
 ## Step 1 — Intake interview (ask, don't invent)
 

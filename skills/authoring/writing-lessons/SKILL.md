@@ -12,7 +12,7 @@ description: >-
 
 Capture a lesson so a future session does not repeat it, and promote a lesson to a durable rule once it recurs.
 
-The log lives at `.claude/lessons-learned.md`. It is **append-only**: new entries go at the top of `## Entries`, nothing is rewritten or deleted. A `## Promoted clusters` ledger sits at the bottom. The promotion path turns a recurring lesson into an actionable rule under `.claude/rules/`.
+The log lives at `.claude/lessons-learned.md`. It is a **transient backlog** of un-promoted candidate rules: new entries go at the top of `## Entries`; when a cause-tag is promoted to (or already covered by) a rule, its entry bodies are **deleted** and the tag is recorded in the `## Promoted clusters` ledger at the bottom — git keeps the history (`git log -S '<cause-tag>'`). Deletion happens only via this skill, inside a confirmed promotion. The promotion path turns a recurring lesson into an actionable rule under `.claude/rules/`.
 
 Project-agnostic: paths and rule topics adapt to the repo. A filled example is in [references/lessons-template.md](references/lessons-template.md).
 
@@ -45,10 +45,18 @@ Most turns produce no lesson — that is normal, not a skipped step. Do not capt
 
 Lessons must not nag every session. Two levels keep it quiet:
 
-- **`.claude/lessons-learned.md` is an on-demand archive.** It is NOT loaded into every session. Read it only at capture time, or when you suspect you are repeating a past mistake. It can grow without polluting context.
+- **`.claude/lessons-learned.md` is an on-demand backlog.** It is NOT loaded into every session. Read it only at capture time, or when you suspect you are repeating a past mistake. It stays small because promoted tags are deleted from it (git keeps the history).
 - **`.claude/rules/` is the small always-on distillate.** Only a cluster that crossed the threshold gets promoted here. Promotion is the filter that keeps always-on guidance short — most lessons stay in the archive and never load by default.
 
 So "I've hit this before" comes from the few promoted **rules**, not from re-reading the whole log. This skill activates at a capture or recurrence moment — it is not a per-task gate.
+
+## Before capturing: dedup against rules and the ledger
+
+The log holds only un-promoted candidates. Before appending, derive the cause-tag and check the `## Promoted clusters` ledger AND the rules under `.claude/rules/` for that class:
+
+- **Covered, and the rule handles this instance** → SKIP — do not add an entry; the rule already carries the guidance.
+- **Tag is in the ledger but the rule is too narrow for this variant** → SCALE the rule now via `writing-rules`; do NOT add a backlog entry (a promoted tag never re-enters `## Entries`).
+- **Not covered** → add/increment an entry in `## Entries` (below).
 
 ## Capture an entry
 
@@ -65,7 +73,7 @@ grep -oE '^[[:space:]]*-[[:space:]]+\*\*Cause-tag[^[:alnum:]]+[a-z0-9-]+' .claud
   | sed -E 's/.*Cause-tag[^[:alnum:]]+//' | sort | uniq -c | sort -rn
 ```
 
-Any tag with **count ≥ 3** that is NOT in the `## Promoted clusters` ledger is **promotion debt** — promote it now, or add a ledger line stating why it does not generalize. (Threshold 3 is the rule of three; lower it to 2 if you want earlier promotion. If a Stop hook automates this tally, it is a backstop — still run the scan yourself.)
+Any tag with **count ≥ 3** that is NOT in the `## Promoted clusters` ledger is **promotion debt** — promote it now, or add a ledger line stating why it does not generalize. Under the backlog model promoted tags are deleted from `## Entries`, so any tag still at count ≥ 3 here is always live debt. (Threshold 3 is the rule of three; lower it to 2 if you want earlier promotion. If a Stop hook automates this tally, it is a backstop — still run the scan yourself.)
 
 ## Promotion path: lesson → rule
 
@@ -76,9 +84,9 @@ If the reviewer says **Promote**, apply its output:
 1. **Author the rule with the `writing-rules` skill**, feeding it the reviewer's drafted rule text and target path as the starting point. It owns the rule's shape — `paths` scoping, `## When`, the ✅/❌ example, the Review Checklist.
 
    > REQUIRED SUB-SKILL: Use `writing-rules` to write the promoted rule file at `.claude/rules/<...>.md`. Do not hand-author it here — this skill owns the *promotion decision and bookkeeping*; `writing-rules` owns the *rule's shape*.
-2. Append a back-reference to each contributing entry: `→ promoted to rules/<...>.md`.
+2. **Delete the contributing entry bodies** from `## Entries` (git preserves them via `git log -S`). Deletion is allowed ONLY here, inside this confirmed-promotion change — never as a standalone log tidy.
 3. Add a ledger line under `## Promoted clusters`: `- <cause-tag> → rules/<...>.md (YYYY-MM-DD)`. This is what the scan reads to know the cluster is resolved.
-4. Commit the new rule and the back-references + ledger line together.
+4. Commit the new/extended rule, the entry deletions, and the ledger line together (one commit).
 
 The rule file is the durable artifact. The ledger only points to it — never leave the actual rule sitting inside the lessons log. If the reviewer says **Keep in lessons**, add a ledger line recording why, so the scan stops flagging it as debt.
 
@@ -91,7 +99,7 @@ A lesson reads like an instruction (a check someone can run), not a journal entr
 ## Red Flags — STOP
 
 - Writing an entry with no **Cause-tag**, or inventing a new tag for a cause that already has one.
-- Rewriting/overwriting the log instead of appending.
+- Deleting an entry body OUTSIDE a confirmed-promotion change (the only standalone deletion allowed was the one-time backlog cleanup).
 - An entry that reads like a changelog ("today I fixed…") with no Prevention.
 - A cause-tag at count ≥ 3 with nothing promoted and no ledger line.
 - "Promote it" leaving the rule inside the lessons file instead of `.claude/rules/`.
@@ -105,4 +113,4 @@ After capturing or promoting:
 git diff --stat -- .claude/lessons-learned.md .claude/rules/
 ```
 
-The diff shows the entry was appended (and, for a promotion, the new rule file + back-references + ledger line all changed). Then re-run the promotion-debt tally (above) — it must show no untracked cause-tag at count ≥ 3.
+The diff shows a capture as one added entry; a promotion as the new/extended rule + the deleted entry bodies + the ledger line, all in one commit. Then re-run the promotion-debt tally (above) — it must show no untracked cause-tag at count ≥ 3.

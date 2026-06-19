@@ -1,5 +1,5 @@
 ---
-name: bootstrapping-domain-rules
+name: bootstrapping-glossary
 description: >-
   Use when a project has no foundational rules yet and you need to create the
   base set the agent works from — a domain glossary (what the app's concepts
@@ -8,9 +8,9 @@ description: >-
   framework rules", "bootstrap .claude/rules", "how should Claude work here".
 ---
 
-# Bootstrapping Domain Rules
+# Bootstrapping Glossary
 
-Create the two foundational, always-on rules every other rule hangs off, by default under `.claude/rules/common/`:
+Create the two foundational, always-on rules every other rule hangs off, by default under `.claude/rules/domains/`:
 
 - **Domain glossary** — what the app's concepts *mean*, who owns what, and how to disambiguate overlapping terms. The source of truth for domain vocabulary.
 - **Framework charter** — how to approach work in this repo regardless of which module you touch: the implementation protocol, the suspicion/verification discipline, the question discipline.
@@ -21,13 +21,13 @@ These are foundational, always-on rules. This skill owns the two specific docs a
 
 ## When to use
 
-- A new or unruled project: there is no `.claude/rules/common/` glossary or framework yet.
+- A new or unruled project: there is no `.claude/rules/domains/` glossary or framework yet.
 - Recurring confusion about what a term means or who owns a concept → the project needs a glossary.
 - Repeated process failures (hallucinated symbols, skipped verification, guessed structure) → the project needs a framework charter.
 
 ## When NOT to use
 
-- The docs already exist and just need correcting — that is `auditing-domain-rules`.
+- The docs already exist and just need correcting — that is `auditing-glossary`.
 - A single narrow convention — that is one ordinary, area-scoped rule, not a foundational doc.
 
 ## Discover first (non-negotiable)

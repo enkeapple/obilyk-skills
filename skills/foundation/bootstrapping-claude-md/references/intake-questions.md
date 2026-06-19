@@ -16,7 +16,7 @@ Ask these before writing either CLAUDE.md. One question at a time, lead with a r
 - **Stack & versions** — read `package.json`/lockfile/Makefile/CI; confirm the pins you found.
 - **Real commands** — the actual run/build/typecheck/lint/test scripts. Quote them; don't paraphrase.
 - **Folder layout & where rules live** — `.claude/rules/` structure, skills, slash commands.
-- **Domains** — overlapping concepts that need a glossary (hand off to `bootstrapping-domain-rules`).
+- **Domains** — overlapping concepts that need a glossary (hand off to `bootstrapping-glossary`).
 
 ## Turn answers into sections
 
