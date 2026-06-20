@@ -35,7 +35,7 @@ State the mode on a non-trivial task.
 
 ## Workflow: RED → GREEN → REFACTOR → VALIDATE (AUTHOR)
 
-1. **RED** — classify the baseline failure (discipline vs shaping — see `writing-great-skills` "Match the Form to the Failure"). Run subagent pressure scenarios WITHOUT the skill; record verbatim failures. No failure observed → nothing to fix; stop.
+1. **RED** — classify the baseline failure (discipline vs shaping — see `writing-skills` "Match the Form to the Failure"). Run subagent pressure scenarios WITHOUT the skill; record verbatim failures. No failure observed → nothing to fix; stop.
 2. **GREEN** — write the minimal skill addressing those exact failures, in the form the failure calls for. Re-run the scenarios WITH the skill; confirm compliance.
 3. **REFACTOR** — close new loopholes; build the rationalization table / red flags for discipline skills.
 4. **VALIDATE** — run the validators (root CLAUDE.md → Common commands). Fix until clean.
@@ -63,7 +63,7 @@ For multi-phase authoring/audit work, persist the plan and — when a turn ends 
 
 ## Search-before-ask
 
-Asking is the LAST step. Search order before a clarifying question: the skill in question → `writing-great-skills` → `.claude/rules/` → [lessons-learned.md](./lessons-learned.md) → `git log` → the skill files. Pre-flight: where did I look, what did each say, why not derivable, what's my fallback. Escalate only for a genuine scope/product decision or a git-boundary action — never an A/B/C/D menu on a derivable choice.
+Asking is the LAST step. Search order before a clarifying question: the skill in question → `writing-skills` → `.claude/rules/` → [lessons-learned.md](./lessons-learned.md) → `git log` → the skill files. Pre-flight: where did I look, what did each say, why not derivable, what's my fallback. Escalate only for a genuine scope/product decision or a git-boundary action — never an A/B/C/D menu on a derivable choice.
 
 ## Git boundary
 
@@ -110,7 +110,7 @@ A qualifying lesson → an entry in [lessons-learned.md](./lessons-learned.md) (
 
 ## Pointers
 
-- Skill-authoring methodology: `writing-great-skills`
+- Skill-authoring methodology: `writing-skills`
 - Process basics (Implementation/Suspicion protocols, evidence-based verification, question discipline): [rules/domains/framework.md](./rules/domains/framework.md)
 - Domain glossary: [rules/domains/glossary.md](./rules/domains/glossary.md)
 - Domain rules (on demand): [rules/](./rules/) · Lessons: [lessons-learned.md](./lessons-learned.md)

@@ -35,13 +35,13 @@ Ownership table — do not infer from a filename:
 Term-disambiguation rules — what each word maps to, and how to resolve the ambiguous ones:
 
 - **"test"** — resolve by mode. In **AUTHOR/AUDIT** (working on the vault's own skills) → a **subagent pressure scenario**: RED = run the scenario WITHOUT the skill and watch it fail; GREEN = re-run WITH the skill and confirm compliance. In **APPLY** (the `test-driven-development` skill on a consumer repo) → a real automated unit test on that repo's stack. Never a unit test *of the vault* — there is none.
-- **"RED / GREEN / REFACTOR"** — in **AUTHOR** it is the skill-authoring loop (`writing-great-skills`: RED→GREEN→REFACTOR→VALIDATE, object = a `SKILL.md`). In **APPLY** it is the `test-driven-development` skill's code loop (object = implementation code). Same words, different workpiece — always name which.
+- **"RED / GREEN / REFACTOR"** — in **AUTHOR** it is the skill-authoring loop (`writing-skills`: RED→GREEN→REFACTOR→VALIDATE, object = a `SKILL.md`). In **APPLY** it is the `test-driven-development` skill's code loop (object = implementation code). Same words, different workpiece — always name which.
 - **"the vault" / "this repo"** — always this repo: the skills are the *product*. **"consumer / target repo" / "the app"** — a separate codebase the chain is APPLIED to; it supplies the stack, paths, and commands the agnostic skills never bake in.
 - **"design" → "spec" → "plan"** — ordered, distinct artifacts: `grilling` produces a **design**; `writing-specs` turns it into a **spec**; `writing-plans` turns that into a task-by-task **plan**. Do not use them interchangeably.
 - **"bootstrap" vs "audit"** — `bootstrapping-*` creates a doc from scratch; `auditing-*` checks an existing doc for drift. Two skills per target (CLAUDE.md, domain-rules).
 - **"lesson" vs "rule"** — a **lesson** is one entry in `lessons-learned.md`; it becomes a **rule** only after the same cause-tag recurs 3× and is promoted via `writing-rules`, at which point its lesson entries are deleted from the backlog (git keeps them).
 
-What is NOT in this domain (must not be conflated): there is **no** `package.json` / build / dev / unit-test pipeline, **no** `src/`, **no** simulator. Verification here = validators + subagent runs only. `writing-great-skills` is a reference skill (`disable-model-invocation: true`) — it is NOT trigger-routed and has no entry in `skills-routing.json`. The general rule: `disable-model-invocation: true` ⇒ no `skills-routing.json` entry, and it has two sub-kinds — **reference skills** (methodology, no triggers) and **alias skills** (see Edge Cases below).
+What is NOT in this domain (must not be conflated): there is **no** `package.json` / build / dev / unit-test pipeline, **no** `src/`, **no** simulator. Verification here = validators + subagent runs only. `writing-skills` is a reference skill (`disable-model-invocation: true`) — it is NOT trigger-routed and has no entry in `skills-routing.json`. The general rule: `disable-model-invocation: true` ⇒ no `skills-routing.json` entry, and it has two sub-kinds — **reference skills** (methodology, no triggers) and **alias skills** (see Edge Cases below).
 
 ## Edge Cases
 
@@ -56,4 +56,4 @@ What is NOT in this domain (must not be conflated): there is **no** `package.jso
 - Used **design / spec / plan** as distinct artifacts, not synonyms.
 - Did not attribute any `pnpm` / build / unit-test command to the vault itself.
 - Every skill/rule/hook/path cited matches disk (key === dir === `SKILL.md name:`).
-- Did not add a glossary row for a `_`-prefixed runtime path or for `writing-great-skills`'s triggers.
+- Did not add a glossary row for a `_`-prefixed runtime path or for `writing-skills`'s triggers.

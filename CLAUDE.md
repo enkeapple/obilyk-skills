@@ -4,7 +4,7 @@ A **vault for developing an agnostic Spec-Driven-Development (SDD) skill framewo
 
 ## How to work here (read first)
 
-Authoring or changing a skill runs through **RED → GREEN → REFACTOR → VALIDATE** (the `writing-great-skills` TDD methodology). Applying the framework to a consumer repo runs the chain `grilling → writing-specs → writing-plans → pre-implementation-protocol → inline-driven-development | subagent-driven-development → spec-drift-audit` (each task test-first via `test-driven-development`). Full operating manual: [.claude/CLAUDE.md](./.claude/CLAUDE.md).
+Authoring or changing a skill runs through **RED → GREEN → REFACTOR → VALIDATE** (the `writing-skills` TDD methodology). Applying the framework to a consumer repo runs the chain `grilling → writing-specs → writing-plans → pre-implementation-protocol → inline-driven-development | subagent-driven-development → spec-drift-audit` (each task test-first via `test-driven-development`). Full operating manual: [.claude/CLAUDE.md](./.claude/CLAUDE.md).
 
 **Hard rules:**
 
@@ -39,7 +39,7 @@ No build / dev / test pipeline — this is a skills vault, not an app. Verificat
 | Create / audit the two CLAUDE.md files | `bootstrapping-claude-md` / `auditing-claude-md` |
 | Create / audit the base domain rules (glossary, framework) | `bootstrapping-glossary` / `auditing-glossary` |
 | Capture a lesson; promote a recurring one to a rule | `writing-lessons` → `writing-rules` |
-| Author or change any skill (test-first) | `writing-great-skills` |
+| Author or change any skill (test-first) | `writing-skills` |
 | Design a deep module / find a seam (shared deep-module vocabulary) | `codebase-design` |
 | Architecture review — surface deepening opportunities (user-invoked, not trigger-routed) | `improve-codebase-architecture` |
 | Approaching the context limit / ending with unfinished work | `handoff` |

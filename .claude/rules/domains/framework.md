@@ -41,4 +41,4 @@ A change is not done until you run and SHOW the vault's real checks (no "should 
 
 ## Question Discipline
 
-Asking is the LAST step. Before a question, search in order: the skill in question → `writing-great-skills` → `.claude/rules/` → [lessons-learned.md](../../lessons-learned.md) → `git log` → the skill files. If the answer is derivable, decide, justify in one line (smallest diff, closest existing pattern), and proceed. Reserve questions for a genuine product/scope decision or a git-boundary action — never an A/B/C/D menu on a derivable choice.
+Asking is the LAST step. Before a question, search in order: the skill in question → `writing-skills` → `.claude/rules/` → [lessons-learned.md](../../lessons-learned.md) → `git log` → the skill files. If the answer is derivable, decide, justify in one line (smallest diff, closest existing pattern), and proceed. Reserve questions for a genuine product/scope decision or a git-boundary action — never an A/B/C/D menu on a derivable choice.

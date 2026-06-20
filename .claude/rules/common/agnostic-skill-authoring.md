@@ -38,7 +38,7 @@ Run the project's test command and confirm the suite is green before you refacto
 - **When NOT to apply:** editing a *rule*, *hook*, `skills-routing.json`, or either `CLAUDE.md` — those are vault-internal harness files and legitimately name this repo's real paths and tools. They are not shareable skills. That is why this rule is scoped to `.claude/skills/**` only.
 - A **marked-illustrative** example that names a stack is **not** a leak — it is the sanctioned escape hatch from move 3. Don't flag it.
 - A skill's **own structural references** — a relative link to its `references/foo.md`, the `Skill` tool, the names of neighbouring skills it hands off to — are part of the skill system, not project coupling. Leave them.
-- A `disable-model-invocation` reference skill (e.g. `writing-great-skills`) is held to the same agnostic bar as any other skill — being user-invoked does not license stack leaks.
+- A `disable-model-invocation` reference skill (e.g. `writing-skills`) is held to the same agnostic bar as any other skill — being user-invoked does not license stack leaks.
 
 ## Review Checklist
 

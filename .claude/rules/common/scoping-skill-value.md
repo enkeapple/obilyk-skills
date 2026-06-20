@@ -16,7 +16,7 @@ paths: ['skills/**/SKILL.md']
 
 You are authoring a new skill, or adding a phase / section to an existing one, whose remit is one of: a **principle** ("think about deep modules", "consider edge cases"), a **"review / verify / validate" pass**, or a **discipline gate** ("don't dive into code before X"). This is the moment to check the value is real before writing — it is the recurring `skill-value-vs-noop` failure (3 instances in [lessons-learned.md](../../lessons-learned.md)).
 
-The RED→GREEN methodology this rule applies is owned by `writing-great-skills` (the inversion test and the No-op failure mode); this rule is the always-on distillate of the *scoping decision*, not a substitute for that skill.
+The RED→GREEN methodology this rule applies is owned by `writing-skills` (the inversion test and the No-op failure mode); this rule is the always-on distillate of the *scoping decision*, not a substitute for that skill.
 
 ## Implementation
 
@@ -53,7 +53,7 @@ RED it with a **clean misread** — an artifact internally consistent but wrong 
 
 - **When NOT to apply:** a pure-reference skill (API/command docs) — its value is retrieval, not behaviour change, so the no-op test does not apply. Test retrieval instead.
 - A skill that bundles principle-prose *plus* a reproduced shaping/process failure is fine — keep the load-bearing part scoped to the failure and treat the principle as light scaffolding, not the justification.
-- This rule governs the *scoping decision*. The full RED→GREEN→REFACTOR loop, the rationalization table, and "Match the Form to the Failure" live in `writing-great-skills` — cross-link, don't restate.
+- This rule governs the *scoping decision*. The full RED→GREEN→REFACTOR loop, the rationalization table, and "Match the Form to the Failure" live in `writing-skills` — cross-link, don't restate.
 
 ## Review Checklist
 
@@ -61,5 +61,5 @@ RED it with a **clean misread** — an artifact internally consistent but wrong 
 - [ ] RED-ran the literal version against a cold baseline; if the baseline complied, the literal version was cut or re-aimed — not shipped.
 - [ ] GREEN is calibrated to the reproduced failure (shape convergence / efficacy / step taken), not to the skill's stated purpose.
 - [ ] For a discipline target, did not trust an in-vault Agent-tool "compliance" as the baseline (it may be inherited `framework.md`) — got a clean baseline or pivoted.
-- [ ] Did not duplicate `writing-great-skills`' methodology content; cross-linked it instead.
+- [ ] Did not duplicate `writing-skills`' methodology content; cross-linked it instead.
 - [ ] For a two-layer review (self + cold reviewer): the cold layer is fed the SOURCE the artifact derives from (not just the artifact), its checklist is disjoint from the self-review's (author-reachable vs author-blind), and a clean-misread RED confirms it catches a consistent-but-wrong artifact.
