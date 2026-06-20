@@ -4,6 +4,15 @@ Transient backlog of un-promoted candidate rules — newest at the top of `## En
 
 ## Entries
 
+### 2026-06-20 — AskUserQuestion failed twice with "expected array, got string"; the real cause was a `\x` escape in the JSON args
+
+- **Cause-tag:** `tool-arg-json-escape`
+- **Symptom:** Two `AskUserQuestion` calls were rejected with `InputValidationError: questions type is expected as array but provided as string`, even though `questions` was passed as a JSON array. The misleading message pointed at the type of `questions`; the actual fault was that option `description` strings contained `\xAB`/`\xBB` escapes (intended as guillemets). JSON permits only `\uXXXX`, never `\xNN`, so the args failed to parse and the harness surfaced a confusing top-level type error instead of an escape error. Using plain quotes / `\uXXXX` fixed it on the third try.
+- **Root cause:** Hand-authored JSON tool arguments used a non-JSON escape (`\x`). The validation error names the consequence (a field that "isn't an array") rather than the cause (an invalid string escape upstream), so the message actively misdirects toward restructuring the array.
+- **Wrong approach:** Reading "expected array, got string" literally and re-checking the array structure — already correct — instead of inspecting the string values for an invalid escape.
+- **Correct approach:** In any tool's JSON arguments, encode non-ASCII only as `\uXXXX` (or paste the literal UTF-8 character); never `\xNN`, `\0`, or other C-style escapes JSON does not define. When a tool reports a type error for a field you clearly passed correctly, suspect an invalid escape in a sibling string value before touching the structure.
+- **Prevention:** Before sending an `AskUserQuestion` (or any tool) call whose JSON contains typographic/Cyrillic characters, scan the argument strings for `\x`, `\0`, or other non-JSON escapes; use `\u` or the literal character. Treat a "field X is the wrong type" error on an obviously-correct field as a parse-failure symptom — look for a bad escape, not a structural bug.
+
 ### 2026-06-19 — Merging two quality hooks, ran lint + test identically on every edited file; owner flagged that a test runner is keyed to file role
 
 - **Cause-tag:** `conflated-distinct-checks`
