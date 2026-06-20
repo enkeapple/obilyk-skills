@@ -57,7 +57,7 @@ State the exception as its own line ("Allowed only when the package ships docume
 
 Each file covers one concern. Cross-link siblings with relative links (`[error-handling](./error-handling.md)`) instead of duplicating them. A rule that needs three unrelated `## When`s should be split.
 
-When a concern is genuinely large (an "API layer", an "auth/session layer"), it is not one big file — it is a **domain folder** `rules/<domain>/` of focused sibling rules, each its own file with its own tight `paths`. **The split line is the `paths`**: each sub-aspect that loads on a different set of files gets its own rule, so editing one file pulls in only the relevant sub-rule, not the whole domain. Example — an `api` domain:
+When a concern is genuinely large (an "API layer", an "auth/session layer"), it is not one big file — it is a **domain folder** `rules/<domain>/` of focused sibling rules, each its own file with its own tight `paths`. **The split line is the `paths`**: each sub-aspect that loads on a different set of files gets its own rule, so editing one file pulls in only the relevant sub-rule, not the whole domain. Example (illustrative — your stack/paths may differ) — an `api` domain:
 
 ```text
 .claude/rules/api/

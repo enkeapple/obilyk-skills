@@ -17,6 +17,7 @@ Ask these before writing either CLAUDE.md. One question at a time, lead with a r
 - **Real commands** — the actual run/build/typecheck/lint/test scripts. Quote them; don't paraphrase.
 - **Folder layout & where rules live** — `.claude/rules/` structure, skills, slash commands.
 - **Domains** — overlapping concepts that need a glossary (hand off to `bootstrapping-glossary`).
+- **Placeholder keys** — for each key in [placeholder-keys.md](placeholder-keys.md) tagged `intake` (`<layers>`, `<ui-exercise-method>`, `<product-and-platforms>`) or left ambiguous after the disk read, ask the human; auto-tagged keys you resolved from disk are confirmed, not asked.
 
 ## Turn answers into sections
 

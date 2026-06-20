@@ -42,10 +42,10 @@ No structural claim about the repo without a read this session. Trigger phrases 
 
 After any code change, run and SHOW the output of the repo's real checks (no "should pass"):
 
-- `<real typecheck command>`
-- `<real lint command>`
-- `<real test command, if any — else state there is no suite and what you verified manually>`
-- For UI changes: exercise it (simulator/browser) or say explicitly you couldn't.
+- `<typecheck-cmd>`
+- `<lint-cmd>`
+- `<test-cmd>` (if none, state there is no suite and what you verified manually)
+- For UI changes: exercise it via `<ui-exercise-method>` or say explicitly you couldn't.
 
 ## Question Discipline
 

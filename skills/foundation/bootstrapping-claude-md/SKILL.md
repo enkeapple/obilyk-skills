@@ -38,6 +38,8 @@ Before writing, collect what only the human can tell you — one question at a t
 - **Stack & real commands** — confirm against `package.json`/Makefile/CI; ask for anything not discoverable. Crucially, whether there IS a test pipeline — never assume one.
 - **Where rules/skills/commands live** and any **session-handoff** preference.
 
+**Resolve placeholder keys (hybrid).** The templates use the keys in [references/placeholder-keys.md](references/placeholder-keys.md). Resolve a key to a real value ONLY when exactly one disk fact maps to it (an exactly-named manifest script; the manifest file itself) — auto. Anything ambiguous (no exactly-named script, multiple manifests, two plausible scripts) or any `intake`-tagged key (`<layers>`, `<ui-exercise-method>`, `<product-and-platforms>`) stays a `<key>` and becomes an intake question. Never infer a command silently.
+
 Discover the rest (stack pins, folder layout, existing rules) by reading the repo.
 
 ## Step 2 — Write the two files

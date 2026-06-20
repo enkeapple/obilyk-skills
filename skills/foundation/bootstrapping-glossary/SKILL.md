@@ -35,7 +35,7 @@ These are foundational, always-on rules. This skill owns the two specific docs a
 Before writing a line, explore the actual repo:
 
 - **For the glossary:** grep the overlapping noun-roots and the domains that share them; open each owning module to learn the real boundaries, the real route/type/API names, and the actual incident that proves they collide. Do not invent entities or naming conventions — capture the ones the code already uses.
-- **For the charter:** find the repo's real verification commands (package.json / Makefile / CI), the established patterns to mirror, and the real failure modes this codebase has hit. The charter cites *these*, not generic advice.
+- **For the charter:** find the repo's real verification commands (package.json / Makefile / CI), the established patterns to mirror, and the real failure modes this codebase has hit. The charter cites *these*, not generic advice. The charter template's stack-specific slots use the keys in [references/placeholder-keys.md](references/placeholder-keys.md) — resolve them by the same hybrid rule (auto off disk only when unambiguous, else intake).
 
 If you cannot ground a claim in something you read this session, it does not go in the doc.
 

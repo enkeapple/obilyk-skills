@@ -31,18 +31,18 @@ Every non-trivial task runs through **<PIPELINE>** and ends with the Completenes
 
 ## What this project is
 
-<One or two sentences: product + platforms.> <Then the stack as the repo actually uses it.> Stack pins live in [package.json](./package.json) and [.claude/rules/](./.claude/rules/) — read them, do not infer.
+<One or two sentences: product + platforms.> <Then the stack as the repo actually uses it.> Stack pins live in [`<stack-manifest>`](./<stack-manifest>) and [.claude/rules/](./.claude/rules/) — read them, do not infer.
 
 ## Common commands
 
 | Task | Command |
 |---|---|
-| <run / dev> | `<real cmd>` |
-| <start / serve> | `<real cmd>` |
-| <typecheck> | `<real cmd>` |
-| <lint> | `<real cmd>` |
-| <lint autofix / format> | `<real cmd>` |
-| <native install / build / deploy> | `<real cmd>` |
+| run / dev | `<run-cmd>` |
+| typecheck | `<typecheck-cmd>` |
+| lint | `<lint-cmd>` |
+| lint autofix / format | `<format-cmd>` |
+| test | `<test-cmd>` |
+| native install / build / deploy | `<build-deploy-cmd>` |
 
 <List every command the team actually runs — not just the basics. If there is no test pipeline, state it in one line here: e.g. "There is no `<test>` script; verification is `<typecheck>` + `<lint>` + manual, judged against the feature's spec.">
 

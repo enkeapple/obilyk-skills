@@ -79,7 +79,7 @@ The baseline failure is not lazy "TODO" markers — it is *describing instead of
 - A test referenced but not written out ("write tests for the above").
 - "Similar to Task N" — repeat the code; the reader may not have seen Task N.
 - A type / function / command named but never defined or shown in any task.
-- "Find the command in package.json" — look it up now and write the exact command.
+- "Find the command in the repo's manifest/CI" — look it up now and write the exact command.
 
 ## Two-layer review — self first, then an independent cold pass
 
