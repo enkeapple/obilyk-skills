@@ -35,7 +35,7 @@ These are foundational, always-on rules. This skill owns the two specific docs a
 Before writing a line, explore the actual repo:
 
 - **For the glossary:** grep the overlapping noun-roots and the domains that share them; open each owning module to learn the real boundaries, the real route/type/API names, and the actual incident that proves they collide. Do not invent entities or naming conventions — capture the ones the code already uses.
-- **For the charter:** find the repo's real verification commands (package.json / Makefile / CI), the established patterns to mirror, and the real failure modes this codebase has hit. The charter cites *these*, not generic advice. The charter template's stack-specific slots use the keys in [references/placeholder-keys.md](references/placeholder-keys.md) — resolve them by the same hybrid rule (auto off disk only when unambiguous, else intake).
+- **For the charter:** find the repo's real verification commands (package.json / Makefile / CI), the established patterns to mirror, and the real failure modes this codebase has hit. The charter cites *these*, not generic advice. The charter template's stack-specific slots use the keys in [references/placeholder-keys.md](./references/placeholder-keys.md) — resolve them by the same hybrid rule (auto off disk only when unambiguous, else intake).
 
 If you cannot ground a claim in something you read this session, it does not go in the doc.
 
@@ -43,7 +43,7 @@ If you cannot ground a claim in something you read this session, it does not go 
 
 Write each to its anatomy; full templates + filled examples are in references.
 
-**Domain glossary** ([references/domain-glossary-template.md](references/domain-glossary-template.md)) — required parts:
+**Domain glossary** ([assets/domain-glossary-template.md](./assets/domain-glossary-template.md)) — required parts:
 
 - `## When` — every trigger that must make the agent STOP and read this: each ambiguous term (in every language the team uses) and each owning path.
 - `## Why` — the confusion it prevents, ideally the concrete incident that motivated it.
@@ -51,7 +51,7 @@ Write each to its anatomy; full templates + filled examples are in references.
 - `## Edge Cases` + `## Review Checklist`.
 - State the **source-of-truth principle**: when code and glossary disagree, fix the glossary first, then the code — never silently diverge.
 
-**Framework charter** ([references/framework-charter-template.md](references/framework-charter-template.md)) — required parts:
+**Framework charter** ([assets/framework-charter-template.md](./assets/framework-charter-template.md)) — required parts:
 
 - **Implementation protocol** — read the request, scan every layer the change touches (classify none/partial/full), write contracts as code (not prose), think through happy + edge cases, then code in dependency order.
 - **Suspicion protocol** — the concrete failure modes this repo hits (missed duplicate code, shortcut/silent cut, hallucinated symbol, test-passes-for-wrong-reason, unverified structure claim), each with a detection check.

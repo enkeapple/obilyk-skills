@@ -4,6 +4,15 @@ Transient backlog of un-promoted candidate rules — newest at the top of `## En
 
 ## Entries
 
+### 2026-06-21 — A prior task in the same plan wrote the new convention into the file later used as the RED control, so the baseline already carried the answer
+
+- **Cause-tag:** `red-scenario-contamination`
+- **Symptom:** Adding the `assets/` vs `references/` criterion to `writing-skills` (a methodology edit, Iron-Law-gated by RED→GREEN). The RED subagent — constrained to read only `writing-skills/SKILL.md` + `vocabulary.md` — said "the methodology states no rule" yet still routed a template/prompt to `assets/`, because an *earlier task in the same plan* had already repointed a link to `assets/validation-subagent-prompt.md` inside that very SKILL.md. The subagent pattern-matched the leaked example, so the RED "failure" was not skill-free; a GREEN against it would have proved nothing.
+- **Root cause:** Execution order. The plan moved files + repointed pointers (Task 1) *before* RED-testing the methodology edit (Task 3) — and the methodology file is both the artifact-under-test and the RED control. Task 1 mutated that control to contain the new convention, so the "without-the-criterion" baseline already exhibited the convention. This is the same class as the existing `red-scenario-contamination` (the control carries the answer → false signal), but the contaminating channel is the **shared tree/state mutated by a prior task**, not the scenario prompt's wording.
+- **Wrong approach:** Trusting the RED because the *prompt* was clean (named no tool, constrained the files), without checking that the *files themselves* were free of the convention under test. Treating "subagent complied" as a valid baseline when a sibling task had already seeded the answer into the read set.
+- **Correct approach:** Re-classified honestly — the real reproduced failure here is **shaping** (the pre-existing placement variance: `subagent-dd` prompts lived in the skill root while peer prompts sat in `references/`), not discipline. GREEN was validated by the subagent **quoting the new rule passage** (not the example/inference) and correctly splitting a third file (a playbook → `references/`) the example could not settle.
+- **Prevention:** When a multi-task plan has an early task that writes a new convention into a file that a later task uses as a skill-edit RED control, **capture the RED before the contaminating task runs**, or run the RED control against a pristine copy of the methodology text (convention example stripped) — never against the live, already-mutated tree. Pre-flight: before trusting any RED, grep the control's *read set* (not just the prompt) for the convention/symbol under test; any hit is contamination.
+
 ### 2026-06-21 — Externalized a shared registry referenced by 4 skills into one skill's references/ (then into a rule); owner: a skill must be self-contained
 
 - **Cause-tag:** `skill-self-containment`

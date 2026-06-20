@@ -14,7 +14,7 @@ with whatever the host environment provides (illustrative shell shown; adapt to 
 2. **`name` regex** — matches `^[a-z0-9-]+$` (lowercase, digits, hyphens only).
 3. **`name === dir === symlink`** — `name:` equals the skill's directory name AND the flat-symlink name that surfaces it. A mismatch is a hard fail (invocation breaks).
 4. **Code fences balanced** — an even count of ` ``` ` fence lines.
-5. **Reference links resolve** — every `references/*.md` (and other relative `.md`) link in `SKILL.md` and in each reference file points at a file that exists.
+5. **Reference links resolve** — every `references/*.md` and `assets/*.md` (and other relative `.md`) link in `SKILL.md` and in each reference file points at a file that exists.
 6. **Frontmatter keys legal** — every key is in the authoritative set (`frontmatter-reference.md`); an unknown key is a likely typo. When present, `allowed-tools`/`disallowed-tools` is a space/comma string or YAML list; `model` is `inherit`, a known alias, or a `claude-*` id.
 7. **Routing invariant** — if `disable-model-invocation: true`, the skill has NO entry in the routing registry (`skills-routing.json`) and declares no triggers; otherwise it MUST have a routing entry whose key equals `name`.
 8. **Word count** — measured on the `SKILL.md` body (excluding frontmatter and fenced code blocks). Key the bound off the (mechanically decidable) `disable-model-invocation` signal from check #7:

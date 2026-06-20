@@ -27,12 +27,12 @@ Do NOT write code, scaffold, split tickets, or invoke an implementation/planning
 
 ## The interview loop
 
-Walk the decision tree, resolving dependencies one at a time. The full technique — depth-first ordering, the recommended-answer pattern, explore-vs-ask, good/bad questions, knowing when to stop — is in [references/interview-playbook.md](references/interview-playbook.md).
+Walk the decision tree, resolving dependencies one at a time. The full technique — depth-first ordering, the recommended-answer pattern, explore-vs-ask, good/bad questions, knowing when to stop — is in [references/interview-playbook.md](./references/interview-playbook.md).
 
 1. **Explore context first** — files, docs, recent commits — so questions are informed, not generic.
 2. **Ask ONE question.** Prefer multiple-choice. Lead with your recommended answer + one line of reasoning. Wait for the response before the next question.
 3. **Follow dependencies** — each answer opens the next branch. Resolve a decision before the ones that depend on it.
-4. **Keep a running Decisions list** — one line per resolved question: the decision + why (+ the alternative rejected). This is the material you hand to the spec; don't lose it. Format: [references/decisions-template.md](references/decisions-template.md).
+4. **Keep a running Decisions list** — one line per resolved question: the decision + why (+ the alternative rejected). This is the material you hand to the spec; don't lose it. Format: [assets/decisions-template.md](./assets/decisions-template.md).
 5. **YAGNI** — actively prune features the user doesn't need.
 
 Scope check: if the idea is actually several independent subsystems, say so first and help decompose — don't grill the details of something that needs splitting.
@@ -41,11 +41,11 @@ Scope check: if the idea is actually several independent subsystems, say so firs
 
 Once you understand the goal, propose **2-3 approaches** with trade-offs, lead with your recommendation. Then present the design **in sections scaled to complexity** (architecture, data flow, components, error/edge cases), asking after each section whether it's right. Revise until the user approves.
 
-What a good design *is* — design-for-isolation, deep modules, decomposing multi-subsystem ideas, existing-codebase discipline, ruthless YAGNI — is in [references/design-principles.md](references/design-principles.md). Read it when shaping the design, especially in an unfamiliar or large codebase.
+What a good design *is* — design-for-isolation, deep modules, decomposing multi-subsystem ideas, existing-codebase discipline, ruthless YAGNI — is in [references/design-principles.md](./references/design-principles.md). Read it when shaping the design, especially in an unfamiliar or large codebase.
 
 ## Hand off to the spec (terminal state)
 
-When the design is approved, do **not** write code, tickets, or an implementation plan. For a non-trivial design, first dispatch an independent readiness reviewer ([references/readiness-reviewer-prompt.md](references/readiness-reviewer-prompt.md)) to catch a "we're done" that still hides open assumptions — if it returns *Not ready*, grill those branches and re-check. Then hand the gathered design + Decisions list to the spec:
+When the design is approved, do **not** write code, tickets, or an implementation plan. For a non-trivial design, first dispatch an independent readiness reviewer ([assets/readiness-reviewer-prompt.md](./assets/readiness-reviewer-prompt.md)) to catch a "we're done" that still hides open assumptions — if it returns *Not ready*, grill those branches and re-check. Then hand the gathered design + Decisions list to the spec:
 
 > **REQUIRED SUB-SKILL:** Use `writing-specs` to turn the approved design and the Decisions list into a concrete spec. Pass every decision as input so nothing is re-litigated.
 

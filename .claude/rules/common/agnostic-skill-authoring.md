@@ -8,7 +8,7 @@ paths:
 
 ## When
 
-Authoring or editing any skill — `.claude/skills/<name>/SKILL.md` or its `references/*.md` — **regardless of where the material came from**: written from scratch, lifted from another repo, pasted from docs/Context7/web, or adapted from an existing skill. The moment skill content is written, it must read the same in any consumer repo.
+Authoring or editing any skill — `.claude/skills/<name>/SKILL.md` or its `references/*.md` / `assets/*.md` — **regardless of where the material came from**: written from scratch, lifted from another repo, pasted from docs/Context7/web, or adapted from an existing skill. The moment skill content is written, it must read the same in any consumer repo.
 
 ## Canonical Source — Do Not Duplicate
 

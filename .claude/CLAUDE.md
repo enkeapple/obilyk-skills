@@ -53,7 +53,7 @@ Not complete until each row is `[x]` or `[N/A]`-with-reason, evidence pasted:
 | 3 | Form matches failure | Discipline → prohibition+table+red-flags; shaping → positive recipe |
 | 4 | Validators pass | Frontmatter ≤1024, name regex, links resolve, fences balanced, word count — output pasted |
 | 5 | Agnostic | No project stack/paths/commands baked in; examples marked illustrative |
-| 6 | References resolve | Every `references/*.md` link exists; cross-links inside refs resolve |
+| 6 | References resolve | Every `references/*.md` and `assets/*.md` link exists; cross-links inside refs resolve |
 | 7 | Chain coherence | Hand-offs to/from neighbouring skills named and consistent |
 | 8 | Lesson captured (if any) | A lesson that met the (A)+(B) bar was captured via the `writing-lessons` skill (the `Skill` tool), not a direct edit to `lessons-learned.md` — or `[N/A]` when no turn met the bar (the expected default) |
 

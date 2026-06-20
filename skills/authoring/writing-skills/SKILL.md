@@ -56,7 +56,7 @@ Two layers, both defined inside this skill — no dependency on any repo hook:
    regex, `name === dir === symlink`, balanced fences, links resolve, legal frontmatter keys,
    routing invariant, word count. Fail fast here before spending a subagent.
 2. **Layer 2 — dynamic run.** Dispatch the validation subagent
-   ([`validation-subagent-prompt.md`](./references/validation-subagent-prompt.md)) to RUN the
+   ([`validation-subagent-prompt.md`](./assets/validation-subagent-prompt.md)) to RUN the
    skill's test cases (from [`test-cases.md`](./references/test-cases.md), or synthesized for a
    foreign skill) WITH the skill enabled, invert each (would it comply WITHOUT?), and return
    pass/fail with verbatim evidence. A static "looks good" is not a pass.
@@ -95,9 +95,11 @@ its own conditional.
 
 ## References
 
+Bundled files split by **role** into two sibling dirs: `references/` = read for guidance (methodology, registry, checklist); `assets/` = instantiated/copied (a template the skill fills, an example it emulates, a prompt it injects into a subagent). Test: copy/fill/inject → `assets/`; read-for-guidance → `references/`.
+
 - [`vocabulary.md`](./references/vocabulary.md) — the leading words.
 - [`testing-with-subagents.md`](./references/testing-with-subagents.md) — pressure scenarios, the control, reps.
 - [`frontmatter-reference.md`](./references/frontmatter-reference.md) — the field set incl. `allowed-tools`/`model`.
 - [`validation-checklist.md`](./references/validation-checklist.md) — Layer-1 checks.
-- [`validation-subagent-prompt.md`](./references/validation-subagent-prompt.md) — Layer-2 dispatch.
+- [`validation-subagent-prompt.md`](./assets/validation-subagent-prompt.md) — Layer-2 dispatch.
 - [`test-cases.md`](./references/test-cases.md) — this skill's own persisted cases.

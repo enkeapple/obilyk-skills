@@ -24,7 +24,7 @@ Ownership table — do not infer from a filename:
 
 | # | Concept | Lives in | Surface / artifact | What it represents |
 | --- | --- | --- | --- | --- |
-| 1 | **skill** | source `skills/*/<name>/SKILL.md` (+ `references/*.md`); discovered via flat symlink `.claude/skills/<name>` | invoked via the `Skill` tool | a routable capability; `name:` MUST equal the directory name and the symlink name |
+| 1 | **skill** | source `skills/*/<name>/SKILL.md` (+ `references/*.md`, `assets/*.md`); discovered via flat symlink `.claude/skills/<name>` | invoked via the `Skill` tool | a routable capability; `name:` MUST equal the directory name and the symlink name |
 | 2 | **rule** | `.claude/rules/<area>/*.md` (`common/` = cross-cutting; `domains/` = glossary + framework) | loaded on demand, never auto-injected | a convention/process doc the agent reads when relevant |
 | 3 | **hook** | source `hooks/<area>/<name>.sh` (`guards/`, `quality/`, `routing/`, `session/`); surfaced via flat symlink `.claude/hooks/<name>.sh`, wired by `settings.json` | runs on tool events | a gate/logger: routing (`detect-bypass`, `skill-gate`, `log-skill-usage`), guards (`security-guard`, `bash-read-guard`, `read-guard`, `edit-write-guard`), quality (`quality`), session (`reset-turn-budget`, `token-guard`, `lessons-nudge`) |
 | 4 | **routing** | `.claude/skills-routing.json` | read by the hooks | trigger-phrase → skill map; `skill-routing-sync.md` keeps it true |

@@ -49,7 +49,7 @@ Write these as a positive recipe — every section, in this order:
 
 ### Templates
 
-The copy-paste template lives in [references/spec-template.md](references/spec-template.md): one canonical template, notes for the refactor and retroactive variants, and a filled example. Load it when you start writing.
+The copy-paste template lives in [assets/spec-template.md](./assets/spec-template.md): one canonical template, notes for the refactor and retroactive variants, and a filled example. Load it when you start writing.
 
 ## No Placeholders
 
@@ -87,7 +87,7 @@ This pass cannot catch what you are blind to: a requirement you *misread* yields
 
 ### Independent cold reviewer (the author-blind pass)
 
-For anything beyond a small spec, dispatch an **independent reviewer — a fresh subagent with zero shared context** — using [references/spec-reviewer-prompt.md](references/spec-reviewer-prompt.md). Its remit is the class your self-review structurally cannot reach, so it is **not** a second run of the checklist above:
+For anything beyond a small spec, dispatch an **independent reviewer — a fresh subagent with zero shared context** — using [assets/spec-reviewer-prompt.md](./assets/spec-reviewer-prompt.md). Its remit is the class your self-review structurally cannot reach, so it is **not** a second run of the checklist above:
 
 - **Conformance to source:** hand it the original request / approved design *alongside* the spec. It re-derives what was asked from the source and flags where the spec diverges (the consistent-but-wrong misread). Without the source on its desk it cannot do this — pass it in.
 - **Ambiguity:** any requirement two engineers would build differently.

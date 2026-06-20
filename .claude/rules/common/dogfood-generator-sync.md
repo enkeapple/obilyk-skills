@@ -12,6 +12,7 @@ paths:
   - '.claude/rules/**/*.md'
   - 'skills/**/SKILL.md'
   - 'skills/**/references/*.md'
+  - 'skills/**/assets/*.md'
 ---
 
 # Dogfood ↔ Generator ↔ Auditor Sync
@@ -45,7 +46,7 @@ generated CLAUDE.md regenerates it — and auditing-claude-md has no check to ca
 ✅ CORRECT — same turn, all three copies move together.
 1. Fixed the instance (.claude/CLAUDE.md).
 2. grep -rln "<changed section phrase>" skills/foundation/bootstrapping-*/ → applied the same
-   fix to references/operating-manual-template.md, kept agnostic.
+   fix to assets/operating-manual-template.md, kept agnostic.
 3. Added the mirror drift-check to auditing-claude-md (flags the old shape in a consumer repo).
 4. RED/GREEN on a subagent following the fixed template — confirms the generated output is correct.
 ```

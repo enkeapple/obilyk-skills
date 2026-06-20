@@ -53,14 +53,14 @@ digraph process {
 
     "Read plan once; extract every task's full text + context; build a durable ledger" [shape=box];
     "More tasks remain?" [shape=diamond];
-    "Dispatch implementer subagent (./implementer-prompt.md)" [shape=box];
+    "Dispatch implementer subagent (./assets/implementer-prompt.md)" [shape=box];
     "Implementer asks questions?" [shape=diamond];
     "Answer; provide context" [shape=box];
     "Implementer implements test-first, verifies, commits, self-reviews" [shape=box];
-    "Dispatch spec reviewer (./spec-reviewer-prompt.md)" [shape=box];
+    "Dispatch spec reviewer (./assets/spec-reviewer-prompt.md)" [shape=box];
     "Spec compliant?" [shape=diamond];
     "Implementer fixes spec gaps" [shape=box];
-    "Dispatch code-quality reviewer (./code-quality-reviewer-prompt.md)" [shape=box];
+    "Dispatch code-quality reviewer (./assets/code-quality-reviewer-prompt.md)" [shape=box];
     "Quality approved?" [shape=diamond];
     "Implementer fixes quality issues" [shape=box];
     "Mark task complete in the ledger" [shape=box];
@@ -68,19 +68,19 @@ digraph process {
     "Hand off: spec-drift-audit, then propose the commit to the owner" [shape=box style=filled fillcolor=lightgreen];
 
     "Read plan once; extract every task's full text + context; build a durable ledger" -> "More tasks remain?";
-    "More tasks remain?" -> "Dispatch implementer subagent (./implementer-prompt.md)" [label="yes"];
-    "Dispatch implementer subagent (./implementer-prompt.md)" -> "Implementer asks questions?";
+    "More tasks remain?" -> "Dispatch implementer subagent (./assets/implementer-prompt.md)" [label="yes"];
+    "Dispatch implementer subagent (./assets/implementer-prompt.md)" -> "Implementer asks questions?";
     "Implementer asks questions?" -> "Answer; provide context" [label="yes"];
-    "Answer; provide context" -> "Dispatch implementer subagent (./implementer-prompt.md)";
+    "Answer; provide context" -> "Dispatch implementer subagent (./assets/implementer-prompt.md)";
     "Implementer asks questions?" -> "Implementer implements test-first, verifies, commits, self-reviews" [label="no"];
-    "Implementer implements test-first, verifies, commits, self-reviews" -> "Dispatch spec reviewer (./spec-reviewer-prompt.md)";
-    "Dispatch spec reviewer (./spec-reviewer-prompt.md)" -> "Spec compliant?";
+    "Implementer implements test-first, verifies, commits, self-reviews" -> "Dispatch spec reviewer (./assets/spec-reviewer-prompt.md)";
+    "Dispatch spec reviewer (./assets/spec-reviewer-prompt.md)" -> "Spec compliant?";
     "Spec compliant?" -> "Implementer fixes spec gaps" [label="no"];
-    "Implementer fixes spec gaps" -> "Dispatch spec reviewer (./spec-reviewer-prompt.md)" [label="re-review"];
-    "Spec compliant?" -> "Dispatch code-quality reviewer (./code-quality-reviewer-prompt.md)" [label="yes"];
-    "Dispatch code-quality reviewer (./code-quality-reviewer-prompt.md)" -> "Quality approved?";
+    "Implementer fixes spec gaps" -> "Dispatch spec reviewer (./assets/spec-reviewer-prompt.md)" [label="re-review"];
+    "Spec compliant?" -> "Dispatch code-quality reviewer (./assets/code-quality-reviewer-prompt.md)" [label="yes"];
+    "Dispatch code-quality reviewer (./assets/code-quality-reviewer-prompt.md)" -> "Quality approved?";
     "Quality approved?" -> "Implementer fixes quality issues" [label="no"];
-    "Implementer fixes quality issues" -> "Dispatch code-quality reviewer (./code-quality-reviewer-prompt.md)" [label="re-review"];
+    "Implementer fixes quality issues" -> "Dispatch code-quality reviewer (./assets/code-quality-reviewer-prompt.md)" [label="re-review"];
     "Quality approved?" -> "Mark task complete in the ledger" [label="yes"];
     "Mark task complete in the ledger" -> "More tasks remain?";
     "More tasks remain?" -> "Dispatch final reviewer over the whole change" [label="no"];
@@ -115,9 +115,9 @@ Implementers report one of four statuses:
 
 ## Prompt templates
 
-- [./implementer-prompt.md](./implementer-prompt.md) — dispatch the implementer subagent.
-- [./spec-reviewer-prompt.md](./spec-reviewer-prompt.md) — dispatch the spec-compliance reviewer.
-- [./code-quality-reviewer-prompt.md](./code-quality-reviewer-prompt.md) — dispatch the code-quality reviewer.
+- [./assets/implementer-prompt.md](./assets/implementer-prompt.md) — dispatch the implementer subagent.
+- [./assets/spec-reviewer-prompt.md](./assets/spec-reviewer-prompt.md) — dispatch the spec-compliance reviewer.
+- [./assets/code-quality-reviewer-prompt.md](./assets/code-quality-reviewer-prompt.md) — dispatch the code-quality reviewer.
 
 Hand subagents large artifacts as **files**, not pasted blobs: give the task's full text in the prompt (don't make the subagent re-read the plan), and pass diffs to reviewers as file references.
 

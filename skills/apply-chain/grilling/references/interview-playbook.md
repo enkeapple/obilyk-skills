@@ -50,7 +50,7 @@ A question you can answer from the repo is a wasted turn. Before asking:
 
 ## Keep a running Decisions log
 
-As each decision resolves, record one line — this is the material the spec is built from, so do not lose it. Capture format is in [decisions-template.md](decisions-template.md).
+As each decision resolves, record one line — this is the material the spec is built from, so do not lose it. Capture format is in [decisions-template.md](../assets/decisions-template.md).
 
 ## Knowing when to stop
 

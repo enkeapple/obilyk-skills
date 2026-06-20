@@ -53,7 +53,7 @@ Label every difference:
 
 ## Report format
 
-Produce a report with these sections, in order (see [references/report-example.md](references/report-example.md) for a filled example):
+Produce a report with these sections, in order (see [assets/report-example.md](./assets/report-example.md) for a filled example):
 
 1. **Verification** — each command → real output.
 2. **Files touched** — table: file → spec said → code shows → status (OK / MISSED / SILENT EXPANSION).

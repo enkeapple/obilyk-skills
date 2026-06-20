@@ -7,7 +7,7 @@ How to work in this repo, regardless of which skill or rule you touch. This is a
 Before any change to a skill, rule, or hook:
 
 1. **Read the full request**; restate the change in one line. If it touches a skill, identify the operating mode (AUTHOR / AUDIT / APPLY).
-2. **Scan every layer the change touches** and classify each NONE / PARTIAL / FULL. The layers of a skill change are: `SKILL.md` frontmatter → `SKILL.md` body → `references/*.md` → `skills-routing.json` (triggers) → `.claude/hooks/*.sh`. A new/renamed/deleted skill or a trigger change is NOT done until routing matches disk and the flat symlink exists (see [skill-routing-sync.md](../common/skill-routing-sync.md)).
+2. **Scan every layer the change touches** and classify each NONE / PARTIAL / FULL. The layers of a skill change are: `SKILL.md` frontmatter → `SKILL.md` body → `references/*.md` / `assets/*.md` → `skills-routing.json` (triggers) → `.claude/hooks/*.sh`. A new/renamed/deleted skill or a trigger change is NOT done until routing matches disk and the flat symlink exists (see [skill-routing-sync.md](../common/skill-routing-sync.md)).
 3. **Write the contract as the artifact, not prose** — for a skill that means the actual `name:`/`description:` frontmatter and the precise prohibition or recipe; for a rule, the `## When` triggers and the canonical table. If you can't write it concretely yet, the task isn't understood — read more.
 4. **Walk the behaviour**: the happy path plus how the skill holds under pressure (the loophole a subagent will try, the edge the rule must name).
 5. **Only then write**, in dependency order: contract/frontmatter → body → references → routing. For PARTIAL, touch only the missing layers.
@@ -20,7 +20,7 @@ Run every phase presuming something is wrong. After each, check this vault's rec
 
 1. **Skipped RED** — did you observe a verbatim baseline failure WITHOUT the skill? No failure observed → there is nothing to fix; do not write the skill.
 2. **Project leakage** — does the skill name a stack, path, or command (`pnpm`, `src/`, a route)? An agnostic skill must let the consumer repo fill specifics; mark unavoidable examples illustrative.
-3. **Hallucinated skill name / symbol** — every referenced skill, rule, hook, path, or `references/*.md` link is verified by a `Read`/`Grep`/`Glob` THIS session. A skill name is a structural claim: it must equal a real dir and `SKILL.md` `name:`.
+3. **Hallucinated skill name / symbol** — every referenced skill, rule, hook, path, or `references/*.md` / `assets/*.md` link is verified by a `Read`/`Grep`/`Glob` THIS session. A skill name is a structural claim: it must equal a real dir and `SKILL.md` `name:`.
 4. **Test passes for the wrong reason** — invert it: would the subagent *also* comply WITHOUT the skill? If yes, the GREEN run proves nothing — the scenario doesn't exert the pressure you think.
 5. **Missed duplicate** — before adding a skill/rule, grep `.claude/skills-routing.json` and `skills/**` for an existing one that already covers it; extend rather than fork.
 6. **Silent cut** — re-read the request bullet by bullet against the diff; a bullet with no corresponding edit is a silent cut, name it.
@@ -35,7 +35,7 @@ No structural claim about a skill, rule, or hook without a read THIS session. ST
 
 A change is not done until you run and SHOW the vault's real checks (no "should pass"):
 
-- **Validators** — frontmatter ≤1024, `name` regex, every `references/*.md` link resolves, fences balanced, word count sane. Paste the result.
+- **Validators** — frontmatter ≤1024, `name` regex, every `references/*.md` and `assets/*.md` link resolves, fences balanced, word count sane. Paste the result.
 - **GREEN subagent run** — re-run the RED scenarios WITH the skill; paste the compliance. Markdown existing is not "done".
 - There is **no** `pnpm`/build/test pipeline and no simulator — do not claim to have run one. Read-only `git` is the only routine shell use; the human owns the commit.
 

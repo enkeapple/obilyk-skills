@@ -25,7 +25,7 @@ A ladder ranked by how immediately the agent needs the material:
 
 1. **In-skill step** — an ordered action in SKILL.md (the primary tier): what the agent does, in order. Ends on a **completion criterion**.
 2. **In-skill reference** — a definition/rule/fact in SKILL.md, consulted on demand; often a flat peer-set (fine, not a smell).
-3. **External reference** — reference pushed into a separate file, reached by a **context pointer**, loaded only when the pointer fires.
+3. **External file** — material pushed into a separate file, reached by a **context pointer**, loaded only when the pointer fires. Split by **role** into two sibling dirs: a **reference** (`references/`) the agent *reads for guidance* (methodology, playbook, key/lookup registry, checklist) vs an **asset** (`assets/`) the skill *instantiates or copies* (a template it fills, an example it emulates, a prompt it injects verbatim into a subagent). Test: "does the skill copy/fill/inject this file, or read it for guidance?" — copy/fill/inject → `assets/`; read-for-guidance → `references/`.
 
 - **Completion criterion** — the checkable condition that tells the agent a step is done. Make it *checkable* and, where it matters, *exhaustive* ("every modified case accounted for"). A vague one invites **premature completion**.
 - **Progressive disclosure** — the move down the ladder: out of SKILL.md into a linked file, so the top stays legible. Inline what every branch needs; push behind a pointer what only some reach.

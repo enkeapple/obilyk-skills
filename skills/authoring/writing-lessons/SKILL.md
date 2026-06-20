@@ -14,7 +14,7 @@ Capture a lesson so a future session does not repeat it, and promote a lesson to
 
 The log lives at `.claude/lessons-learned.md`. It is a **transient backlog** of un-promoted candidate rules: new entries go at the top of `## Entries`; when a cause-tag is promoted to (or already covered by) a rule, its entry bodies are **deleted** and the tag is recorded in the `## Promoted clusters` ledger at the bottom — git keeps the history (`git log -S '<cause-tag>'`). Deletion happens only via this skill, inside a confirmed promotion. The promotion path turns a recurring lesson into an actionable rule under `.claude/rules/`.
 
-Project-agnostic: paths and rule topics adapt to the repo. A filled example is in [references/lessons-template.md](references/lessons-template.md).
+Project-agnostic: paths and rule topics adapt to the repo. A filled example is in [assets/lessons-template.md](./assets/lessons-template.md).
 
 ## When to use
 
@@ -60,7 +60,7 @@ The log holds only un-promoted candidates. Before appending, derive the cause-ta
 
 ## Capture an entry
 
-Append at the **top** of `## Entries` using the template in [references/lessons-template.md](references/lessons-template.md) — every field required (Cause-tag, Symptom, Root cause, Wrong approach, Correct approach, Prevention).
+Append at the **top** of `## Entries` using the template in [assets/lessons-template.md](./assets/lessons-template.md) — every field required (Cause-tag, Symptom, Root cause, Wrong approach, Correct approach, Prevention).
 
 **Cause-tag is the load-bearing field.** It is a short kebab-case key for the root-cause *class* (e.g. `hallucinated-symbol`, `dep-upgrade`, `wrong-assumption`). **REUSE an existing tag** when the cause matches an earlier entry — identical tags are what make a cluster countable. Only a genuinely new cause class gets a new tag. Inventing a fresh tag for an existing cause hides recurrence and defeats promotion.
 
@@ -77,7 +77,7 @@ Any tag with **count ≥ 3** that is NOT in the `## Promoted clusters` ledger is
 
 ## Promotion path: lesson → rule
 
-When the same cause-tag reaches the threshold, it is a pattern, not a one-off. Do not decide promotion by gut — dispatch an independent reviewer that judges whether it generalizes and at what level it belongs, using [references/promotion-reviewer-prompt.md](references/promotion-reviewer-prompt.md). It returns one of: Promote (with target rule file + actionable rule text), Keep in lessons (too situational / already covered), or Re-tag (not a real cluster).
+When the same cause-tag reaches the threshold, it is a pattern, not a one-off. Do not decide promotion by gut — dispatch an independent reviewer that judges whether it generalizes and at what level it belongs, using [assets/promotion-reviewer-prompt.md](./assets/promotion-reviewer-prompt.md). It returns one of: Promote (with target rule file + actionable rule text), Keep in lessons (too situational / already covered), or Re-tag (not a real cluster).
 
 If the reviewer says **Promote**, apply its output:
 
@@ -94,7 +94,7 @@ The rule file is the durable artifact. The ledger only points to it — never le
 
 Capturing a lesson that does not change what you do next is filler. Apply the Prevention in the current session before moving on.
 
-A lesson reads like an instruction (a check someone can run), not a journal entry — see the good-vs-bad examples in [references/lessons-template.md](references/lessons-template.md).
+A lesson reads like an instruction (a check someone can run), not a journal entry — see the good-vs-bad examples in [assets/lessons-template.md](./assets/lessons-template.md).
 
 ## Red Flags — STOP
 

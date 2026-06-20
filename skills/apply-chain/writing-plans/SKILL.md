@@ -56,7 +56,7 @@ Every task implicitly includes these.>
 
 ## Task recipe (the contract for every task)
 
-Each task has, in order: **Files**, **Interfaces**, then **checkbox steps** where every code step contains real code and every command step shows the exact command + expected output. The full template and a filled example are in [references/plan-template.md](references/plan-template.md).
+Each task has, in order: **Files**, **Interfaces**, then **checkbox steps** where every code step contains real code and every command step shows the exact command + expected output. The full template and a filled example are in [assets/plan-template.md](./assets/plan-template.md).
 
 A task's steps follow the test-first cycle, each step one action (2–5 min):
 
@@ -94,7 +94,7 @@ Mechanical checks against the plan **text itself**, with the context you already
 
 ### Independent cold reviewer (the author-blind pass)
 
-For anything beyond a small plan, dispatch an **independent reviewer — a fresh subagent with zero shared context, handed the spec** — using [references/plan-reviewer-prompt.md](references/plan-reviewer-prompt.md). Its remit is what you cannot judge from inside your own context, so it is **not** a re-run of the scan above:
+For anything beyond a small plan, dispatch an **independent reviewer — a fresh subagent with zero shared context, handed the spec** — using [assets/plan-reviewer-prompt.md](./assets/plan-reviewer-prompt.md). Its remit is what you cannot judge from inside your own context, so it is **not** a re-run of the scan above:
 
 - **Spec coverage, re-derived:** it reads the spec independently and checks each requirement maps to a task — you *believe* you covered it; it verifies you did. A gap you can't see is one you didn't know you left.
 - **Zero-context buildability:** could an engineer with no context follow this task-by-task, possibly out of order, without getting stuck or guessing? You hold the context, so you cannot feel its absence — only a cold reader can.

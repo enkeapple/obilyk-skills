@@ -43,11 +43,11 @@ Wrote code before the test? Delete it. Start over, implementing fresh from the t
 
 Run RED → GREEN → REFACTOR for **one** behavior, then repeat for the next.
 
-1. **RED — write one failing test.** One behavior, clear name, exercises real code through the public interface ([references/tests.md](references/tests.md)). No mocks unless unavoidable ([references/mocking.md](references/mocking.md)).
+1. **RED — write one failing test.** One behavior, clear name, exercises real code through the public interface ([references/tests.md](./references/tests.md)). No mocks unless unavoidable ([references/mocking.md](./references/mocking.md)).
 2. **Verify RED (mandatory).** Run the test. Confirm it *fails* (not errors), and fails for the right reason — the feature is missing, not a typo. Passes already? You're testing existing behavior — fix the test. Errors? Fix and re-run until it fails cleanly.
 3. **GREEN — minimal code.** The simplest code that passes this one test. No extra options, no speculative features (YAGNI).
 4. **Verify GREEN (mandatory).** Run the test. It passes, all other tests still pass, output is pristine (no warnings/errors). Test fails? Fix the code, not the test.
-5. **REFACTOR — only while green.** Remove duplication, improve names, extract helpers, deepen modules. Never refactor while red; add no new behavior ([references/refactoring.md](references/refactoring.md)).
+5. **REFACTOR — only while green.** Remove duplication, improve names, extract helpers, deepen modules. Never refactor while red; add no new behavior ([references/refactoring.md](./references/refactoring.md)).
 6. **Repeat** with the next failing test.
 
 ## Vertical slices, not horizontal
@@ -102,9 +102,9 @@ Run this every loop. Can't tick all six? You skipped a step — redo the cycle, 
 
 ## Layered references
 
-- [references/tests.md](references/tests.md) — what a good (behavior-driven) test looks like; good vs bad.
-- [references/mocking.md](references/mocking.md) — mock only true boundaries; never test the mock.
-- [references/refactoring.md](references/refactoring.md) — the REFACTOR step: candidates and the never-refactor-while-red rule.
+- [references/tests.md](./references/tests.md) — what a good (behavior-driven) test looks like; good vs bad.
+- [references/mocking.md](./references/mocking.md) — mock only true boundaries; never test the mock.
+- [references/refactoring.md](./references/refactoring.md) — the REFACTOR step: candidates and the never-refactor-while-red rule.
 
 ## Rationalizations
 

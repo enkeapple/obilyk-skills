@@ -31,14 +31,14 @@ This mirrors `bootstrapping-glossary` (which builds `.claude/rules/`); the CLAUD
 
 ## Step 1 — Intake interview (ask, don't invent)
 
-Before writing, collect what only the human can tell you — one question at a time, with a recommended default. The full question set is in [references/intake-questions.md](references/intake-questions.md). At minimum:
+Before writing, collect what only the human can tell you — one question at a time, with a recommended default. The full question set is in [references/intake-questions.md](./references/intake-questions.md). At minimum:
 
 - **What the app is** — product, platforms, the domain in one or two sentences.
 - **The managing engineer's position** — e.g. *Principal Mobile Dev*, *Staff Backend*, *Senior Frontend*. This sets the **Role/persona** the agent acts as and the bar it holds. Do not default to a generic "senior engineer" — use the position given.
 - **Stack & real commands** — confirm against `package.json`/Makefile/CI; ask for anything not discoverable. Crucially, whether there IS a test pipeline — never assume one.
 - **Where rules/skills/commands live** and any **session-handoff** preference.
 
-**Resolve placeholder keys (hybrid).** The templates use the keys in [references/placeholder-keys.md](references/placeholder-keys.md). Resolve a key to a real value ONLY when exactly one disk fact maps to it (an exactly-named manifest script; the manifest file itself) — auto. Anything ambiguous (no exactly-named script, multiple manifests, two plausible scripts) or any `intake`-tagged key (`<layers>`, `<ui-exercise-method>`, `<product-and-platforms>`) stays a `<key>` and becomes an intake question. Never infer a command silently.
+**Resolve placeholder keys (hybrid).** The templates use the keys in [references/placeholder-keys.md](./references/placeholder-keys.md). Resolve a key to a real value ONLY when exactly one disk fact maps to it (an exactly-named manifest script; the manifest file itself) — auto. Anything ambiguous (no exactly-named script, multiple manifests, two plausible scripts) or any `intake`-tagged key (`<layers>`, `<ui-exercise-method>`, `<product-and-platforms>`) stays a `<key>` and becomes an intake question. Never infer a command silently.
 
 Discover the rest (stack pins, folder layout, existing rules) by reading the repo.
 
@@ -46,8 +46,8 @@ Discover the rest (stack pins, folder layout, existing rules) by reading the rep
 
 Each template carries the fixed section order, a filled example, and per-section notes — follow it, don't re-derive the structure here.
 
-- **Root `CLAUDE.md`** ([references/root-claude-md-template.md](references/root-claude-md-template.md)) — the scannable entry point: "How to work here" with a distinct **Hard rules** block, What this project is, **Common commands** (the *real* ones — never validator one-liners; if there's no test pipeline, say so), **Skill routing**, Slash commands / Where rules live, and a substantial **Engineering system** pointer.
-- **`.claude/CLAUDE.md`** ([references/operating-manual-template.md](references/operating-manual-template.md)) — the operating manual: Rule precedence; **Non-negotiables** (the discipline set that survives summarization, each with WHY + enforcement); **Role** (the intake position, not a generic "senior engineer"); Operating modes; **Workflow pipeline** + **Completeness Checklist** (real commands); Plan persistence; Search-before-ask; Git boundary; Status block; **Skill discipline**, **Lessons promotion path**, **Pointers**.
+- **Root `CLAUDE.md`** ([assets/root-claude-md-template.md](./assets/root-claude-md-template.md)) — the scannable entry point: "How to work here" with a distinct **Hard rules** block, What this project is, **Common commands** (the *real* ones — never validator one-liners; if there's no test pipeline, say so), **Skill routing**, Slash commands / Where rules live, and a substantial **Engineering system** pointer.
+- **`.claude/CLAUDE.md`** ([assets/operating-manual-template.md](./assets/operating-manual-template.md)) — the operating manual: Rule precedence; **Non-negotiables** (the discipline set that survives summarization, each with WHY + enforcement); **Role** (the intake position, not a generic "senior engineer"); Operating modes; **Workflow pipeline** + **Completeness Checklist** (real commands); Plan persistence; Search-before-ask; Git boundary; Status block; **Skill discipline**, **Lessons promotion path**, **Pointers**.
 
 **Three rules that override the templates' defaults:**
 

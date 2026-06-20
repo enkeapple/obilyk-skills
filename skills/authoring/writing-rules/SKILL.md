@@ -13,7 +13,7 @@ A rule is a small, **actionable** instruction that loads when relevant and tells
 
 **Core contract: a rule has a `description`, an optional `paths` to scope it, and a body of actionable instructions with real examples — not a prose essay.** `paths` scopes an *area-specific* rule to the files it governs; **omit it for a genuinely always-on rule** (a framework charter, a repo-wide convention) that should load every session. The real failure is an *area-specific* rule left unscoped so it nags everywhere — not the mere absence of `paths`. If its body describes a topic instead of prescribing actions, it is a doc, not a rule.
 
-Project-agnostic: match the repo's existing rule conventions (frontmatter keys, folder layout) when it has them. The full anatomy and a filled example are in [references/rule-template.md](references/rule-template.md).
+Project-agnostic: match the repo's existing rule conventions (frontmatter keys, folder layout) when it has them. The full anatomy and a filled example are in [assets/rule-template.md](./assets/rule-template.md).
 
 ## When to use
 
@@ -80,7 +80,7 @@ Before saving, check the rule against the Review Checklist below: the **form** i
 
 ### Independent cold reviewer (the author-blind pass)
 
-For a rule that will be widely loaded or promoted from a lesson, dispatch an **independent reviewer — a fresh subagent with zero shared context, given the existing rules directory** — using [references/rule-reviewer-prompt.md](references/rule-reviewer-prompt.md). Its remit is what you cannot judge from inside your own context, not a re-run of the form checklist:
+For a rule that will be widely loaded or promoted from a lesson, dispatch an **independent reviewer — a fresh subagent with zero shared context, given the existing rules directory** — using [assets/rule-reviewer-prompt.md](./assets/rule-reviewer-prompt.md). Its remit is what you cannot judge from inside your own context, not a re-run of the form checklist:
 
 - **Duplication, re-derived:** you are anchored on the rule you just wrote and won't notice it restates a neighbor; a reader holding the whole rules set will. Cross-link, don't fork.
 - **Scoping & applicability:** would the `paths` nag outside its area, and would two agents reading this cold apply it two ways? You can't feel your own assumptions; a cold reader trips on them.
@@ -94,7 +94,7 @@ Static review confirms the rule is well-*formed*. It does NOT confirm the rule *
 3. **GREEN — cold agent, rule injected.** Dispatch a fresh subagent on the same task with only the rule in context. Expect compliance on every Review-Checklist item. Still slips? The rule is real but ineffective — sharpen the Implementation (stronger imperative, a ✅/❌ closer to the case) and re-run until a cold agent complies.
 4. **Verdict, not a file.** Each subagent returns a structured pass/fail per Review-Checklist item as its result — do NOT hand-write any `/tmp` artifact (the vault owns temp files via `handoff`). The rule is done only when RED shows the failure and GREEN shows compliance.
 
-Dispatch both runs with [references/rule-efficacy-test-prompt.md](references/rule-efficacy-test-prompt.md). Skip only for a pure-policy rule with no single target case to exercise (e.g. an always-on charter) — and say so explicitly.
+Dispatch both runs with [assets/rule-efficacy-test-prompt.md](./assets/rule-efficacy-test-prompt.md). Skip only for a pure-policy rule with no single target case to exercise (e.g. an always-on charter) — and say so explicitly.
 
 ## Review Checklist
 
