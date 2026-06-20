@@ -53,13 +53,13 @@ In the same change that creates/renames/deletes a skill or edits its triggers, u
 
 - When NOT to apply: editing a skill's prose, examples, or `references/*.md` without touching its name, location, or trigger phrases — `files` points at `SKILL.md`, so internal reference files are not listed and need no change.
 - Entries under `.claude/skills/` that are not skill directories (e.g. `_metrics.jsonl`, any `_`-prefixed path) are not skills — do not add entries for them.
-- A reference/methodology skill that opts out of routing with `disable-model-invocation: true` in its `SKILL.md` frontmatter and declares no trigger phrases (e.g. `writing-great-skills`) is not trigger-routed — do NOT add a `triggers` entry for it. The "every skill has a key" check below applies only to invocable skills.
+- A reference/methodology skill that opts out of routing with `disable-model-invocation: true` in its `SKILL.md` frontmatter and declares no trigger phrases (e.g. `writing-great-skills`, `improve-codebase-architecture`) is not trigger-routed — do NOT add a `triggers` entry or a `skills` key for it. Its absence from `skills-routing.json` is correct, not a gap. The "every skill has a key" check below applies only to invocable skills.
 - This rule governs only the `skills` map. Leave `version` and `ruleGates` alone unless a separate task requires them.
 - Trigger phrases are bilingual where the skill is — include the Russian triggers too if the skill declares them (e.g. `handoff` lists «передать сесси»).
 
 ## Review Checklist
 
-- [ ] Every invocable skill directory under `skills/` (excluding `disable-model-invocation` reference skills) has exactly one matching key in `skills-routing.json` (`find skills -name SKILL.md` vs `jq '.skills | keys' .claude/skills-routing.json`). Known carried-forward gap: `improve-codebase-architecture` has no key yet.
+- [ ] Every invocable skill directory under `skills/` (excluding `disable-model-invocation` reference skills) has exactly one matching key in `skills-routing.json` (`find skills -name SKILL.md` vs `jq '.skills | keys' .claude/skills-routing.json`).
 - [ ] Each entry's key equals the directory name AND the `name:` in that skill's `SKILL.md`.
 - [ ] Each entry's `files` path exists and points at the skill's `SKILL.md`.
 - [ ] `triggers` is non-empty and reflects the skill's stated trigger phrases (incl. RU where declared).

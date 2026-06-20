@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-# PostToolUse hook (matcher: Read|Skill): detect skill bypass.
-# Triggers two warnings:
-#   (1) Read on a file registered as a skill body without invoking the Skill tool earlier in the turn.
-#   (2) After N tool calls without Skill, if the user prompt matched any skill's triggers -- remind.
-# Also logs events to metrics.
+# PostToolUse hook (matcher: Read|Skill|Edit|Write|MultiEdit): detect skill bypass.
+# Triggers three warnings:
+#   (1)  Read on a file registered as a skill body without invoking the Skill tool earlier in the turn.
+#   (1b) Edit/Write/MultiEdit on lessons-learned.md without invoking the writing-lessons Skill this turn.
+#   (2)  After N tool calls without Skill, if the user prompt matched any skill's triggers -- remind.
+# Also logs events to metrics. (Edit/Write/MultiEdit events are needed for check 1b.)
 set -euo pipefail
 
 STATE_DIR="${CLAUDE_PROJECT_DIR:-.}/.claude/state"

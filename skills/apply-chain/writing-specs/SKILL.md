@@ -73,7 +73,7 @@ Remember: real file paths, real type/signature code in Contracts, real commands 
 
 ## Two-layer review — self first, then an independent cold pass
 
-The two layers catch **different** classes of defect; they are not the same check run twice. Keep their remits disjoint, or the cold pass is wasted load.
+The two layers catch **different** classes of defect; they are not the same check run twice. Keep their remits disjoint — the disjoint-remits requirement and its rationale are owned by [scoping-skill-value](../../../.claude/rules/common/scoping-skill-value.md) (Two-layer review variant).
 
 ### Self-review (author pass — cheap, every time)
 

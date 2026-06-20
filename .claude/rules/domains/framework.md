@@ -22,7 +22,7 @@ Run every phase presuming something is wrong. After each, check this vault's rec
 2. **Project leakage** — does the skill name a stack, path, or command (`pnpm`, `src/`, a route)? An agnostic skill must let the consumer repo fill specifics; mark unavoidable examples illustrative.
 3. **Hallucinated skill name / symbol** — every referenced skill, rule, hook, path, or `references/*.md` link is verified by a `Read`/`Grep`/`Glob` THIS session. A skill name is a structural claim: it must equal a real dir and `SKILL.md` `name:`.
 4. **Test passes for the wrong reason** — invert it: would the subagent *also* comply WITHOUT the skill? If yes, the GREEN run proves nothing — the scenario doesn't exert the pressure you think.
-5. **Missed duplicate** — before adding a skill/rule, grep for an existing one that already covers it (the registry has 12 skills); extend rather than fork.
+5. **Missed duplicate** — before adding a skill/rule, grep `.claude/skills-routing.json` and `skills/**` for an existing one that already covers it; extend rather than fork.
 6. **Silent cut** — re-read the request bullet by bullet against the diff; a bullet with no corresponding edit is a silent cut, name it.
 
 If suspicion confirms a defect: STOP, name the failure mode, go back one phase — do not patch silently.
@@ -41,4 +41,4 @@ A change is not done until you run and SHOW the vault's real checks (no "should 
 
 ## Question Discipline
 
-Asking is the LAST step. Before a question, search in order: the skill in question → `writing-great-skills` → `.claude/rules/` → [lessons-learned.md](./lessons-learned.md) → `git log` → the skill files. If the answer is derivable, decide, justify in one line (smallest diff, closest existing pattern), and proceed. Reserve questions for a genuine product/scope decision or a git-boundary action — never an A/B/C/D menu on a derivable choice.
+Asking is the LAST step. Before a question, search in order: the skill in question → `writing-great-skills` → `.claude/rules/` → [lessons-learned.md](../../lessons-learned.md) → `git log` → the skill files. If the answer is derivable, decide, justify in one line (smallest diff, closest existing pattern), and proceed. Reserve questions for a genuine product/scope decision or a git-boundary action — never an A/B/C/D menu on a derivable choice.

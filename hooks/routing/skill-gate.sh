@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # PreToolUse hook (matcher: Edit|Write|MultiEdit): BARRIER, not a warning.
-# Blocks an edit/write inside a skill-owned domain (e.g. src/shared/api, src/shared/stores)
-# until the routed Skill has been invoked this turn. This is the enforcement that the
+# Blocks an edit/write inside a skill-owned domain (a path matching a skill's editGlobs in
+# skills-routing.json) until the routed Skill has been invoked this turn. This is the enforcement that the
 # PostToolUse detect-bypass.sh could never be: detect-bypass fires AFTER the tool ran and
 # only writes to stderr; this fires BEFORE and can deny, so rule-following no longer depends
 # on how willingly a given model reads stderr warnings -- it is model-agnostic.
@@ -14,9 +14,9 @@
 #
 # Fail-open: any error / missing routing / unparseable input exits 0 (allow). A buggy
 # guard must never block real work -- it only blocks the one specific, verified condition.
-# Domains gated: only path-deterministic ones (api, slice). Unistyles is NOT gated here
-# because styles live next to components -- a path glob would false-positive; it stays on
-# the trigger-based detect-bypass.sh nudge.
+# Domains gated: only path-deterministic ones (a directory-prefix editGlob). A domain whose
+# files are interleaved with others (no clean path glob) would false-positive here; it stays
+# on the trigger-based detect-bypass.sh nudge instead.
 #
 # Two passes:
 #   1. Skill-gate (original): edit in a skill-owned editGlob with the Skill not yet invoked -> deny.
@@ -52,11 +52,11 @@ REL_PATH="${FILE_PATH#$PROJECT_DIR/}"
 # Pass 0: NO local-memory writes. The per-user memory dir (~/.claude/projects/.../memory/)
 # is not in git and invisible to the rest of the team. Several people work on this repo, so
 # project facts, feedback and incidents must live in git-tracked stores (.claude/lessons-learned.md,
-# .claude/rules/*, docs/superpowers/specs/) -- never a local profile. Deny any write whose path
+# .claude/rules/*) -- never a local profile. Deny any write whose path
 # contains a /memory/ segment under a .claude/projects tree, or ends in MEMORY.md there.
 case "$FILE_PATH" in
   */.claude/projects/*/memory/*|*/.claude/projects/*/MEMORY.md)
-    MREASON="Write blocked: local Claude memory is forbidden in this project. The memory dir is per-user and not in git, so several teammates never see it. Persist the fact where the team can: an incident/learned fact -> append to .claude/lessons-learned.md; a recurring rule -> .claude/rules/<area>/<topic>.md; a future-feature contract -> docs/superpowers/specs/. This barrier is intentional and model-agnostic."
+    MREASON="Write blocked: local Claude memory is forbidden in this project. The memory dir is per-user and not in git, so several teammates never see it. Persist the fact where the team can: an incident/learned fact -> append to .claude/lessons-learned.md; a recurring rule -> .claude/rules/<area>/<topic>.md. This barrier is intentional and model-agnostic."
     jq -cn --arg r "$MREASON" \
       '{hookSpecificOutput:{hookEventName:"PreToolUse", permissionDecision:"deny", permissionDecisionReason:$r}}' \
       2>/dev/null || exit 0
@@ -85,7 +85,7 @@ done < <(jq -r '.skills | to_entries[] | .key as $k | (.value.editGlobs // [])[]
 
 # Skill-domain hit and skill not invoked -> deny on the skill (original behavior).
 if [[ -n "$MISSED_SKILL" ]]; then
-  REASON="Edit blocked by skill-gate: '${REL_PATH}' is in the '${MISSED_GLOB}' domain owned by Skill '${MISSED_SKILL}', which carries the domain rules (schemes/adapters/tags/selectors). Invoke Skill('${MISSED_SKILL}') first to load those rules, then retry this edit. This barrier is intentional and model-agnostic — it keeps rule-following stable across model versions."
+  REASON="Edit blocked by skill-gate: '${REL_PATH}' is in the '${MISSED_GLOB}' domain owned by Skill '${MISSED_SKILL}', which carries that domain's rules. Invoke Skill('${MISSED_SKILL}') first to load those rules, then retry this edit. This barrier is intentional and model-agnostic — it keeps rule-following stable across model versions."
   jq -cn --arg r "$REASON" \
     '{hookSpecificOutput:{hookEventName:"PreToolUse", permissionDecision:"deny", permissionDecisionReason:$r}}' \
     2>/dev/null || exit 0
@@ -138,7 +138,7 @@ if [[ "$GATE_WHY" == "path" ]]; then
 else
   WHY="your task matches a gated domain by keyword"
 fi
-REASON="Edit blocked by rule-gate: ${WHY}, which requires '${GATE_RULE}' to be loaded into context first. Read('${GATE_RULE}') this turn, then retry this edit. This file pins which of the three independent document-ish domains owns which routes/APIs/i18n — editing without it is the recurring cross-domain bug this barrier exists to prevent. Intentional and model-agnostic."
+REASON="Edit blocked by rule-gate: ${WHY}, which requires '${GATE_RULE}' to be loaded into context first. Read('${GATE_RULE}') this turn, then retry this edit. This file pins which rule owns this domain — editing without it is the recurring cross-domain bug this barrier exists to prevent. Intentional and model-agnostic."
 jq -cn --arg r "$REASON" \
   '{hookSpecificOutput:{hookEventName:"PreToolUse", permissionDecision:"deny", permissionDecisionReason:$r}}' \
   2>/dev/null || exit 0

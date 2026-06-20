@@ -30,7 +30,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/reset-turn-budget.sh"
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/reset-turn-budget.sh"
           }
         ]
       }
@@ -42,6 +42,10 @@
           {
             "type": "command",
             "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/security-guard.sh"
+          },
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/bash-read-guard.sh"
           }
         ]
       },
@@ -55,29 +59,15 @@
         ]
       },
       {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/bash-read-guard.sh"
-          }
-        ]
-      },
-      {
-        "matcher": "Edit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/edit-write-guard.sh"
-          }
-        ]
-      },
-      {
         "matcher": "Edit|Write|MultiEdit",
         "hooks": [
           {
             "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/skill-gate.sh"
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/skill-gate.sh"
+          },
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/edit-write-guard.sh"
           }
         ]
       }
@@ -87,12 +77,8 @@
         "matcher": "Edit|MultiEdit|Write",
         "hooks": [
           {
-            "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/lint-fix.sh"
-          },
-          {
-            "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/test-quick.sh"
+            "type": "command", 
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/quality.sh"
           }
         ]
       },
@@ -101,7 +87,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/token-guard.sh"
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/token-guard.sh"
           }
         ]
       },
@@ -110,7 +96,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/detect-bypass.sh"
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/detect-bypass.sh"
           }
         ]
       }
@@ -120,11 +106,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/log-skill-usage.sh"
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/log-skill-usage.sh"
           },
           {
             "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/lessons-nudge.sh"
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/lessons-nudge.sh"
           }
         ]
       }

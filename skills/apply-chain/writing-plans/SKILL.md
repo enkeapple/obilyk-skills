@@ -83,7 +83,7 @@ The baseline failure is not lazy "TODO" markers — it is *describing instead of
 
 ## Two-layer review — self first, then an independent cold pass
 
-The two layers catch **different** defect classes; keep their remits disjoint or the cold pass is wasted load.
+The two layers catch **different** defect classes; keep their remits disjoint per [scoping-skill-value](../../../.claude/rules/common/scoping-skill-value.md) (Two-layer review variant).
 
 ### Self-review (author pass — cheap, every time)
 

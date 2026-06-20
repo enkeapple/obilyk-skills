@@ -72,7 +72,7 @@ Shared concepts (the auth token, cache tags) are cross-linked once between the f
 
 ## Two-layer review — self first, then an independent cold pass
 
-Two layers catching **different** defect classes (plus a third, the efficacy test below). Keep the first two disjoint or the cold pass is wasted load.
+Two layers catching **different** defect classes (plus a third, the efficacy test below). Keep the first two disjoint per [scoping-skill-value](../../../.claude/rules/common/scoping-skill-value.md) (Two-layer review variant).
 
 ### Self-review (author pass — cheap, every time)
 

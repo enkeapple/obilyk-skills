@@ -31,11 +31,11 @@ When the threshold is met: write the approved plan to `$TMPDIR/plan-<slug>.md` (
 
 ## Writing the handoff doc
 
-Before writing, snapshot ground truth (not memory): `git status --short`, and `pnpm typescript` / `pnpm lint` so the doc records a real green/red baseline. Then write `$TMPDIR/handoff-<slug>.md`:
+Before writing, snapshot ground truth (not memory): `git status --short`, and the consumer repo's typecheck/lint command (illustrative — e.g. `pnpm typescript` / `pnpm lint` in a JS/TS repo) so the doc records a real green/red baseline. Then write `$TMPDIR/handoff-<slug>.md`:
 
-- **Progress ledger** keyed to the CODE layer order: Types/API/Slice/Hook/Screen/Nav/i18n each `[done|partial: …|not started]`, with exact file paths touched and still owed.
+- **Progress ledger** keyed to the consumer repo's own layer / work order (illustrative — e.g. Types/API/Slice/Hook/Screen/Nav/i18n in an RN app) each `[done|partial: …|not started]`, with exact file paths touched and still owed.
 - **Verification baseline** — the pasted typecheck/lint result.
-- **Suggested skills / gates to clear on resume** — name the routed skills the next session MUST invoke before gated edits (e.g. `scaffold-slice` before `src/shared/stores/**`, `scaffold-api` before `src/shared/api/**`), or `skill-gate.sh` will deny them.
+- **Suggested skills / gates to clear on resume** — name any routed skills or rule-gates the consumer repo requires the next session to invoke before its gated edits (whatever that repo's `skills-routing.json` configures), so the resuming session loads them before touching a gated path.
 - **Mid-code decisions** made since plan approval that aren't in the plan yet.
 - **Reference, do not duplicate** other artifacts (the plan file, specs, ADRs, commits) — link by path.
 - **Redact** secrets/PII.
@@ -45,7 +45,7 @@ Then set the status-block `Next:` to the absolute path of the handoff doc.
 
 ## Red Flags — STOP, you are rationalizing
 
-- "I'll just finish the slice first, the context is already loaded." — The gated edit forces a `scaffold-slice` invocation that loads *more* rules into the context you are trying not to overflow, and risks a forbidden half-finished slice. Checkpoint at the clean layer boundary instead.
+- "I'll just finish this unit of work first, the context is already loaded." — Pushing past a clean boundary can force another gated skill invocation that loads *more* rules into the context you are trying not to overflow, and risks a forbidden half-finished unit. Checkpoint at the clean boundary instead.
 - "I'll jot a quick note to myself." — Forbidden (non-negotiable #7: no local memory). A note in your head is exactly what the fresh session does not inherit.
 - "The plan file is still there, the next session can re-read it." — The plan is the contract, not progress; and it is deleted at VERIFY. Reference it from the handoff; never rely on it as the handoff.
 - "I'll just `/compact` and keep going." — `/compact` is lossy in-session summarization with no durable artifact; a brand-new session gets nothing. It feeds the "finish the slice" temptation rather than producing resumable state on disk.
