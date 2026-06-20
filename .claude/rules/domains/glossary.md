@@ -41,13 +41,14 @@ Term-disambiguation rules — what each word maps to, and how to resolve the amb
 - **"bootstrap" vs "audit"** — `bootstrapping-*` creates a doc from scratch; `auditing-*` checks an existing doc for drift. Two skills per target (CLAUDE.md, domain-rules).
 - **"lesson" vs "rule"** — a **lesson** is one entry in `lessons-learned.md`; it becomes a **rule** only after the same cause-tag recurs 3× and is promoted via `writing-rules`, at which point its lesson entries are deleted from the backlog (git keeps them).
 
-What is NOT in this domain (must not be conflated): there is **no** `package.json` / build / dev / unit-test pipeline, **no** `src/`, **no** simulator. Verification here = validators + subagent runs only. `writing-great-skills` is a reference skill (`disable-model-invocation: true`) — it is NOT trigger-routed and has no entry in `skills-routing.json`.
+What is NOT in this domain (must not be conflated): there is **no** `package.json` / build / dev / unit-test pipeline, **no** `src/`, **no** simulator. Verification here = validators + subagent runs only. `writing-great-skills` is a reference skill (`disable-model-invocation: true`) — it is NOT trigger-routed and has no entry in `skills-routing.json`. The general rule: `disable-model-invocation: true` ⇒ no `skills-routing.json` entry, and it has two sub-kinds — **reference skills** (methodology, no triggers) and **alias skills** (see Edge Cases below).
 
 ## Edge Cases
 
 - The deleted `framework.md` once described a TypeScript/React-Native + `pnpm` app — that was a **project leak**, not this vault. Never reintroduce stack-specific verification (`pnpm test`, Vitest) as if it were the vault's.
 - `RED/GREEN` in a quoted `test-driven-development` example refers to the consumer repo's tests — do not "fix" it to mean subagent runs.
 - A `_`-prefixed path under `.claude/skills/` (e.g. `_metrics.jsonl`) is runtime state, not a skill — it owns no glossary row.
+- An **alias skill** is a thin `disable-model-invocation` facade under `skills/entrypoints/` (`sdd`, `grill`, `spec`, `audit`) whose body delegates to exactly one canonical skill and forwards `$ARGUMENTS` — it holds no logic of its own and is correctly absent from `skills-routing.json`. The invariant `name === dir === SKILL.md name:` still holds; only the routing-key expectation differs (it has none).
 
 ## Review Checklist
 
