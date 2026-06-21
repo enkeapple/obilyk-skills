@@ -1,6 +1,6 @@
 # Framework Charter
 
-How to work in this repo, regardless of which skill or rule you touch. This is a **skills vault**, not an app: no `package.json`, no build, no unit-test suite, no `src/`. Verification here is **the skill validators + RED/GREEN subagent runs** — never `pnpm`/Vitest/simulator (that would be a consumer-repo leak). Domain vocabulary lives alongside in [glossary.md](./glossary.md); read it first if a request says "test", "RED/GREEN", "skill vs rule", or names the vault vs a consumer repo.
+How to work in this repo, regardless of which skill or rule you touch. This is a **skills vault**, not an app: no `package.json`, no build, no unit-test suite, no `src/`. Verification here is **the skill validators + RED/GREEN subagent runs**, plus **fixture-execution of a hook against crafted stdin** for a hook change — never `pnpm`/Vitest/simulator (that would be a consumer-repo leak). Domain vocabulary lives alongside in [glossary.md](./glossary.md); read it first if a request says "test", "RED/GREEN", "skill vs rule", or names the vault vs a consumer repo.
 
 ## Implementation Protocol
 
@@ -37,7 +37,8 @@ A change is not done until you run and SHOW the vault's real checks (no "should 
 
 - **Validators** — frontmatter ≤1024, `name` regex, every `references/*.md` and `assets/*.md` link resolves, fences balanced, word count sane. Paste the result.
 - **GREEN subagent run** — re-run the RED scenarios WITH the skill; paste the compliance. Markdown existing is not "done".
-- There is **no** `pnpm`/build/test pipeline and no simulator — do not claim to have run one. Read-only `git` is the only routine shell use; the human owns the commit.
+- **Hook fixture run** — for a *hook* change, pipe crafted stdin to the script and assert the decision (exit code / stdout `permissionDecision` / stderr message), plus garbage stdin → fail-open. A hook is deterministic executable code, so this fixture-execution IS its RED/GREEN — see `writing-hooks`. Still **no** `pnpm`/build/suite.
+- There is **no** `pnpm`/build/test pipeline and no simulator — do not claim to have run one (the hook fixture run above is the one sanctioned execution, of the hook script itself). Read-only `git` is the only routine shell use; the human owns the commit.
 
 ## Question Discipline
 

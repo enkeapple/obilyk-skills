@@ -16,6 +16,7 @@ Ask these before writing either CLAUDE.md. One question at a time, lead with a r
 - **Stack & versions** — read `package.json`/lockfile/Makefile/CI; confirm the pins you found.
 - **Real commands** — the actual run/build/typecheck/lint/test scripts. Quote them; don't paraphrase.
 - **Folder layout & where rules live** — `.claude/rules/` structure, skills, slash commands.
+- **Design-docs location** (only if the repo applies the `writing-specs`/`writing-plans` chain) — where spec/plan markdown already lives. If exactly one dir, confirm it; if none, default to `docs/specs/` + `docs/plans/`; if two competing dirs exist, surface it and confirm the single canonical one. This becomes the design-docs convention line in "What this project is".
 - **Domains** — overlapping concepts that need a glossary (hand off to `bootstrapping-glossary`).
 - **Placeholder keys** — for each key in [placeholder-keys.md](placeholder-keys.md) tagged `intake` (`<layers>`, `<ui-exercise-method>`, `<product-and-platforms>`) or left ambiguous after the disk read, ask the human; auto-tagged keys you resolved from disk are confirmed, not asked.
 

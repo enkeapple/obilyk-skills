@@ -184,6 +184,22 @@
       ],
       "files": [".claude/skills/writing-rules/SKILL.md"]
     },
+    "writing-hooks": {
+      "triggers": [
+        "write a hook",
+        "add a hook",
+        "create a hook",
+        "make a hook",
+        "PreToolUse hook",
+        "PostToolUse hook",
+        "gate (this )?tool",
+        "написать хук",
+        "добавить хук",
+        "создать хук",
+        "блокировать инструмент"
+      ],
+      "files": [".claude/skills/writing-hooks/SKILL.md"]
+    },
     "writing-lessons": {
       "triggers": [
         "lesson learned",
@@ -306,6 +322,29 @@
         "shallow module"
       ],
       "files": [".claude/skills/codebase-design/SKILL.md"]
+    },
+    "bootstrapping-readme": {
+      "triggers": [
+        "set up the README",
+        "generate the skills catalog",
+        "bootstrap the README",
+        "build the skills index",
+        "настроить README",
+        "собрать каталог скиллов"
+      ],
+      "files": [".claude/skills/bootstrapping-readme/SKILL.md"]
+    },
+    "auditing-readme": {
+      "triggers": [
+        "audit the README",
+        "is the skills catalog (still )?accurate",
+        "README drift",
+        "check the skills index",
+        "update the README catalog",
+        "проверить README",
+        "каталог скиллов устарел"
+      ],
+      "files": [".claude/skills/auditing-readme/SKILL.md"]
     }
   }
 }

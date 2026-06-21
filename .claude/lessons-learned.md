@@ -4,6 +4,15 @@ Transient backlog of un-promoted candidate rules — newest at the top of `## En
 
 ## Entries
 
+### 2026-06-21 — A dispatched RED-baseline subagent wrote a scratch hook into the repo root; completion + spec-drift-audit missed it (owner caught it)
+
+- **Cause-tag:** `subagent-scratch-leak`
+- **Symptom:** Authoring `writing-hooks`, Task 1 (RED) dispatched a cold subagent to author an example `.env`-blocking hook WITHOUT the skill. The subagent wrote its script to the **repo root** (`vault-expansion-block-env-read.sh`) instead of `/tmp`. I then ran GREEN subagent runs, validators, and a full `spec-drift-audit` — all green — and declared the change verified, never noticing the stray untracked file. The owner caught it ("ты добавил новый хук… ты его не в то место положил"). It was never part of the deliverable; I removed it.
+- **Root cause:** Every verification I ran was scoped to the **planned change set** — validators on the new skill files, the audit's Files-touched table and named out-of-scope cuts. A subagent's *side effect* (a file authored OUTSIDE that set) is structurally invisible to all of them: the audit checks the cuts it was told about, not arbitrary new paths. Same blind-spot family as "a verification pattern narrower than the change's blast radius" (`relocate-reference-undercount`), but the escaping artifact here is a dispatched agent's filesystem write, not a missed reference.
+- **Wrong approach:** Trusting change-set-scoped checks (validators + audit Files-touched/out-of-scope) as a complete "is the tree clean?" gate, and dispatching authoring subagents without constraining where they write.
+- **Correct approach:** Treat `git status --short` as a required completion gate: after any turn that dispatches file-authoring subagents (RED/GREEN especially), reconcile EVERY untracked/changed path against the intended change set and delete/relocate strays before declaring done or running the audit. Constrain dispatched authoring subagents up front — instruct them to write scratch artifacts under `/tmp`, never the repo.
+- **Prevention:** When a subagent prompt asks it to *produce a script/file*, add "write any scratch/example files under /tmp, not the repo" to the prompt. Before the closing audit/"done", run `git status --short` and account for each path; any file outside the planned change set is a leak to remove. Do not rely on `spec-drift-audit` to find it — its out-of-scope sweep checks named cuts, not arbitrary stray files.
+
 ### 2026-06-21 — Added `allowed-tools: Read, Grep, Glob` to three audit/bootstrap skills calling them "read-only"; their bodies document Edit/Write, and allowed-tools does not restrict anyway
 
 - **Cause-tag:** `allowed-tools-semantics`

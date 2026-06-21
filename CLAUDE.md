@@ -18,6 +18,8 @@ Authoring or changing a skill runs through **RED → GREEN → REFACTOR → VALI
 
 Agnostic skills authored under `skills/` (grouped into category folders) and discovered by Claude Code through flat symlinks in `.claude/skills/`, plus the harness around them: hooks authored under `hooks/` and surfaced via flat symlinks in `.claude/hooks/` (gates + logging), `.claude/rules/domains/` (framework + domain glossary) and `.claude/rules/common/` (cross-cutting rules), `.claude/skills-routing.json`, `.claude/state/`. No application code, no `package.json`, no build.
 
+The vault's own design docs follow a single convention: **specs live in `docs/specs/YYYY-MM-DD-<topic>.md`, plans in `docs/plans/YYYY-MM-DD-<topic>.md`** — never bare `specs/` or `plans/` at the root. This is the convention `writing-specs`/`writing-plans` detect via "where the project keeps design docs"; keeping it single-valued is what makes the output path deterministic.
+
 ## Common commands
 
 No build / dev / test pipeline — this is a skills vault, not an app. Verification is **(a)** the skill validators (frontmatter ≤1024, name regex, reference links resolve, fence balance, word count) and **(b)** subagent RED/GREEN pressure runs. Both are defined in the operating manual → "Workflow" / "Completeness Checklist", not run as project scripts. Read-only `git` inspection is the only routine shell use.
@@ -40,6 +42,7 @@ No build / dev / test pipeline — this is a skills vault, not an app. Verificat
 | Create / audit the base domain rules (glossary, framework) | `bootstrapping-glossary` / `auditing-glossary` |
 | Capture a lesson; promote a recurring one to a rule | `writing-lessons` → `writing-rules` |
 | Author or change any skill (test-first) | `writing-skills` |
+| Author or change a Claude Code hook (test-first) | `writing-hooks` |
 | Design a deep module / find a seam (shared deep-module vocabulary) | `codebase-design` |
 | Architecture review — surface deepening opportunities (user-invoked, not trigger-routed) | `improve-codebase-architecture` |
 | Approaching the context limit / ending with unfinished work | `handoff` |

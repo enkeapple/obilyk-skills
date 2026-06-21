@@ -6,7 +6,7 @@ The entry point. Mirror this section order exactly — it is the structure prove
 
 1. `# <Project> — Claude entry point`
 2. `## How to work here (read first)` — the pipeline one-liner + pointer to `.claude/CLAUDE.md`, then a distinct **Hard rules** block.
-3. `## What this project is` — product + stack, grounded.
+3. `## What this project is` — product + stack, grounded; plus, for an SDD-chain repo, the single design-docs location convention.
 4. `## Common commands` — the real dev commands table.
 5. `## Skill routing` — task → skill table.
 6. `## Slash commands` — (only if the repo has `.claude/commands/`).
@@ -32,6 +32,9 @@ Every non-trivial task runs through **<PIPELINE>** and ends with the Completenes
 ## What this project is
 
 <One or two sentences: product + platforms.> <Then the stack as the repo actually uses it.> Stack pins live in [`<stack-manifest>`](./<stack-manifest>) and [.claude/rules/](./.claude/rules/) — read them, do not infer.
+
+Design docs follow one convention: specs in `docs/specs/YYYY-MM-DD-<topic>.md`, plans in `docs/plans/YYYY-MM-DD-<topic>.md` (the `writing-specs`/`writing-plans` defaults) — a single declared location so the output path stays deterministic.
+<!-- Include the design-docs line ONLY if the repo applies the writing-specs/writing-plans chain; drop it otherwise. If the repo already keeps design docs elsewhere, name that ONE location instead of the defaults — but never leave it multi-valued: two competing dirs (e.g. both `specs/` and `docs/specs/`) make the output path a coin-flip from session to session. -->
 
 ## Common commands
 
@@ -90,4 +93,5 @@ Process basics (<Implementation Protocol, Suspicion Protocol, evidence-based ver
 - **Hard rules** (here) ≠ **Non-negotiables** (in the operating manual). Hard rules are the 3-5 entry-point reminders a fresh session needs immediately; Non-negotiables are the discipline set that must survive context summarization. Overlap is fine; the root version is shorter.
 - **Common commands** is the real dev/verification commands the human actually runs (run / typecheck / lint / build / test). Do not pad it with internal validator one-liners or invent a `test` script — if there is no test pipeline, say so in one line. A wrong command here wastes every session.
 - **Skill routing** is first-class: a task→skill table so the agent loads the right skill before editing. Omit a row only if the skill genuinely doesn't exist.
+- **Design-docs convention** is for repos that apply the `writing-specs`/`writing-plans` chain: declare ONE location (the `docs/specs/` + `docs/plans/` defaults, or the repo's existing single home) so the skills' "where the project keeps design docs" detection resolves deterministically. Two competing dirs are exactly what makes the output path drift; omit the line entirely for a repo that doesn't run the chain.
 - Keep the root an index. Anything about *how* to work goes in `.claude/CLAUDE.md`.
