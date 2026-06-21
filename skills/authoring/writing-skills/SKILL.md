@@ -1,7 +1,7 @@
 ---
 name: writing-skills
 description: Test-first methodology for authoring, editing, and validating skills (RED→GREEN). User-invoked.
-disable-model-invocation: false
+disable-model-invocation: true
 allowed-tools: Read, Write, Edit, Grep, Glob, Bash, Task, Skill
 ---
 
