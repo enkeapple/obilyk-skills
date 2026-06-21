@@ -12,7 +12,7 @@ STOP and apply this whenever you author or edit any skill — a `.claude/skills/
 
 ## Why
 
-A skill is a *shared, portable capability*, not project config. It is meant to drop into any consumer repo unchanged and still do its job. A token in the body that assumes *this* project — a package manager or test runner, a directory path, a shell command, a framework or library presented as the default, or domain vocabulary only this repo's glossary defines — couples the skill to one codebase and silently makes it wrong everywhere else. Such leakage is a **defect**, not a cosmetic nit: it is the difference between a reusable instruction and a buried piece of one repo's configuration. The test that settles every case is a single question — *if I delete every project-specific noun, does the skill still do its job?* Everything below is how to keep the answer "yes".
+A skill is a *shared, portable capability*, not project config. It is meant to drop into any consumer repo unchanged and still do its job. A token in the body that assumes *this* project — a package manager or test runner, a directory path, a shell command, a framework or library presented as the default, or domain vocabulary only this repo's glossary defines — couples the skill to one codebase and silently makes it wrong everywhere else. Such leakage is a **defect**, not a cosmetic nit: it is the difference between a reusable instruction and a buried piece of one repo's configuration. One question settles every case: *if I delete every project-specific noun, does the skill still do its job?*
 
 ## Implementation
 
