@@ -46,7 +46,7 @@ Then set the status-block `Next:` to the absolute path of the handoff doc.
 ## Red Flags — STOP, you are rationalizing
 
 - "I'll just finish this unit of work first, the context is already loaded." — Pushing past a clean boundary can force another gated skill invocation that loads *more* rules into the context you are trying not to overflow, and risks a forbidden half-finished unit. Checkpoint at the clean boundary instead.
-- "I'll jot a quick note to myself." — Forbidden (non-negotiable #7: no local memory). A note in your head is exactly what the fresh session does not inherit.
+- "I'll jot a quick note to myself." — Forbidden (the **no-local-memory** non-negotiable — facts go to git, not a scratch note). A note in your head is exactly what the fresh session does not inherit.
 - "The plan file is still there, the next session can re-read it." — The plan is the contract, not progress; and it is deleted at VERIFY. Reference it from the handoff; never rely on it as the handoff.
 - "I'll just `/compact` and keep going." — `/compact` is lossy in-session summarization with no durable artifact; a brand-new session gets nothing. It feeds the "finish the slice" temptation rather than producing resumable state on disk.
 

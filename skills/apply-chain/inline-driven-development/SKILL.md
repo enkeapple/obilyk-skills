@@ -17,7 +17,7 @@ Execute an approved plan **yourself, task by task, in this session**: review the
 
 **Project-agnostic:** discover the repo's real test/build/commit commands and paths from the target repo — this skill names none. Each task's code is written test-first via `test-driven-development`; this skill governs *order and cadence*, not the test discipline itself.
 
-**Progress:** this is the chain's *implement* phase; its single task-list item is driven per [phase-task-visualization](../../../.claude/rules/common/phase-task-visualization.md). That phase item is distinct from the per-task ledger below — when a phase list already renders, keep the ledger in plan-file markers so the two don't collide.
+**Progress:** this is the chain's *implement* phase; its single task-list item is driven per [phase-task-visualization](../../../.claude/rules/common/phase-task-visualization.md), which also owns how that phase item and the per-task ledger below coexist without colliding.
 
 ## When to use
 
