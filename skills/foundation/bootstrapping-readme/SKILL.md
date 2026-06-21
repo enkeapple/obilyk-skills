@@ -29,8 +29,8 @@ Pairs with `auditing-readme`, which checks the block this skill writes for drift
 ## Process
 
 1. **Discover.** Resolve ROOT and glob every `SKILL.md` under it ([catalog-derivation](./references/catalog-derivation.md) → Definitions). Read each one's frontmatter `name` and `description`.
-2. **Derive each row** — link, description (strip the trigger tail, collapse, truncate to ~120 at a word boundary), and kind (from routing, NOT `disable-model-invocation`). Group by category; order categories then rows alphabetically.
-3. **Build the block** — the marker pair, the generated-by comment, `###` per category with its table (or one flat table). Tables use standard GitHub-Flavored Markdown (a spaced delimiter row, blank lines around the table). See [assets/readme-block-example.md](./assets/readme-block-example.md).
+2. **Derive each row** — link and description (strip the trigger tail, collapse, truncate to ~120 at a word boundary). Group by category; order categories then rows alphabetically.
+3. **Build the block** — the marker pair, the generated-by comment, `###` per category with its bullet list (or one flat bullet list). Each item is `- [<name>](<link>) — <description>` in standard GitHub-Flavored Markdown (a blank line before and after each list). See [assets/readme-block-example.md](./assets/readme-block-example.md).
 4. **Write it in, never over prose.** No README → create `# <repo>` H1 + `## Skills` + the block. README without markers → insert the block under a `## Skills` heading. README with markers → replace only the content between them. Everything outside the markers (intro, install, badges, license) is untouched.
 5. **Stop on an ambiguous file state** — see Edge cases; never guess past it.
 
@@ -46,7 +46,7 @@ Handle exactly as the [catalog-derivation contract](./references/catalog-derivat
 ## Red Flags — STOP
 
 - Writing a description by hand instead of deriving it from frontmatter.
-- Inferring kind from `disable-model-invocation` instead of routing.
+- Rendering the catalog as a table or re-adding a kind column instead of the derived bullet list.
 - Overwriting prose outside the markers, or inserting a second `## Skills` section.
 - Editing a README whose markers are malformed instead of refusing and reporting.
 - Inventing a skill, or omitting one the glob found, so the block disagrees with disk.

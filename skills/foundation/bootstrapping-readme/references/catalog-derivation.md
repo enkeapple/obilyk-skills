@@ -2,7 +2,7 @@
 
 The single source of truth for how a skills catalog is derived from disk. **Both `bootstrapping-readme` (which writes the block) and `auditing-readme` (which checks it) follow this contract verbatim** — they agree by construction only if this file is identical in both skills, so any change here must be applied to both copies in the same change.
 
-Every row in the catalog is derived, never hand-authored. Deriving the same input twice must produce byte-identical output (descriptions, ordering, kind) — that determinism is what makes the block auditable.
+Every row in the catalog is derived, never hand-authored. Deriving the same input twice must produce byte-identical output (descriptions, ordering) — that determinism is what makes the block auditable.
 
 ## Definitions
 
@@ -21,18 +21,10 @@ CATEGORY    The first path segment of (skill-directory path relative to ROOT).
             `foundation/auditing-readme` → `foundation`; a path nested deeper than
             one level keeps the FIRST segment. A skill directory directly under ROOT
             is uncategorized. If NO skill has a category segment, render flat
-            (one table, no `###` headings).
+            (one bullet list, no `###` headings).
 
 ROW LINK    The repo-root-relative path to the source SKILL.md
             (e.g. `skills/foundation/auditing-readme/SKILL.md`). Link text = `name`.
-
-KIND        Derived from ROUTING, never from `disable-model-invocation` (an
-            unreliable signal — a skill may carry it `false` yet be user-invoked):
-              `alias`        if CATEGORY == `entrypoints`
-              `auto-routed`  else if `name` is a key in `.claude/skills-routing.json` .skills
-              `user-invoked` otherwise
-            `user-invoked` IS the not-hidden flag a reference/methodology skill
-            carries — there is no separate `reference` value.
 
 DESCRIPTION The frontmatter `description`, folded to a single string, then:
               1. strip from the first match of /\s*Triggers?( on)?:.*/is to the end
@@ -48,12 +40,10 @@ ORDER       Categories alphabetical (a flat render has none); rows alphabetical 
 
 ## Row shape
 
-A GFM table per category with three columns, in standard GitHub-Flavored Markdown (a spaced delimiter row `| --- | --- |`, blank lines around the table):
+One bullet-list item per skill, in standard GitHub-Flavored Markdown (a blank line before and after each list), `name`-linked with the description after an em dash — no table, no kind column:
 
 ```text
-| Skill | What it does | Kind |
-| --- | --- | --- |
-| [<name>](<ROW LINK>) | <DESCRIPTION> | <KIND> |
+- [<name>](<ROW LINK>) — <DESCRIPTION>
 ```
 
 ## Managed block
@@ -66,14 +56,13 @@ The derived catalog lives inside a marker pair so it can be regenerated without 
 
 ### <category>
 
-| Skill | What it does | Kind |
-| --- | --- | --- |
-| … |
+- [<name>](<ROW LINK>) — <DESCRIPTION>
+- …
 
 <!-- skills:end -->
 ```
 
-The `## Skills` heading that owns the block is human-authored and lives OUTSIDE the markers; the block contains only `###` category subsections and their tables (or a single table when flat).
+The `## Skills` heading that owns the block is human-authored and lives OUTSIDE the markers; the block contains only `###` category subsections and their bullet lists (or a single bullet list when flat).
 
 ## Edge cases
 
