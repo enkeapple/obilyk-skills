@@ -19,7 +19,9 @@ mkdir -p "$STATE_DIR"
 [[ -f "$TURN_FILE" ]] || echo '{"bytes":0,"tools":[]}' > "$TURN_FILE"
 [[ -f "$SESSION_FILE" ]] || echo "{\"bytes\":0,\"started_at\":\"$(date -u +%FT%TZ)\"}" > "$SESSION_FILE"
 
-INPUT=$(cat)
+INPUT=$(cat 2>/dev/null) || exit 0
+# Fail open: unreadable / non-JSON stdin must not disrupt the tool call (or spam jq errors).
+printf '%s' "$INPUT" | jq -e . >/dev/null 2>&1 || exit 0
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // "unknown"')
 # tool_response is either string or object; stringify for size measurement
 RESP_BYTES=$(echo "$INPUT" | jq -r '.tool_response | if type=="string" then . else tostring end' | wc -c | tr -d ' ')

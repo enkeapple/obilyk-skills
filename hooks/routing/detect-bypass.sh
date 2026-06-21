@@ -24,7 +24,9 @@ mkdir -p "$STATE_DIR" "$(dirname "$METRICS")"
 [[ -f "$TURN_SKILLS_FILE" ]] || echo '[]' > "$TURN_SKILLS_FILE"
 [[ -f "$TURN_TOOL_COUNT_FILE" ]] || echo '{"count":0}' > "$TURN_TOOL_COUNT_FILE"
 
-INPUT=$(cat)
+INPUT=$(cat 2>/dev/null) || exit 0
+# Fail open: unreadable / non-JSON stdin must not disrupt the tool call (or spam jq errors).
+printf '%s' "$INPUT" | jq -e . >/dev/null 2>&1 || exit 0
 TOOL=$(echo "$INPUT" | jq -r '.tool_name // ""')
 
 # Track Skill invocations -- reset bypass-warned flag, record skill name, exit.

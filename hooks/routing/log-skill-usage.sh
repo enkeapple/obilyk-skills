@@ -13,7 +13,9 @@ LAST_PROMPT_FILE="$STATE_DIR/last-prompt.txt"
 mkdir -p "$STATE_DIR" "$(dirname "$METRICS")"
 [[ -f "$ROUTING" ]] || exit 0
 
-INPUT=$(cat)
+INPUT=$(cat 2>/dev/null) || exit 0
+# Fail open: unreadable / non-JSON stdin must not disrupt turn end (or spam jq errors).
+printf '%s' "$INPUT" | jq -e . >/dev/null 2>&1 || exit 0
 # Stop hook receives session info. Read transcript_path if provided.
 TRANSCRIPT=$(echo "$INPUT" | jq -r '.transcript_path // ""')
 
