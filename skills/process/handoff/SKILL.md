@@ -14,7 +14,7 @@ argument-hint: "What will the next session focus on?"
 
 ## Overview
 
-This skill owns creation of the session's temporary documents. Rules invoke it instead of writing `/tmp/...` by hand, so temp-file creation is consistent and a fresh agent can always resume. **All files go to the OS temp directory (`$TMPDIR`), never the workspace.**
+This skill owns creation of the session's temporary documents. Rules invoke it instead of writing `/tmp/...` by hand, so temp-file creation is consistent and a fresh agent can always resume. **Resolve a temp dir once — `$TMPDIR`, falling back to `/tmp` (or `%TEMP%` on Windows) when it is unset — and write every file there (called `<tmpdir>` below), never the workspace and never a path the next session cannot read back** (a bare `$TMPDIR` resolves to `/…` when unset, and an ephemeral per-session temp — fresh container, wiped CI runner — leaves the resuming session nothing; pick a durable shared path in that case).
 
 There are **two distinct documents** — do not merge them:
 
@@ -27,11 +27,11 @@ The plan is intent (pre-execution). The handoff is progress (mid-execution). A p
 
 ## Writing the plan doc
 
-When the threshold is met: write the approved plan to `$TMPDIR/plan-<slug>.md` (short kebab-case slug). Contents: Goal, Affected-layers table (NONE/PARTIAL/FULL), Contracts (API/slice/nav/zod), out-of-scope. Re-read it at the start of each tool-call burst (anti-amnesia). Update it **first** when scope expands. Delete it after VERIFY + the Completeness Checklist walk.
+When the threshold is met: write the approved plan to `<tmpdir>/plan-<slug>.md` (short kebab-case slug). Contents: Goal, Affected-layers table (NONE/PARTIAL/FULL), Contracts (API/slice/nav/zod), out-of-scope. Re-read it at the start of each tool-call burst (anti-amnesia). Update it **first** when scope expands. Delete it after VERIFY + the Completeness Checklist walk.
 
 ## Writing the handoff doc
 
-Before writing, snapshot ground truth (not memory): `git status --short`, and the consumer repo's typecheck/lint command (illustrative — e.g. `pnpm typescript` / `pnpm lint` in a JS/TS repo) so the doc records a real green/red baseline. Then write `$TMPDIR/handoff-<slug>.md`:
+Before writing, snapshot ground truth (not memory): `git status --short`, and the consumer repo's typecheck/lint command (illustrative — e.g. `pnpm typescript` / `pnpm lint` in a JS/TS repo) so the doc records a real green/red baseline. Then write `<tmpdir>/handoff-<slug>.md`:
 
 - **Progress ledger** keyed to the consumer repo's own layer / work order (illustrative — e.g. Types/API/Slice/Hook/Screen/Nav/i18n in an RN app) each `[done|partial: …|not started]`, with exact file paths touched and still owed.
 - **Verification baseline** — the pasted typecheck/lint result.
@@ -52,6 +52,6 @@ Then set the status-block `Next:` to the absolute path of the handoff doc.
 
 ## Common mistakes
 
-- Writing into the workspace instead of `$TMPDIR`.
+- Writing into the workspace, or to a bare `$TMPDIR` that may be unset, instead of the resolved `<tmpdir>`.
 - Dumping the whole conversation — keep it a resume contract, not a transcript.
 - A vague `Next:` ("continue where we left off") — name the exact file and edit.

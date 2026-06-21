@@ -94,7 +94,7 @@ Mechanical checks against the plan **text itself**, with the context you already
 
 ### Independent cold reviewer (the author-blind pass)
 
-For anything beyond a small plan, dispatch an **independent reviewer — a fresh subagent with zero shared context, handed the spec** — using [assets/plan-reviewer-prompt.md](./assets/plan-reviewer-prompt.md). Its remit is what you cannot judge from inside your own context, so it is **not** a re-run of the scan above:
+For anything beyond a small plan — **beyond small** = more than ~2 tasks/files, a shared contract, or cross-task coupling; a single-task, single-file plan is *small* — dispatch an **independent reviewer — a fresh subagent with zero shared context, handed the spec** — using [assets/plan-reviewer-prompt.md](./assets/plan-reviewer-prompt.md). Its remit is what you cannot judge from inside your own context, so it is **not** a re-run of the scan above:
 
 - **Spec coverage, re-derived:** it reads the spec independently and checks each requirement maps to a task — you *believe* you covered it; it verifies you did. A gap you can't see is one you didn't know you left.
 - **Zero-context buildability:** could an engineer with no context follow this task-by-task, possibly out of order, without getting stuck or guessing? You hold the context, so you cannot feel its absence — only a cold reader can.

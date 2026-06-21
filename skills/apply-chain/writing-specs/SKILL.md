@@ -87,7 +87,7 @@ This pass cannot catch what you are blind to: a requirement you *misread* yields
 
 ### Independent cold reviewer (the author-blind pass)
 
-For anything beyond a small spec, dispatch an **independent reviewer — a fresh subagent with zero shared context** — using [assets/spec-reviewer-prompt.md](./assets/spec-reviewer-prompt.md). Its remit is the class your self-review structurally cannot reach, so it is **not** a second run of the checklist above:
+For anything beyond a small spec — **beyond small** = it touches more than one surface/module, defines or changes a shared contract (API, schema, interface), or includes a destructive/irreversible operation; a single-surface change with no shared contract is *small* — dispatch an **independent reviewer — a fresh subagent with zero shared context** — using [assets/spec-reviewer-prompt.md](./assets/spec-reviewer-prompt.md). Its remit is the class your self-review structurally cannot reach, so it is **not** a second run of the checklist above:
 
 - **Conformance to source:** hand it the original request / approved design *alongside* the spec. It re-derives what was asked from the source and flags where the spec diverges (the consistent-but-wrong misread). Without the source on its desk it cannot do this — pass it in.
 - **Ambiguity:** any requirement two engineers would build differently.

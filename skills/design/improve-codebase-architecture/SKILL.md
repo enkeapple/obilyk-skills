@@ -33,7 +33,9 @@ Apply the **deletion test** to anything you suspect is shallow: would deleting i
 
 ### 2. Present candidates visually
 
-Present the candidates as a **visual report**, not a prose list — the diagrams carry the weight. The recommended, illustrative format is a self-contained HTML file (Tailwind + Mermaid via CDN) written to the OS temp directory so nothing lands in the repo; a consumer repo may substitute another visual medium if it has one. See [HTML-REPORT.md](HTML-REPORT.md) for the full scaffold, diagram patterns, and styling guidance.
+The deliverable is **always a written, self-contained visual artifact** — never a prose or markdown bullet list in the chat. The diagrams carry the weight; a chat list is the exact failure this skill exists to prevent, and "I'm in a hurry", "just read them aloud", "markdown is fine", or "skip the report" are the pressure to resist, not an exception that converts the deliverable into chat prose. The recommended, illustrative format is a self-contained HTML file (Tailwind + Mermaid via CDN) written to the OS temp directory so nothing lands in the repo. A consumer repo may substitute another medium **only if it stays visual, self-contained, and written to a file** — substitution swaps the format, it never downgrades it to a chat list. See [HTML-REPORT.md](HTML-REPORT.md) for the full scaffold, diagram patterns, and styling guidance.
+
+If the user insists on chat prose *after* being told the report is one temp file with zero repo footprint, that is an explicit, informed override of the skill — name what it costs ("dropping the visual report loses the before/after diagrams that carry the deepening case") and do not slide into it silently as though the first request settled it.
 
 Resolve the temp dir from `$TMPDIR`, falling back to `/tmp` (or `%TEMP%` on Windows), and write to `<tmpdir>/architecture-review-<timestamp>.html` so each run gets a fresh file. Open it for the user — `xdg-open <path>` on Linux, `open <path>` on macOS, `start <path>` on Windows — and tell them the absolute path.
 
@@ -52,7 +54,23 @@ End the report with a **Top recommendation** section: which candidate you'd tack
 
 **ADR conflicts**: if a candidate contradicts an existing ADR, only surface it when the friction is real enough to warrant revisiting the ADR. Mark it clearly in the card (e.g. a warning callout: _"contradicts ADR-0007 — but worth reopening because…"_). Don't list every theoretical refactor an ADR forbids.
 
-Do NOT propose interfaces yet. After the file is written, ask the user: "Which of these would you like to explore?"
+Do NOT propose interfaces yet. Confirm the artifact was actually written (the file exists and you have its absolute path) **before** asking the pick question — never ask "which would you like to explore?" off a chat list that was never written to a file. After the file is written, ask the user: "Which of these would you like to explore?"
+
+### Holding the visual form under pressure
+
+| Excuse | Reality |
+| --- | --- |
+| "User's in a hurry — just give bullets." | The hurry is the pressure the skill exists to resist; the report is one temp file, seconds to write, zero repo footprint. |
+| "They want to read it aloud at the review." | Produce the visual artifact and read talking points *from* it — don't replace it with a chat list. |
+| "A markdown list is basically the same." | A list drops the before/after diagrams that carry the deepening case — the load-bearing part of the deliverable. |
+| "The format is 'illustrative / recommended', so prose is fine." | Illustrative means HTML vs another *visual, file-written* medium; it never licenses a non-visual chat list. |
+
+**Red Flags — STOP:**
+
+- Emitting the recommendations as a chat prose / markdown bullet list instead of a written visual artifact.
+- Treating "skip the report / I'm in a hurry / markdown is fine" as license to downgrade rather than the pressure to resist.
+- Citing "illustrative / recommended" to drop the visual form (it only permits another visual, self-contained, file-written medium).
+- Asking "which would you like to explore?" off a list that was never written to a file.
 
 ### 3. Grilling loop
 
