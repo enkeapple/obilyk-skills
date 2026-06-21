@@ -12,7 +12,7 @@ allowed-tools: Read, Grep, Glob, Edit
 
 Verify the README skills catalog against the skills on disk, report the drift per criterion, then correct it. **A stale catalog is worse than none**: it tells a browsing human the repo has skills it dropped, or hides ones it gained.
 
-**Every row is a derived claim, not prose to skim.** Re-derive the catalog from frontmatter via the [catalog-derivation contract](./references/catalog-derivation.md) — the SAME contract `bootstrapping-readme` writes from — and compare. Eyeballing "looks complete" is not an audit; a row that disagrees with disk is drift, not a detail. The catalog is a derived **bullet list** (`- [name](link) — description`); a block rendered as a table or carrying a kind column is itself drift from the contract.
+**Every row is a derived claim, not prose to skim.** Re-derive the catalog from frontmatter via the [catalog-derivation contract](./references/catalog-derivation.md) — the SAME contract `bootstrapping-readme` writes from — and compare. Eyeballing "looks complete" is not an audit; a row that disagrees with disk is drift, not a detail. The catalog is a derived **bullet list** of bold links (`- **[name](link)** — description`); a block rendered as a table, missing the bold link, or carrying a kind column is itself drift from the contract. Audit only the managed block — the scaffold prose around it (intro, Quickstart, Installation, Philosophy, …) is human-owned and out of scope.
 
 Pairs with `bootstrapping-readme`, which generates the block this skill keeps true.
 
@@ -38,7 +38,7 @@ Pairs with `bootstrapping-readme`, which generates the block this skill keeps tr
 Produce a report before editing (see [assets/audit-report-example.md](./assets/audit-report-example.md)):
 
 1. **Findings** — table: criterion → what disk shows → status, over the five criteria:
-   1. markers well-formed; 2. every SKILL.md appears exactly once; 3. grouping + ordering match disk; 4. each description matches the derived one; 5. each row link resolves and the row is the bullet shape (no table, no kind column).
+   1. markers well-formed; 2. every SKILL.md appears exactly once; 3. grouping + ordering match disk; 4. each description matches the derived one; 5. each row link resolves and the row is the bold-link bullet shape `- **[name](link)** — …` (no table, no kind column).
 2. **Summary** — counts per status.
 3. **Recommended disposition** — for any drift, **regenerate the block** (rerun `bootstrapping-readme`); the block is fully derived, so re-deriving resolves every drift at once.
 

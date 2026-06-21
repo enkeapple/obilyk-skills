@@ -10,7 +10,7 @@ Illustrative (a real report covers the README on disk and every skill the glob f
 | 2 | Every SKILL.md once | `old-planning-helper` listed but absent on disk; `writing-hooks` on disk but missing from block | Drift |
 | 3 | Grouping + ordering match disk | Block has 2 categories; disk has 7 (`design`, `entrypoints`, `foundation`, `process`, `prose` missing) | Drift |
 | 4 | Description matches frontmatter | `grilling` row reads "brainstorming feature ideas"; derived description is "Use before any creative or build work…" | Drift |
-| 5 | Links resolve + bullet shape | `skills/apply-chain/old-planning-helper/SKILL.md` does not exist; block still rendered as a table | Drift |
+| 5 | Links resolve + bold-link bullet shape | `skills/apply-chain/old-planning-helper/SKILL.md` does not exist; rows rendered as plain links (no bold) instead of `- **[name](link)** — …` | Drift |
 
 ## Summary
 

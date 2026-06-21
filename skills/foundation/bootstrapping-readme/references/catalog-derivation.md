@@ -40,10 +40,10 @@ ORDER       Categories alphabetical (a flat render has none); rows alphabetical 
 
 ## Row shape
 
-One bullet-list item per skill, in standard GitHub-Flavored Markdown (a blank line before and after each list), `name`-linked with the description after an em dash — no table, no kind column:
+One bullet-list item per skill, in standard GitHub-Flavored Markdown (a blank line before and after each list), the `name` rendered as a **bold link** with the description after an em dash — no table, no kind column:
 
 ```text
-- [<name>](<ROW LINK>) — <DESCRIPTION>
+- **[<name>](<ROW LINK>)** — <DESCRIPTION>
 ```
 
 ## Managed block
@@ -56,7 +56,7 @@ The derived catalog lives inside a marker pair so it can be regenerated without 
 
 ### <category>
 
-- [<name>](<ROW LINK>) — <DESCRIPTION>
+- **[<name>](<ROW LINK>)** — <DESCRIPTION>
 - …
 
 <!-- skills:end -->
