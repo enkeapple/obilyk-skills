@@ -48,7 +48,7 @@ Add a foundation skill **pair** — `bootstrapping-readme` (generates) and `audi
 ````
 
 - The `## Skills` H2 that owns the block is **human-authored, outside** the markers. Block content = `###` category subsections + GFM tables only.
-- Tables obey `markdown-style` (spaced delimiter row `| --- | --- |`, blank line around headings/tables).
+- Tables use standard GitHub-Flavored Markdown (spaced delimiter row `| --- | --- |`, blank line around headings/tables). The skill bodies state this directly and MUST NOT reference vault rules (e.g. `markdown-style`, `dogfood-generator-sync`) — an agnostic skill carries no dependency on the vault's harness (owner constraint).
 - Flat repos (no category dirs): a single table, no `###`.
 
 ### Catalog-derivation contract (encoded in `references/catalog-derivation.md` in BOTH skills)
@@ -133,7 +133,7 @@ auditing-glossary report shape (assets/audit-report-example.md).
 
 | File(s) | Kind | Why |
 | --- | --- | --- |
-| `specs/2026-06-21-readme-catalog-skill-pair.md` | NEW | This spec. |
+| `docs/specs/2026-06-21-readme-catalog-skill-pair.md` | NEW | This spec (repo convention is `docs/specs/`). |
 | `skills/foundation/bootstrapping-readme/SKILL.md` | NEW | Generator skill body. |
 | `skills/foundation/bootstrapping-readme/references/catalog-derivation.md` | NEW | The derivation contract (canonical copy). |
 | `skills/foundation/bootstrapping-readme/assets/readme-block-example.md` | NEW | Filled managed-block example. |

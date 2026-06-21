@@ -8,7 +8,9 @@
 
 - T1 `bootstrapping-readme`: **done** — RED observed (cold baseline: no markers, non-reproducible format, hand-rewritten descriptions, kind from the unreliable `disable-model-invocation` signal, sync pointed at the wrong `auditing-claude-md` skill). GREEN: skill produced markers + 27/27 skills once + deterministic descriptions + routing-based kind (writing-skills & improve-codebase-architecture → user-invoked, codebase-design → auto-routed proving kind ≠ folder/flag). Validators pass (frontmatter 388B, name regex, links resolve, fences 0, json valid, symlink + routing synced). Commit proposed.
 - T2 `auditing-readme`: **done** — RED observed (cold baseline: prose not a per-criterion report, kind mis-derived from `disable-model-invocation`, no disposition, conflated "no README" with audit). GREEN: skill produced the 6-criteria findings table, derived kind from routing (writing-skills → user-invoked), caught missing skills + dead link + stale description, recommended regenerate. Validators pass (frontmatter 391B, name match, fences 0, byte-identical catalog-derivation, symlink + routing synced). Owner correction applied (dropped the `auditing-glossary` analogy from the asset). Commit proposed.
-- T3 dogfood `README.md`: **in_progress** (depends T1, T2). Note: live skill count is 28 (T1 GREEN's 27 predated auditing-readme's creation).
+- T3 dogfood `README.md`: **done** — generated README.md (verbatim intro + managed block, 28 rows = 28 SKILL.md on disk, 7 categories). Independent auditing-readme cross-check: 6/6 criteria Confirmed, 0 drift — the generator's output passes the auditor (dogfood proof, D8). Commit proposed.
+
+Owner corrections applied this turn: (1) dropped the `auditing-glossary` analogy from auditing-readme's asset; (2) removed all vault-rule references (`dogfood-generator-sync`, `markdown-style`) from both skills' bodies/references — agnostic leak. catalog-derivation.md re-synced byte-identical after the scrub.
 
 ## Global constraints
 
@@ -20,7 +22,7 @@
 - **markdown-style:** generated block + all docs use spaced table delimiters `| --- | --- |` and blank lines around headings/tables.
 - **Git boundary:** the human owns the commit; each task ends with a proposed one-line Conventional Commit, not an autonomous `git commit`.
 
-The full contracts (catalog-derivation algorithm, managed-block format, kind table, audit drift criteria, routing entries, edge cases D9) live in `specs/2026-06-21-readme-catalog-skill-pair.md` — copy them verbatim, do not paraphrase.
+The full contracts (catalog-derivation algorithm, managed-block format, kind table, audit drift criteria, routing entries, edge cases D9) live in `docs/specs/2026-06-21-readme-catalog-skill-pair.md` — copy them verbatim, do not paraphrase.
 
 ---
 

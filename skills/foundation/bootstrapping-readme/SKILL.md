@@ -12,7 +12,7 @@ allowed-tools: Read, Grep, Glob, Write, Edit
 
 Generate a human-facing **skills catalog** inside a managed block in `README.md`, sourcing every row from skill frontmatter on disk. The catalog is the GitHub landing page a browser reads — distinct from the agent-facing `CLAUDE.md`.
 
-**Every row is derived, never hand-written.** The full derivation — ROOT discovery, category, kind, the description algorithm, ordering, the marker block — is the [catalog-derivation contract](./references/catalog-derivation.md); follow it verbatim. A hand-curated catalog drifts and cannot be audited; a derived one regenerates identically and `auditing-readme` can check it.
+**Every row is derived, never hand-written.** The full derivation — ROOT discovery, category, the description algorithm, ordering, the marker block — is the [catalog-derivation contract](./references/catalog-derivation.md); follow it verbatim. A hand-curated catalog drifts and cannot be audited; a derived one regenerates identically and `auditing-readme` can check it.
 
 Pairs with `auditing-readme`, which checks the block this skill writes for drift.
 
