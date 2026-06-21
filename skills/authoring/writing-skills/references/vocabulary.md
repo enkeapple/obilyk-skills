@@ -46,5 +46,5 @@ A ladder ranked by how immediately the agent needs the material:
 - **Premature completion** — ending a step before it is genuinely done, attention slipping to *being done*. Fix: sharpen the completion criterion first; only then hide post-completion steps by splitting.
 - **Duplication** — the same meaning in more than one place. Costs maintenance and tokens, and inflates a meaning's apparent rank.
 - **Sediment** — stale layers that settle because adding feels safe and removing feels risky. The default fate without a pruning discipline.
-- **Sprawl** — a skill simply too long, even when every line is live. Cure: the ladder — disclose reference, split by branch/sequence.
+- **Sprawl** — a skill too long, even when every line is live. Cure: the ladder — disclose reference, split by branch/sequence.
 - **No-op** — a line the model already obeys by default. Fix: a stronger leading word, not a different technique — or delete it.

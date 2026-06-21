@@ -113,5 +113,5 @@ Dispatch both runs with [assets/rule-efficacy-test-prompt.md](./assets/rule-effi
 - No Review Checklist.
 - An *area-specific* rule left always-on — a broad/global `paths`, or no `paths` at all — so it nags outside its area.
 - Skipping or rejecting an otherwise-sound rule because its layout doesn't match the template exactly.
-- A "rule" that is really a story or a rationale with no instruction.
+- A "rule" that is a story or a rationale with no instruction.
 - Declaring a rule done on static review alone — well-formed but never empirically RED/GREEN-tested that it steers a cold agent (a no-op rule passes static review).
