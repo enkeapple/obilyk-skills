@@ -217,6 +217,18 @@
       ],
       "files": [".claude/skills/writing-lessons/SKILL.md"]
     },
+    "adopting-framework": {
+      "triggers": [
+        "adopt the framework",
+        "install the SDD vault",
+        "set up the skills in this repo",
+        "onboard (this )?repo to the framework",
+        "bootstrap a new repo",
+        "внедрить фреймворк",
+        "установить SDD"
+      ],
+      "files": [".claude/skills/adopting-framework/SKILL.md"]
+    },
     "bootstrapping-claude-md": {
       "triggers": [
         "set up CLAUDE.md",

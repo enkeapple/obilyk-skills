@@ -60,7 +60,7 @@ The design-approval gate above holds for **every** path: even a three-sentence d
 
 > **REQUIRED SUB-SKILL (full chain):** Use `writing-specs` to turn the approved design and the Decisions list into a concrete spec. Pass every decision as input so nothing is re-litigated. `writing-specs` owns the spec → user-review gate → `writing-plans` chain — do not jump past it to planning or code.
 
-The predicate is the same small-change threshold `writing-specs` ("When NOT to use") and `pre-implementation-protocol` (PATH B) already use, so the exits stay consistent across the chain. **When in doubt about which exit, take the full chain** — a wrongly-skipped spec on a contract or multi-surface change is the expensive rewrite; a slightly-heavy spec on a small change is cheap.
+A source file plus its own test is **one** test-first cycle, not "multiple components" — counting it as multi-file is the mis-classification to avoid. **When in doubt about which exit, take the full chain** — a wrongly-skipped spec on a contract or multi-surface change is the expensive rewrite; a slightly-heavy spec on a small change is cheap.
 
 ## Red Flags — STOP
 

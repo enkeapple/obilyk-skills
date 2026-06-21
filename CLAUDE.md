@@ -38,6 +38,7 @@ No build / dev / test pipeline — this is a skills vault, not an app. Verificat
 | Execute an approved plan solo, in-session (coupled tasks or a small plan) | `inline-driven-development` |
 | Execute an approved plan via a fresh subagent per task (independent tasks) | `subagent-driven-development` |
 | Check shipped code against an approved spec | `spec-drift-audit` |
+| Adopt / install the framework into a fresh consumer repo (ordered: copy → symlinks → bootstraps → routing → verify) | `adopting-framework` |
 | Create / audit the two CLAUDE.md files | `bootstrapping-claude-md` / `auditing-claude-md` |
 | Create / audit the base domain rules (glossary, framework) | `bootstrapping-glossary` / `auditing-glossary` |
 | Create / audit the README skills catalog | `bootstrapping-readme` / `auditing-readme` |

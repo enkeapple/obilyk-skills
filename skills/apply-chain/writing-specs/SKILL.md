@@ -27,8 +27,14 @@ Project-agnostic: fill the blanks (paths, commands, type syntax) from the repo y
 
 ## When NOT to use
 
-- One-line fixes, typo/format/rename with no semantic change.
-- Cosmetic tweaks confined to a single file.
+No spec is needed when the change is **small** — and "small" is the off-ramp predicate, ALL of which must hold:
+
+- a **single, cohesive behavior** (one logical change), AND
+- it touches **no shared/public contract** — no new or changed API endpoint, exported type/signature, schema, persisted shape, event, or navigation route, AND
+- it adds **no new surface** and spans **no multiple components / clients / services**, AND
+- it fits **one test-first cycle** — no task-by-task plan (a source file plus its own test is one cycle, not "multiple files").
+
+The trivial end of this predicate — one-line fixes, typo/format/rename with no semantic change, cosmetic single-file tweaks — obviously qualifies. A change crossing **any** line above needs a spec (see "When to use"); when in doubt, write the spec.
 
 ## Spec location and naming
 
@@ -38,6 +44,7 @@ Put it where the project keeps design docs. If there is no convention, default t
 
 Write these as a positive recipe — every section, in this order:
 
+0. **Source** (*conditional* — the one optional section) — when this spec traces to a resolved ticket/source bundle from `resolving-requirements`, copy its provenance block (`source` / `revision` / `ticket` / `files`) here verbatim, so traceability to the citable source survives into the spec instead of dying at the hand-off. Omit for a free-text idea. `spec-drift-audit` reads this block to trace code↔source.
 1. **Goal** — one or two sentences. What changes for the user / the codebase. No "and also".
 2. **Scope** — bullet list of what is in.
 3. **Out of scope** — bullet list of what looks related but is NOT in. Be explicit; this is where churn comes from. An empty Out-of-scope list means the scope is suspiciously broad.

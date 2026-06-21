@@ -67,5 +67,5 @@ Alignment colons follow the same spacing: `| :--- | :---: | ---: |`, never `|:--
 - [ ] One `#` H1; blank line before and after every heading and every fenced block / list / table.
 - [ ] No bare ` ``` ` opening fence — every code block declares a language (` ```text ` for trees/output).
 - [ ] Links are standard `[text](path)` / `![alt](path)`, not wikilinks `[[…]]` / embeds `![[…]]`.
-- [ ] Tables use a **spaced** delimiter row `| --- | --- |` (grep for the unspaced form: `grep -nE '\|-{2,}\|' **/*.md`).
+- [ ] Tables use a **spaced** delimiter row `| --- | --- |` (grep for the unspaced form: `grep -rnE '\|-{2,}\|' --include='*.md' .` — `-r` recurses without relying on shell `globstar`; fenced ❌-example blocks, including the one in this rule, are expected hits to skip).
 - [ ] No Obsidian-only extensions: callouts `> [!…]`, inline `#tag`, `^block-id`, `%% … %%`, `==highlight==`, `$math$`, Mermaid/Dataview.

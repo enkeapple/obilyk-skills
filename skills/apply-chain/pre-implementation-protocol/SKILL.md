@@ -43,7 +43,7 @@ Then hand off to execution.
 The block is a routing decision plus a minimal pre-flight:
 
 1. **Request** — restate it in one line with its success condition. If your restatement is wider than the request, you are about to over-build; if narrower, under-build — flag which.
-2. **Route** — if the change is non-trivial (multi-file, a shared contract, a new surface), the readiness verdict is "no plan exists; routing to the chain" → go to `grilling` → `writing-specs` → `writing-plans`, and stop here.
+2. **Route** — apply the small-change predicate: a change stays on PATH B (small) only when it is a single cohesive behavior, touches no shared/public contract, adds no new surface, spans no multiple components/services, and fits one test-first cycle (a source file plus its own test is one cycle, not "multi-file"). If it crosses any of those — a shared contract, a new surface, or multiple components/clients/services — the readiness verdict is "no plan exists; routing to the chain" → go to `grilling` → `writing-specs` → `writing-plans`, and stop here.
 3. **Minimal pre-flight** — only if the change is genuinely small and local: a layer map (`file:line` — `NONE`/`PARTIAL`/`FULL`), the contracts written as code, and the real verification commands. Then execute via `test-driven-development` (single-behavior, test-first).
 
 ## Output format

@@ -1,6 +1,6 @@
 # Spec Template
 
-One canonical template. Copy it, fill every section, keep the order — the order *is* the recipe. Never delete a section; if something is cut, it becomes an Out-of-scope bullet, not a missing heading.
+One canonical template. Copy it, fill every section, keep the order — the order *is* the recipe. Never delete a section; if something is cut, it becomes an Out-of-scope bullet, not a missing heading. The single exception is **Source**, which is *conditional*: include it when the change traces to a resolved ticket/source bundle (from `resolving-requirements`), omit it for a free-text idea.
 
 Language- and framework-agnostic. Replace `<lang>` with the project's language and quote *actual* code, not pseudocode.
 
@@ -8,6 +8,13 @@ Language- and framework-agnostic. Replace `<lang>` with the project's language a
 
 ````markdown
 # <Topic>
+
+## Source
+<!-- Conditional: include only when this spec traces to a resolved ticket/source bundle. Omit for a free-text idea. Copy the provenance block from `resolving-requirements` verbatim. -->
+- source: <repo URL/path the requirements bundle came from>
+- revision: <commit SHA fetched, or fetch timestamp if no VCS>
+- ticket: <ticket ID>
+- files: [<every source file read>]
 
 ## Goal
 <One or two sentences. What changes for the user / the codebase. No "and also".>

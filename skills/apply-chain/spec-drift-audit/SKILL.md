@@ -13,9 +13,9 @@ allowed-tools: Read, Grep, Glob, Bash
 
 A read-only comparison between an approved spec and the current code. It produces a **drift report**, classifies each difference, and ends with decisions for the user. **It does not edit code.**
 
-**The audit is read-only. Reporting drift is the job; fixing it is a separate task the user authorizes after seeing the report.** Offering to "just fix it while I'm here" defeats the audit — the user cannot decide on drift they were never shown. Violating the letter of this (one quick edit) violates the spirit.
+**The audit is read-only. Reporting drift is the job; fixing it is a separate task the user authorizes after seeing the report.** Offering to "just fix it while I'm here" defeats the audit — the user cannot decide on drift they were never shown. Violating the letter of this (one quick edit) violates the spirit. (`Bash` is in `allowed-tools` only to **run** the spec's verification commands and read-only inspection — never to edit code; the read-only guarantee holds despite it.)
 
-This pairs with a spec written via the **writing-specs** skill and assumes its section shape (Goal, Scope, Out of scope, Contracts, Files touched, Edge cases, Verification, Risks). Project-agnostic: discover real commands and paths from the repo.
+This pairs with a spec written via the **writing-specs** skill and assumes its section shape (an optional **Source** provenance block, then Goal, Scope, Out of scope, Contracts, Files touched, Edge cases, Verification, Risks). Project-agnostic: discover real commands and paths from the repo.
 
 **Progress:** before your first artifact, reflect this phase in the task list per [phase-task-visualization](../../../.claude/rules/common/phase-task-visualization.md) — under `sdd-lifecycle` update the existing item; run standalone, seed a single item for this phase.
 
@@ -37,11 +37,12 @@ This pairs with a spec written via the **writing-specs** skill and assumes its s
 
 ## Process
 
-1. **Parse the spec.** Extract verbatim: Goal, Scope bullets, Out-of-scope bullets, Contracts, the Files-touched table, the Verification commands.
+1. **Parse the spec.** Extract verbatim: the Source provenance block (if present), Goal, Scope bullets, Out-of-scope bullets, Contracts, the Files-touched table, the Verification commands.
 2. **Verify each file touched.** For every row: open the file; confirm the change kind (NEW / EDIT / DELETE) actually happened; for EDIT, grep for the symbols the spec named.
 3. **Compare contracts field by field.** For each type / signature / shape in the spec, find its real definition and diff it. Note every added / removed / renamed / re-typed field.
 4. **Sweep out-of-scope (REQUIRED, this is where silent drift hides).** For *every* out-of-scope bullet, actively grep the codebase for evidence it was touched anyway. Do not stop at the first one — agents reliably catch the obvious violation and miss the second. Check each bullet.
 5. **Run verification and record real output.** Execute each command from the spec's Verification section; paste the actual result, not "should pass".
+6. **Trace to source (only if a Source block is present).** Confirm the cited `source`/`revision` is recorded and reachable, then check the shipped behavior against the *original* requirements that bundle carried — not just against the spec. A requirement present in the source but absent from both spec and code is **source drift** (the spec silently narrowed its own ticket); flag it. Omit this step when the spec has no Source block.
 
 ## Drift classification
 
@@ -51,6 +52,7 @@ Label every difference:
 - **Missed scope** — spec required it, code lacks it. Critical.
 - **Silent expansion** — code did something not in the spec (often an out-of-scope violation). Critical.
 - **Schema drift** — a contract field differs (added/removed/renamed/re-typed). Critical when the field is part of an external interface (public API, shared type, route/param contract); warn-level for purely internal types.
+- **Source drift** (only when a Source block is present) — a requirement carried by the cited source bundle that is absent from both the spec and the code. The spec narrowed its own ticket. Severity tracks the dropped requirement's importance.
 
 ## Report format
 
@@ -60,8 +62,9 @@ Produce a report with these sections, in order (see [assets/report-example.md](.
 2. **Files touched** — table: file → spec said → code shows → status (OK / MISSED / SILENT EXPANSION).
 3. **Contract drift** — per contract: spec shape → code shape → classification + severity.
 4. **Out-of-scope check** — per out-of-scope bullet: touched? where? classification.
-5. **Summary** — counts per classification.
-6. **Recommended disposition** — per finding, the audit's recommended action (Fix code / Amend spec / Accept) with a one-line reason.
+5. **Source trace** (only if the spec has a Source block) — the cited `source`/`revision`; per source requirement: present in spec? in code? classification (incl. Source drift).
+6. **Summary** — counts per classification.
+7. **Recommended disposition** — per finding, the audit's recommended action (Fix code / Amend spec / Accept) with a one-line reason.
 
 ## Required decision after the report
 

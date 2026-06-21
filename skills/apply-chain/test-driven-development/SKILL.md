@@ -63,6 +63,8 @@ Each test responds to what the previous cycle taught you. The first test is a tr
 
 ## Example (one vertical slice)
 
+The TypeScript/Jest below is **illustrative** — use the consumer repo's real language and test runner; the RED→GREEN→REFACTOR shape is what transfers, not the stack.
+
 ```ts
 // 1. RED — one behavior, public interface, clear name
 test("parseDuration reads a single unit", () => {
