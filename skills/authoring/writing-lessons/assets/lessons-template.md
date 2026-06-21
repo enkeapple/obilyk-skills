@@ -13,6 +13,8 @@ Append at the **top** of the `## Entries` section in `.claude/lessons-learned.md
 - **Prevention**: a concrete check that catches this earlier next time (a grep, a typecheck, a rule reference).
 ```
 
+Each problem-describing field — **Symptom**, **Root cause**, **Wrong approach**, **Correct approach**, **Prevention** — is a terse statement, **~250–300 characters max**. Past that it is drifting into a story (see Good vs bad below); tighten it. The **Cause-tag** (a short kebab key) and the one-sentence title are exempt.
+
 The **Cause-tag** is the load-bearing field: reuse an existing tag for a matching cause, mint a new one only for a genuinely new cause class — identical tags are what make clusters countable. (Full rationale in SKILL.md.)
 
 ## Good vs bad lessons
@@ -24,39 +26,33 @@ The **Cause-tag** is the load-bearing field: reuse an existing tag for a matchin
 
 The bad column reads like a journal. The good column reads like a check someone can run.
 
-## Filled example — a log after one cluster was promoted
+## Filled example — a live backlog
+
+Steady state: a couple of un-promoted candidate entries in `## Entries`, plus a `## Promoted clusters` ledger whose tags' entry bodies have already been **deleted** on promotion. A promoted cluster lives only as a ledger line, never as a retained entry — git keeps the deleted bodies.
 
 ```markdown
 # Lessons Learned
 
 ## Entries
 
-## 2026-06-18 — Transitive peer dep broke the build on upgrade
-- **Cause-tag**: dep-upgrade
-- **Symptom**: build failed after bumping a dependency; a transitive peer dep was incompatible.
-- **Root cause**: only direct deps were checked before the bump, not the transitive peer tree.
-- **Wrong approach**: bumped the version and ran the build, expecting it to surface issues.
-- **Correct approach**: inspected the full peer tree, pinned the compatible range, then upgraded.
-- **Prevention**: before any bump, inspect direct AND transitive peer deps. → promoted to rules/dependency-upgrades.md
+## 2026-06-20 — Imported a hook that does not exist
+- **Cause-tag**: hallucinated-symbol
+- **Symptom**: build failed — `useGetUser` is not exported; the real hook is `useGetUserById`.
+- **Root cause**: imported a remembered symbol name without grepping the actual exports.
+- **Wrong approach**: trusted memory of the API surface and imported the assumed name.
+- **Correct approach**: grepped the module's exports, found `useGetUserById`, fixed the import.
+- **Prevention**: grep the export list before importing any symbol you did not just define.
 
-## 2026-05-02 — Native module unlinked after framework bump
-- **Cause-tag**: dep-upgrade
-- **Symptom**: app crashed on launch; a native module was unlinked.
-- **Root cause**: the native install/link step was not re-run after the upgrade.
-- **Wrong approach**: assumed the JS-level upgrade was enough.
-- **Correct approach**: re-ran the native install step; relinked; crash gone.
-- **Prevention**: re-run the native install step after every framework upgrade. → promoted to rules/dependency-upgrades.md
-
-## 2026-04-18 — Peer dep mismatch after major chart-lib bump
-- **Cause-tag**: dep-upgrade
-- **Symptom**: build failed with an unmet peer dependency.
-- **Root cause**: major version bumped without checking the new peer requirement.
-- **Wrong approach**: upgraded to latest assuming minor compatibility.
-- **Correct approach**: read the changelog, matched the required peer version.
-- **Prevention**: read the changelog and peer requirements before a major bump. → promoted to rules/dependency-upgrades.md
+## 2026-05-30 — Assumed a barrel re-exported a helper
+- **Cause-tag**: hallucinated-symbol
+- **Symptom**: runtime "undefined is not a function" on a helper assumed to be re-exported.
+- **Root cause**: assumed a barrel file re-exported a helper it did not.
+- **Wrong approach**: imported from the barrel by analogy with sibling helpers.
+- **Correct approach**: imported from the defining module directly.
+- **Prevention**: confirm a barrel actually re-exports a symbol before importing from there.
 
 ## Promoted clusters
 - dep-upgrade → rules/dependency-upgrades.md (2026-06-18)
 ```
 
-The rule itself lives in the rule file, not here — the ledger only points to it, and each contributing entry carries a `→ promoted to` back-reference.
+Two live entries share `hallucinated-symbol` (a cluster at count 2, still below the promotion threshold). The `dep-upgrade` cluster was already promoted, so its entry bodies are gone — only the ledger line remains, pointing at the rule that now carries the guidance.

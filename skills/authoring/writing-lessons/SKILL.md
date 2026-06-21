@@ -60,7 +60,7 @@ The log holds only un-promoted candidates. Before appending, derive the cause-ta
 
 ## Capture an entry
 
-Append at the **top** of `## Entries` using the template in [assets/lessons-template.md](./assets/lessons-template.md) — every field required (Cause-tag, Symptom, Root cause, Wrong approach, Correct approach, Prevention).
+Append at the **top** of `## Entries` using the template in [assets/lessons-template.md](./assets/lessons-template.md) — every field it lists is required (the template is the authoritative field set).
 
 **Cause-tag is the load-bearing field.** It is a short kebab-case key for the root-cause *class* (e.g. `hallucinated-symbol`, `dep-upgrade`, `wrong-assumption`). **REUSE an existing tag** when the cause matches an earlier entry — identical tags are what make a cluster countable. Only a genuinely new cause class gets a new tag. Inventing a fresh tag for an existing cause hides recurrence and defeats promotion.
 
@@ -77,18 +77,7 @@ Any tag with **count ≥ 3** that is NOT in the `## Promoted clusters` ledger is
 
 ## Promotion path: lesson → rule
 
-When the same cause-tag reaches the threshold, it is a pattern, not a one-off. Do not decide promotion by gut — dispatch an independent reviewer that judges whether it generalizes and at what level it belongs, using [assets/promotion-reviewer-prompt.md](./assets/promotion-reviewer-prompt.md). It returns one of: Promote (with target rule file + actionable rule text), Keep in lessons (too situational / already covered), or Re-tag (not a real cluster).
-
-If the reviewer says **Promote**, apply its output:
-
-1. **Author the rule with the `writing-rules` skill**, feeding it the reviewer's drafted rule text and target path as the starting point. It owns the rule's shape — `paths` scoping, `## When`, the ✅/❌ example, the Review Checklist.
-
-   > REQUIRED SUB-SKILL: Use `writing-rules` to write the promoted rule file at `.claude/rules/<...>.md`. Do not hand-author it here — this skill owns the *promotion decision and bookkeeping*; `writing-rules` owns the *rule's shape*.
-2. **Delete the contributing entry bodies** from `## Entries` (git preserves them via `git log -S`). Deletion is allowed ONLY here, inside this confirmed-promotion change — never as a standalone log tidy.
-3. Add a ledger line under `## Promoted clusters`: `- <cause-tag> → rules/<...>.md (YYYY-MM-DD)`. This is what the scan reads to know the cluster is resolved.
-4. Commit the new/extended rule, the entry deletions, and the ledger line together (one commit).
-
-The rule file is the durable artifact. The ledger only points to it — never leave the actual rule sitting inside the lessons log. If the reviewer says **Keep in lessons**, add a ledger line recording why, so the scan stops flagging it as debt.
+When the scan flags a cause-tag at the threshold with no ledger line, it is a pattern, not a one-off. Do not decide by gut: follow the full procedure in [references/promotion.md](./references/promotion.md) — it dispatches an independent reviewer ([assets/promotion-reviewer-prompt.md](./assets/promotion-reviewer-prompt.md)) and, on a **Promote** verdict, drives authoring the rule via `writing-rules`, deleting the contributing entry bodies, and recording the ledger line, all in one commit. The rule file is the durable artifact; never leave the rule inside the lessons log.
 
 ## Always change behavior now
 

@@ -57,9 +57,9 @@ Subagent (general-purpose):
       <the actionable rule lines>
       ```
     - Ledger line: `- <tag> → rules/<home>/<topic>.md (YYYY-MM-DD)`
-    - Back-reference to add to each contributing entry: `→ promoted to rules/<home>/<topic>.md`
+    - Contributing entry bodies to delete from `## Entries`: [list the entry titles]
 ````
 
-**Reviewer returns:** Decision, Reason, and (when promoting) the target file, the actionable rule text, the ledger line, and the back-reference. You then apply those edits and commit them together.
+**Reviewer returns:** Decision, Reason, and (when promoting) the target file, the actionable rule text, the ledger line, and the list of contributing entry bodies to delete. You then apply those edits and commit them together.
 
 If the decision is *Keep in lessons*, add a ledger line recording why it does not yet generalize, so the scan stops flagging it as debt.
