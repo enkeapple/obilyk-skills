@@ -17,9 +17,9 @@ with whatever the host environment provides (illustrative shell shown; adapt to 
 5. **Reference links resolve** — every `references/*.md` and `assets/*.md` (and other relative `.md`) link in `SKILL.md` and in each reference file points at a file that exists.
 6. **Frontmatter keys legal** — every key is in the authoritative set (`frontmatter-reference.md`); an unknown key is a likely typo. When present, `allowed-tools`/`disallowed-tools` is a space/comma string or YAML list; `model` is `inherit`, a known alias, or a `claude-*` id.
 7. **Routing invariant** — if `disable-model-invocation: true`, the skill has NO entry in the routing registry (`skills-routing.json`) and declares no triggers; otherwise it MUST have a routing entry whose key equals `name`.
-8. **Word count** — measured on the `SKILL.md` body (excluding frontmatter and fenced code blocks). Key the bound off the (mechanically decidable) `disable-model-invocation` signal from check #7:
-   - a **model-invoked** skill (no `disable-model-invocation`): target ≤ **500 words** — its description loads every turn, so keep the whole skill lean;
-   - a **user-invoked** skill (`disable-model-invocation: true`): ≤ **~1500 words**.
+8. **Word count** — measured on the `SKILL.md` body (excluding frontmatter and fenced code blocks). Key the bound off the skill's **role**, not its invocation mode — the per-turn cost is the one-line `description` in the routing index, not the body (the body loads only when the skill is invoked, model- or user-invoked alike):
+   - a **routine skill** (does one job): target ≤ **500 words** — lean skills route and load best;
+   - a **methodology / reference skill** (large, read-for-guidance — e.g. `writing-skills`, `improve-codebase-architecture` — whether model- or user-invoked): ≤ **~1500 words**.
    Past the bound, **warn** (a sprawl smell, see `vocabulary.md`) — not a hard fail. Under the bound is always fine.
 
 ## Illustrative runner

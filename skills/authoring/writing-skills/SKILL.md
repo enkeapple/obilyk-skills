@@ -1,7 +1,6 @@
 ---
 name: writing-skills
-description: Test-first methodology for authoring, editing, and validating skills (RED→GREEN). User-invoked.
-disable-model-invocation: true
+description: Use when authoring, editing, or validating a skill in this vault, test-first (RED→GREEN→REFACTOR→VALIDATE). Triggers on "write a skill", "create a skill", "author a skill", "edit a skill", "change a skill", "validate a skill", "new skill", "написать скилл", "создать скилл", "отредактировать скилл", "новый скилл".
 allowed-tools: Read, Write, Edit, Grep, Glob, Bash, Task, Skill
 ---
 

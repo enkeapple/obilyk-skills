@@ -345,6 +345,22 @@
         "каталог скиллов устарел"
       ],
       "files": [".claude/skills/auditing-readme/SKILL.md"]
+    },
+    "writing-skills": {
+      "triggers": [
+        "write a skill",
+        "create a skill",
+        "author a skill",
+        "edit a skill",
+        "change a skill",
+        "validate a skill",
+        "new skill",
+        "написать скилл",
+        "создать скилл",
+        "отредактировать скилл",
+        "новый скилл"
+      ],
+      "files": [".claude/skills/writing-skills/SKILL.md"]
     }
   }
 }
