@@ -29,4 +29,4 @@ End there. No "next steps" ladder, no "once you're comfortable", no further read
 - You wrote "Next steps", "Further reading", or "Once you master this" — delete; the clock ran out.
 - You gave more than one exercise — pick the single highest-transfer rep.
 - You toured the feature set / dialects / variants / edge cases — breadth is the enemy of "functional in 4 hours"; cut to the highest-leverage slice.
-- You acknowledged the future value of an "ignore" item, in any wording — a temporal hedge ("but later", "valuable eventually") OR a conditional one ("not your problem until X", "once you hit scale", "when you…"). Both are the banned move. The brief is *ignore entirely, for now*; state the *why* as a cost-of-now, not a when-it-matters-later.
+- You hedged an "ignore" item with any when-it-matters-later clause — temporal or conditional. That is the banned move; re-state the *why* as a cost-of-now (see slot 2's self-check for the full rule).
