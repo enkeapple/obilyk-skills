@@ -39,9 +39,11 @@ it. Start over. No exception for "simple additions", "just a section", or "it's 
    ([`frontmatter-reference.md`](./references/frontmatter-reference.md)) — offer them with their
    trade-offs; do not bake them in by reflex.
 5. **REFACTOR.** Close each new loophole the agent invents (rationalization-table row + red flag).
-6. **Persist the test cases.** Write the RED baselines (verbatim) and GREEN expectations to
-   [`test-cases.md`](./references/test-cases.md) BEFORE the gate — Layer 2 loads them; skip it and
-   the validator re-derives cases with author bias.
+6. **Stage the test cases for the gate — do NOT persist them in the skill.** Write the RED
+   baselines (verbatim) and GREEN expectations to a temporary working file OUTSIDE the skill tree
+   (an OS temp location), and hand its path to Layer 2. The gate consumes that file and then
+   deletes it (see `validate`). The cases are ephemeral validation scaffolding, not skill content —
+   nothing about them stays under `references/`.
 7. **validate** (the gate).
 
 ## edit
@@ -60,11 +62,12 @@ Two layers, both defined inside this skill — no dependency on any repo hook:
    routing invariant, word count. Fail fast here before spending a subagent.
 2. **Layer 2 — dynamic run.** Dispatch the validation subagent
    ([`validation-subagent-prompt.md`](./assets/validation-subagent-prompt.md)) to RUN the
-   skill's test cases (from [`test-cases.md`](./references/test-cases.md), or synthesized for a
-   foreign skill) WITH the skill enabled, invert each (would it comply WITHOUT?), and return
-   pass/fail with verbatim evidence. A static "looks good" is not a pass. Layer 2 is an
+   skill's test cases — from the temporary file staged in step 6, or synthesized for a foreign
+   skill that staged none — WITH the skill enabled, invert each (would it comply WITHOUT?), and
+   return pass/fail with verbatim evidence. A static "looks good" is not a pass. Layer 2 is an
    **independent dispatch** — a fresh subagent, NOT your own GREEN run from step 3; its job is the
-   inversion (would it comply WITHOUT?) that your GREEN never asks.
+   inversion (would it comply WITHOUT?) that your GREEN never asks. **After recording the verdict,
+   delete the temporary cases file** — the skill keeps no persisted test-cases artifact.
 
 Never declare a skill done on Layer 1 alone, never substitute your own GREEN run for the Layer-2
 dispatch, and never ship on a Layer-2 FAIL.
@@ -91,13 +94,15 @@ its own conditional.
 | "The baseline complied, so the skill works." | If it complied WITHOUT the skill, the skill proves nothing — re-aim at a real failure. |
 | "I'll keep the draft as reference while I test." | Delete means delete. A kept draft is a write-first skill. |
 | "My GREEN run passed, so Layer 2 is done." | GREEN is the author's check; Layer 2 is an independent subagent that inverts each case. Separate dispatch, different question. |
+| "Persisting the cases is harmless — I'll just keep the `test-cases.md`." | Cases are ephemeral gate scaffolding, not skill content; a persisted file ships as skill clutter. Stage in a temp file, delete after the gate. |
 
 ## Red Flags — STOP
 
 - Skill (or edit) written before a RED was observed.
 - Declaring done on a static read, with no Layer-2 subagent run.
 - Declaring validated on your own GREEN run, with no independent Layer-2 dispatch — the author's GREEN is not the gate.
-- Reaching the gate with no persisted `test-cases.md`, leaving the validator to re-derive cases with author bias.
+- Persisting a `test-cases.md` inside the skill (e.g. under `references/`) — cases are ephemeral gate scaffolding, not skill content; stage them in a temp file and delete after the gate.
+- Reaching the gate with no staged cases though you observed RED/GREEN this run, forcing the validator to synthesize and re-derive with author bias.
 - A baseline that "complies" inside a repo whose manual it inherited (contaminated RED).
 - A nuance/exemption clause smuggled into a recipe.
 - `name` ≠ dir ≠ symlink, or a routing entry for a `disable-model-invocation` skill.
@@ -111,4 +116,3 @@ Bundled files split by **role** into two sibling dirs: `references/` = read for 
 - [`frontmatter-reference.md`](./references/frontmatter-reference.md) — the field set incl. `allowed-tools`/`model`.
 - [`validation-checklist.md`](./references/validation-checklist.md) — Layer-1 checks.
 - [`validation-subagent-prompt.md`](./assets/validation-subagent-prompt.md) — Layer-2 dispatch.
-- [`test-cases.md`](./references/test-cases.md) — this skill's own persisted cases.

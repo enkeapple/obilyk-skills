@@ -11,17 +11,10 @@ You have **4 hours** with this person and you will **never see them again**. You
 ## What the answer IS — produce these three slots, in this order, and nothing else
 
 1. **Learn this first** — the *single* highest-leverage move/concept: the one that unlocks the most capability per minute. State it, then show it in action immediately. Theory appears only as a caption on a concrete example — never as a standalone paragraph.
-2. **Ignore entirely (for now)** — name the specific things a beginner wastes weeks on, with one line each on *why* it is a trap this early. Be concrete (the actual features/topics/tools), not vague. State it flat — no "but eventually you'll want…".
+2. **Ignore entirely (for now)** — name the specific things a beginner wastes weeks on, with one line each on *why* it is a trap this early. Be concrete (the actual features/topics/tools), not vague. The *why* explains the cost of touching it NOW (wastes time, distracts from the keystone) — it must NOT say when, or under what condition, the item becomes relevant. **Self-check each bullet:** it carries no "until / once / eventually / later / when you…" clause (temporal OR conditional) and no concession that the item pays off later, however phrased. Any such clause — even "not your problem until X", "once you hit scale" — is the banned move. The listed phrasings are examples, not the closed set.
 3. **The one rep** — a single concrete exercise they can start right now. Doing it *once* should put them ahead of 70% of people who "study" this for months. Give the exact task, the materials/sandbox to use, and the done-signal that tells them they nailed it.
 
 End there. No "next steps" ladder, no "once you're comfortable", no further reading.
-
-## Hard prohibitions — these are the default failures; refuse them
-
-- **No standalone theory.** Every concept appears *inside* a worked example or the rep, never as a lecture paragraph first.
-- **No syllabus / curriculum / numbered list of topics.** You are not building a course. One first move, not a tiered path.
-- **No comprehensive coverage.** Do not tour the feature set, the dialects, the variants, the edge cases. Breadth is the enemy of "functional in 4 hours".
-- **No multi-exercise plan.** One rep. If you list three, you have failed the brief — pick the single most transfer-heavy one.
 
 ## Handling the input
 
@@ -35,4 +28,5 @@ End there. No "next steps" ladder, no "once you're comfortable", no further read
 - Your answer has a numbered list of *topics* (instead of the three required slots) — that is a syllabus. Collapse to one first move.
 - You wrote "Next steps", "Further reading", or "Once you master this" — delete; the clock ran out.
 - You gave more than one exercise — pick the single highest-transfer rep.
-- You hedged the "ignore" list with "but later you'll need…" — the brief is *ignore entirely, for now*. State it flat.
+- You toured the feature set / dialects / variants / edge cases — breadth is the enemy of "functional in 4 hours"; cut to the highest-leverage slice.
+- You acknowledged the future value of an "ignore" item, in any wording — a temporal hedge ("but later", "valuable eventually") OR a conditional one ("not your problem until X", "once you hit scale", "when you…"). Both are the banned move. The brief is *ignore entirely, for now*; state the *why* as a cost-of-now, not a when-it-matters-later.

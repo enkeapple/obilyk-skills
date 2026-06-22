@@ -4,6 +4,24 @@ Transient backlog of un-promoted candidate rules — newest at the top of `## En
 
 ## Entries
 
+## 2026-06-23 — Claimed "no test-cases.md" from a depth-limited find that couldn't reach them
+
+- **Cause-tag**: broken-grep-false-verification
+- **Symptom**: asserted the 3 `skills/personal/*` skills "carry no persisted `test-cases.md`"; `git status` later showed each has `references/test-cases.md` at depth 3 — the claim was false.
+- **Root cause**: ran `find skills/personal -maxdepth 2 -type f`, which structurally cannot reach `<name>/references/test-cases.md` (depth 3); reported the truncated result as proof of absence.
+- **Wrong approach**: trusted a depth-limited search's "not found" as evidence of absence without confirming the scope reached where the target would live.
+- **Correct approach**: re-ran `find` without `-maxdepth` (and `git status`); all three carried the file. Corrected the claim and the under-scoped follow-up.
+- **Prevention**: a depth/flag-limited search (`find -maxdepth`, `grep` without `-r`, a non-recursive glob) returning "not found" is NOT absence — before asserting it, drop the limiter or confirm the expected path depth is in scope; a "0 results" that contradicts a plausible expectation is suspect, widen before reporting.
+
+## 2026-06-23 — Shaping prohibition keyed to a phrasing, evaded by a synonym
+
+- **Cause-tag**: phrasing-keyed-prohibition
+- **Symptom**: Layer-2 re-validation of `learning-curve-destroyer` produced the hedge "valuable eventually" in the "Ignore entirely (for now)" slot — a move the skill red-flags — yet it passed the skill's own prohibition. `confusion-translator` showed the same shape (source jargon echoed as a slot-2 "callback").
+- **Root cause**: the prohibition was keyed to one wording ("but eventually you'll want…") instead of the underlying MOVE (acknowledging future value), so a semantic near-synonym slipped past the closed phrase list.
+- **Wrong approach**: wrote the banned phrasing AS the prohibition, treating the enumerated wording as the exhaustive set the rule is matched against.
+- **Correct approach**: (pending REFACTOR, not yet applied) forbid the move in any wording — "no acknowledgement of future value, however phrased" — and demote concrete phrasings to non-exhaustive examples.
+- **Prevention**: when authoring/reviewing a shaping prohibition, check it bans the MOVE, not a wording; a prohibition that reads as a closed list of phrases is a red flag — RED it with a near-synonym NOT in the list and confirm the skill still rejects it.
+
 ## 2026-06-22 — Hook shipped a zero-match branch the fixture never exercised (grep -c "0\n0")
 
 - **Cause-tag**: untested-empty-branch

@@ -21,10 +21,10 @@ Subagent (general-purpose):
     alone is NOT a valid verdict here — you must observe behaviour.
 
     **Target skill:** [SKILL_DIR — path to the skill folder]
-    **Test cases:** [load TARGET/references/test-cases.md if it exists; ELSE
-      synthesize cases from the skill's own contract — its description, completion
-      criteria, rationalization table, red flags — and mark every case `synthesized`
-      (lower-confidence, the author never pinned them).]
+    **Test cases:** [load the staged temporary cases file whose path the dispatch
+      provides, if any; ELSE synthesize cases from the skill's own contract — its
+      description, completion criteria, rationalization table, red flags — and mark
+      every case `synthesized` (lower-confidence, the author staged none).]
 
     ## For each test case
 
@@ -49,9 +49,11 @@ Subagent (general-purpose):
     - [verbatim excuse the agent invented] — [the rule/red-flag that should counter it]
 
     **Notes:**
-    - [synthesized vs persisted cases; any contamination caveat that limits confidence]
+    - [synthesized vs staged cases; any contamination caveat that limits confidence]
 ````
 
 **Reviewer returns:** the verdict + per-case pass/fail with verbatim evidence + any new
 rationalizations. A FAIL or a case that is only `no-op` means the skill is not done — loop back to
-REFACTOR (close the loophole) or re-aim the scenario, then re-validate. Never ship on a FAIL.
+REFACTOR (close the loophole) or re-aim the scenario, then re-validate. Never ship on a FAIL. The
+staged cases file is a temporary working file: the caller (the `validate` gate) deletes it after
+recording this verdict — it is never persisted under the skill.
