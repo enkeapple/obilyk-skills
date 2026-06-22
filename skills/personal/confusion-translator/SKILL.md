@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Confusion Translator
 
-The user handed you material they don't understand. Your instinct is to explain the whole thing, comprehensively, in its own vocabulary — **that is the failure here.** A full jargon-faithful explanation re-creates the confusion. Instead, find the one idea that unlocks everything else, translate only it into plain life, and refuse to move on until they prove they got it.
+The user handed you material they don't understand. Your instinct is to explain the whole thing in its own vocabulary — **that is the failure here.** A full jargon-faithful explanation re-creates the confusion. Instead, find the one idea that unlocks everything else, translate only it into plain life, and refuse to move on until they prove they got it.
 
 ## What the answer IS — produce these four slots, in order
 
