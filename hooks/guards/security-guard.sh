@@ -13,10 +13,15 @@ CMD=$(printf '%s' "$INPUT" | jq -r '.tool_input.command // empty' 2>/dev/null)
 CRED_PATTERNS='(\.config/gcloud|\.config/gh/hosts\.yml|\.ssh/(id_|known_hosts|config|authorized_keys)|\.aws/(credentials|config)|\.claude/(settings|hooks)|\.env(\.|$|/)|\.netrc|application_default_credentials|service[-_.]account.*\.json|credentials\.json|secret[-_.]?.*\.json|\.kube/config|\.vault[-_]token|\.config/hub|\.gradle/gradle\.properties|\.m2/settings\.xml|keystore\.jks|\.p12$|\.pem$|google-services\.json|\.xcconfig)'
 
 # --- EXFIL TOOLS ---
-EXFIL_TOOLS='(curl|wget|nc|ncat|netcat|scp|rsync|ftp|sftp|telnet|socat|ssh\s)'
+# Word-anchored (both sides) so short tokens (nc, ssh, ftp, scp) match only as whole command
+# words — never inside "sync", "encoding", "fetch", "settings". Unanchored substrings were the
+# recurring false-positive class (see lessons-learned: guard-substring-false-positive).
+EXFIL_TOOLS='(^|[^[:alnum:]_])(curl|wget|nc|ncat|netcat|scp|rsync|ftp|sftp|telnet|socat|ssh)([^[:alnum:]_]|$)'
 
 # --- ENCODING TOOLS (used to obfuscate) ---
-ENCODE_TOOLS='(base64|xxd|od|openssl\s+(enc|s_client)|gzip.*\|.*curl|tar.*\|.*curl|perl\s+-e|ruby\s+-e)'
+# Short tools (base64, xxd, od) word-anchored so "od" doesn't match "method"/"code"; the
+# compound exfil patterns (openssl/gzip|curl/…) keep their own structure.
+ENCODE_TOOLS='(^|[^[:alnum:]_])(base64|xxd|od)([^[:alnum:]_]|$)|openssl\s+(enc|s_client)|gzip.*\|.*curl|tar.*\|.*curl|perl\s+-e|ruby\s+-e'
 
 # --- EVAL / OBFUSCATION PATTERNS ---
 EVAL_PATTERNS='(eval\s|source\s+/|\.\s+/|exec\s+[0-9]*[<>]|printf.*\\\\x[0-9a-f]|\$\(echo.*\|.*base64)|xargs\s.*(cat|curl|nc|wget))'
@@ -91,7 +96,9 @@ if printf '%s' "$CMD" | grep -qiE '(dig|nslookup|host)\s' && printf '%s' "$CMD" 
 fi
 
 # Rule 12: Block environment variable dumping combined with network
-if printf '%s' "$CMD" | grep -qiE '(printenv|env\b|set\b|export\s+-p)' && printf '%s' "$CMD" | grep -qiE "$EXFIL_TOOLS"; then
+# Env-dump tokens word-anchored both sides: "set"/"env" match as commands, not inside
+# "reset"/"settings"/"environment" (the false-positive that blocked benign hook tests).
+if printf '%s' "$CMD" | grep -qiE '(^|[^[:alnum:]_])(printenv|env|set|export[[:space:]]+-p)([^[:alnum:]_]|$)' && printf '%s' "$CMD" | grep -qiE "$EXFIL_TOOLS"; then
     echo "BLOCKED: Environment dump combined with network tool." >&2
     exit 2
 fi

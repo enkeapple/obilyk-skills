@@ -5,7 +5,16 @@
 
 set -euo pipefail
 
-STATE_DIR="${CLAUDE_PROJECT_DIR:-.}/.claude/state"
+INPUT=$(cat 2>/dev/null) || exit 0
+# Fail open: unreadable / non-JSON stdin must not disrupt the tool call (or spam jq errors).
+printf '%s' "$INPUT" | jq -e . >/dev/null 2>&1 || exit 0
+
+# Per-session state isolation: parallel Claude Code sessions must not share budget/accounting
+# files. Key the state dir by session_id from the payload; absent → "default" (single-session,
+# no regression). See lessons-learned: hook-state-not-session-keyed.
+SID=$(printf '%s' "$INPUT" | jq -r '.session_id // empty' 2>/dev/null | tr -cd 'A-Za-z0-9._-') || SID=""
+[ -z "$SID" ] && SID=default
+STATE_DIR="${CLAUDE_PROJECT_DIR:-.}/.claude/state/$SID"
 TURN_FILE="$STATE_DIR/turn-budget.json"
 SESSION_FILE="$STATE_DIR/session-budget.json"
 BY_MODEL_FILE="$STATE_DIR/by-model-budget.json"
@@ -24,9 +33,6 @@ mkdir -p "$STATE_DIR"
 [[ -f "$SESSION_FILE" ]] || echo "{\"bytes\":0,\"started_at\":\"$(date -u +%FT%TZ)\"}" > "$SESSION_FILE"
 [[ -f "$BY_MODEL_FILE" ]] || echo '{}' > "$BY_MODEL_FILE"
 
-INPUT=$(cat 2>/dev/null) || exit 0
-# Fail open: unreadable / non-JSON stdin must not disrupt the tool call (or spam jq errors).
-printf '%s' "$INPUT" | jq -e . >/dev/null 2>&1 || exit 0
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // "unknown"')
 # tool_response is either string or object; stringify for size measurement
 RESP_BYTES=$(echo "$INPUT" | jq -r '.tool_response | if type=="string" then . else tostring end' | wc -c | tr -d ' ')

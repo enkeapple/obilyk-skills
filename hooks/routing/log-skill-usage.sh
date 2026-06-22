@@ -4,7 +4,13 @@
 # used_correctly (triggered + skill invoked).
 set -euo pipefail
 
-STATE_DIR="${CLAUDE_PROJECT_DIR:-.}/.claude/state"
+INPUT=$(cat 2>/dev/null) || exit 0
+# Fail open: unreadable / non-JSON stdin must not disrupt turn end (or spam jq errors).
+printf '%s' "$INPUT" | jq -e . >/dev/null 2>&1 || exit 0
+# Per-session state isolation (see lessons-learned: hook-state-not-session-keyed).
+SID=$(printf '%s' "$INPUT" | jq -r '.session_id // empty' 2>/dev/null | tr -cd 'A-Za-z0-9._-') || SID=""
+[ -z "$SID" ] && SID=default
+STATE_DIR="${CLAUDE_PROJECT_DIR:-.}/.claude/state/$SID"
 ROUTING="${CLAUDE_PROJECT_DIR:-.}/.claude/skills-routing.json"
 METRICS="${CLAUDE_PROJECT_DIR:-.}/.claude/skills/_metrics.jsonl"
 TURN_SKILLS_FILE="$STATE_DIR/turn-skills-invoked.json"
@@ -13,9 +19,6 @@ LAST_PROMPT_FILE="$STATE_DIR/last-prompt.txt"
 mkdir -p "$STATE_DIR" "$(dirname "$METRICS")"
 [[ -f "$ROUTING" ]] || exit 0
 
-INPUT=$(cat 2>/dev/null) || exit 0
-# Fail open: unreadable / non-JSON stdin must not disrupt turn end (or spam jq errors).
-printf '%s' "$INPUT" | jq -e . >/dev/null 2>&1 || exit 0
 # Stop hook receives session info. Read transcript_path if provided.
 TRANSCRIPT=$(echo "$INPUT" | jq -r '.transcript_path // ""')
 

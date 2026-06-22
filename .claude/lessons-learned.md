@@ -4,6 +4,24 @@ Transient backlog of un-promoted candidate rules — newest at the top of `## En
 
 ## Entries
 
+## 2026-06-22 — Security guard matched short tokens as substrings → false-blocked benign commands
+
+- **Cause-tag**: guard-substring-false-positive
+- **Symptom**: `security-guard.sh` blocked legitimate read-only hook-test commands three times in one session ("Environment dump combined with network tool", "combines credential file access with network tool"). The commands contained no exfil — only words like "re**set**-turn-budget.sh", "sy**nc**ing", "**enc**oding", "meth**od**".
+- **Root cause**: guard regexes matched short tokens as unanchored substrings. `EXFIL_TOOLS` "nc" matched "sync"/"encoding"; Rule 12's `set\b` had a word boundary only on the RIGHT, so it matched the "set" inside "re**set**"; `od` (ENCODE) matched "method"/"code". Combined with a `.claude/(settings|hooks)` path mention or another stray substring, two unrelated fragments on different lines satisfied an AND-rule.
+- **Wrong approach**: assumed `(nc|set\b|od|...)` in `grep -E` matches those as commands; it matches them anywhere in the command string, across all lines (`grep -q` scans every line).
+- **Correct approach**: word-anchor short tokens on BOTH sides — `(^|[^[:alnum:]_])(curl|nc|scp|…)([^[:alnum:]_]|$)` for EXFIL/ENCODE, same for `env|set|printenv`. Real exfil still matches because the tool appears as a whole command word (`nc evil 443`, `/usr/bin/nc …`); benign substrings no longer do.
+- **Prevention**: when authoring or reviewing a guard regex containing short tokens (`nc`, `od`, `set`, `env`, `host`, `ssh`), word-anchor both sides and RED it against benign words that CONTAIN the token as a substring ("reset", "syncing", "method", "settings"), AND regression-test that real exfil (`nc host`, `/usr/bin/nc`, `set | curl`) still blocks. A one-sided `\b` is a red flag — `set\b` still matches "reset".
+
+## 2026-06-22 — Added accounting state to a hook that shares one global state dir across sessions
+
+- **Cause-tag**: hook-state-not-session-keyed
+- **Symptom**: extended `token-guard.sh` with `by-model-budget.json` keyed only by model, into the shared `.claude/state` dir alongside `turn-budget`/`session-budget`/`last-prompt` — none keyed by session. Owner asked "what if I run several sessions in parallel"; under concurrent Claude Code sessions these files race and co-mingle.
+- **Root cause**: hook state uses fixed global filenames in one `.claude/state` dir. Concurrent sessions interleave read-modify-write (lost increments), one session's `UserPromptSubmit` turn-reset clobbers another mid-turn, `last-prompt.txt` is overwritten so the Stop-hook bypass analysis misattributes the prompt, and session/by-model ceilings sum all sessions at once.
+- **Wrong approach**: assumed a single active session when adding accounting state — the same assumption every existing vault hook makes.
+- **Correct approach**: (tracked as task #11, not yet applied) key state by `session_id` from the hook stdin — `.claude/state/<session_id>/…` — so turn/session/by-model/last-prompt isolate per session and a new session gets a fresh dir (which also gives session-boundary reset for free).
+- **Prevention**: when adding or reviewing any hook that writes to `.claude/state`, confirm the file path is namespaced by `session_id` from the hook input; a fixed global filename is a red flag — it corrupts under parallel sessions. Confirm `session_id` is actually present in that event's payload before keying on it (the vault's `hook-events.md` does not enumerate it).
+
 ## 2026-06-22 — Wrote a skill file to a fabricated `.claude/skills/<category>/` path
 
 - **Cause-tag**: skill-path-source-vs-symlink

@@ -26,17 +26,21 @@
 #      (e.g. glossary.md) and so were never enforced before an edit.
 set -uo pipefail
 
-STATE_DIR="${CLAUDE_PROJECT_DIR:-.}/.claude/state"
+# Fail open if prerequisites missing.
+command -v jq >/dev/null 2>&1 || exit 0
+
+INPUT=$(cat 2>/dev/null) || exit 0
+# Per-session state isolation (see lessons-learned: hook-state-not-session-keyed): read the
+# per-turn skill/read tracking from this session's own dir so parallel sessions don't cross-gate.
+SID=$(printf '%s' "$INPUT" | jq -r '.session_id // empty' 2>/dev/null | tr -cd 'A-Za-z0-9._-') || SID=""
+[ -z "$SID" ] && SID=default
+STATE_DIR="${CLAUDE_PROJECT_DIR:-.}/.claude/state/$SID"
 ROUTING="${CLAUDE_PROJECT_DIR:-.}/.claude/skills-routing.json"
 TURN_SKILLS_FILE="$STATE_DIR/turn-skills-invoked.json"
 TURN_READS_FILE="$STATE_DIR/turn-reads.json"
 LAST_PROMPT_FILE="$STATE_DIR/last-prompt.txt"
-
-# Fail open if prerequisites missing.
-command -v jq >/dev/null 2>&1 || exit 0
+mkdir -p "$STATE_DIR" 2>/dev/null || true
 [[ -f "$ROUTING" ]] || exit 0
-
-INPUT=$(cat 2>/dev/null) || exit 0
 TOOL=$(printf '%s' "$INPUT" | jq -r '.tool_name // ""' 2>/dev/null) || exit 0
 case "$TOOL" in
   Edit|Write|MultiEdit) ;;

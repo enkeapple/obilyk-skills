@@ -7,7 +7,14 @@
 # Also logs events to metrics. (Edit/Write/MultiEdit events are needed for check 1b.)
 set -euo pipefail
 
-STATE_DIR="${CLAUDE_PROJECT_DIR:-.}/.claude/state"
+INPUT=$(cat 2>/dev/null) || exit 0
+# Fail open: unreadable / non-JSON stdin must not disrupt the tool call (or spam jq errors).
+printf '%s' "$INPUT" | jq -e . >/dev/null 2>&1 || exit 0
+# Per-session state isolation (see lessons-learned: hook-state-not-session-keyed): key the
+# per-turn tracking files by session_id so parallel sessions don't cross-count/cross-gate.
+SID=$(printf '%s' "$INPUT" | jq -r '.session_id // empty' 2>/dev/null | tr -cd 'A-Za-z0-9._-') || SID=""
+[ -z "$SID" ] && SID=default
+STATE_DIR="${CLAUDE_PROJECT_DIR:-.}/.claude/state/$SID"
 ROUTING="${CLAUDE_PROJECT_DIR:-.}/.claude/skills-routing.json"
 METRICS="${CLAUDE_PROJECT_DIR:-.}/.claude/skills/_metrics.jsonl"
 TURN_SKILLS_FILE="$STATE_DIR/turn-skills-invoked.json"
@@ -24,9 +31,6 @@ mkdir -p "$STATE_DIR" "$(dirname "$METRICS")"
 [[ -f "$TURN_SKILLS_FILE" ]] || echo '[]' > "$TURN_SKILLS_FILE"
 [[ -f "$TURN_TOOL_COUNT_FILE" ]] || echo '{"count":0}' > "$TURN_TOOL_COUNT_FILE"
 
-INPUT=$(cat 2>/dev/null) || exit 0
-# Fail open: unreadable / non-JSON stdin must not disrupt the tool call (or spam jq errors).
-printf '%s' "$INPUT" | jq -e . >/dev/null 2>&1 || exit 0
 TOOL=$(echo "$INPUT" | jq -r '.tool_name // ""')
 
 # Track Skill invocations -- reset bypass-warned flag, record skill name, exit.
