@@ -33,8 +33,8 @@ jobs:
           for i in $(jq -r '.plugins|keys[]' .claude-plugin/marketplace.json); do
             name=$(jq -r ".plugins[$i].name" .claude-plugin/marketplace.json)
             src=$(jq -r ".plugins[$i].source" .claude-plugin/marketplace.json)
-            test -f "plugins/$src/.claude-plugin/plugin.json" || { echo "missing manifest: $src"; exit 1; }
-            pn=$(jq -r '.name' "plugins/$src/.claude-plugin/plugin.json")
+            test -f "$src/.claude-plugin/plugin.json" || { echo "missing manifest: $src"; exit 1; }
+            pn=$(jq -r '.name' "$src/.claude-plugin/plugin.json")
             [ "$pn" = "$name" ] || { echo "name mismatch: entry=$name manifest=$pn"; exit 1; }
           done
           echo "MARKETPLACE_SCHEMA_OK"
