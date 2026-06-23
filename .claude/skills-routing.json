@@ -392,6 +392,25 @@
         "shallow module"
       ]
     },
+    "writing-adrs": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "writing-adrs",
+      "triggers": [
+        "write an? ADR",
+        "record (this|the|a|an) (architectural )?decision",
+        "document (this|the|a|an) (architectural )?decision",
+        "architectural decision record",
+        "log (this|the) decision",
+        "audit (the )?ADRs",
+        "ADR drift",
+        "написать ADR",
+        "запиши решени",
+        "зафиксировать решени",
+        "зафиксируй решени",
+        "архитектурное решени"
+      ]
+    },
     "bootstrapping-readme": {
       "kind": "ref",
       "plugin": "sdd-kit",

@@ -4,6 +4,15 @@ Transient backlog of un-promoted candidate rules — newest at the top of `## En
 
 ## Entries
 
+## 2026-06-24 — Placed a new writing-* skill in a kit by topical surface, not its naming-family
+
+- **Cause-tag**: skill-kit-placement
+- **Symptom**: authored `writing-adrs` under `craft-kit/skills/design/` (next to `codebase-design`/`improve-codebase-architecture`) because ADRs are "architectural"; owner corrected — "why craft-kit if it should be sdd-kit?".
+- **Root cause**: chose the kit by topical resemblance instead of the established naming-family. Every `writing-*` artifact-authoring skill (writing-specs/plans/rules/lessons/hooks/skills) lives in sdd-kit; a new `writing-<artifact>` is their sibling and belongs in `sdd-kit/skills/authoring`.
+- **Wrong approach**: matched on the word "architecture" → craft-kit (vocabulary/review/prose), ignoring that the `writing-*` family is the load-bearing placement signal.
+- **Correct approach**: moved to `sdd-kit/skills/authoring/writing-adrs`; updated both plugin.json manifests + the routing `plugin` field.
+- **Prevention**: before choosing a kit/dir for a new skill, grep the existing skill names for a naming-family the new name joins (`find plugins/*/skills -name SKILL.md`); place by that family first, fall back to topical/register grouping only when no family applies.
+
 ## 2026-06-23 — Classified discipline skills as "technical docs" and assumed their prose punch was load-bearing
 
 - **Cause-tag**: discipline-binding-is-structural

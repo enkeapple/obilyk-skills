@@ -45,12 +45,13 @@ No build / dev / test pipeline — this is a skills vault, not an app. Verificat
 | Capture a lesson; promote a recurring one to a rule | `writing-lessons` → `writing-rules` |
 | Author or change any skill (test-first) | `writing-skills` |
 | Author or change a Claude Code hook (test-first) | `writing-hooks` |
+| Record an architectural decision as an immutable ADR (gate it, maintain the index, supersede — never edit) | `writing-adrs` |
 | Design a deep module / find a seam (shared deep-module vocabulary) | `codebase-design` |
 | Architecture review — surface deepening opportunities (user-invoked, not trigger-routed) | `improve-codebase-architecture` |
 | De-slop an existing chunk of prose (remove the AI tells) | `tightening-prose` |
 | Rewrite a draft into publication-ready prose (article / blog / post register) | `humanizing-prose` |
 | Approaching the context limit / ending with unfinished work | `handoff` |
-| Short user-typed aliases (deterministic entry; same skills) | `/sdd`→`sdd-lifecycle`, `/grill`→`grilling`, `/spec`→`writing-specs`, `/audit`→`spec-drift-audit` |
+| Short user-typed aliases (deterministic entry; same skills) | `/sdd`→`sdd-lifecycle`, `/grill`→`grilling`, `/spec`→`writing-specs`, `/audit`→`spec-drift-audit`, `/adr`→`writing-adrs` |
 
 When a user prompt contains a registered trigger and the corresponding skill is not invoked within a few tool calls, `detect-bypass.sh` (from `guardrails-kit`) warns and logs the event to `.claude/state/_metrics.jsonl` (gitignored). Triggers are listed in [.claude/skills-routing.json](./.claude/skills-routing.json).
 
