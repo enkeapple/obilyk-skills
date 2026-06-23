@@ -4,6 +4,15 @@ Transient backlog of un-promoted candidate rules — newest at the top of `## En
 
 ## Entries
 
+## 2026-06-23 — Negative/guard validation case proved only the guard's existence, not that it discriminates
+
+- **Cause-tag**: guard-case-inversion-design
+- **Symptom**: Layer-2 validating a new opt-in drift class in `auditing-claude-md`, the negative case ("guard must NOT inject a baseline into a repo that declared none") was built as a one-sided inversion — "skill WITH the new guarded class" vs "skill WITHOUT the class at all". On an opt-out repo both refrain (no applicable class either way), so the validator rightly returned FAIL: the case proved nothing.
+- **Root cause**: for a guard/opt-in clause, comparing feature-present vs feature-absent makes both negative paths observationally identical; the test confirms the guard text EXISTS but not that the guard predicate is load-bearing.
+- **Wrong approach**: assumed the standard inversion ("would it comply WITHOUT the skill?") transfers unchanged to a negative case; it collapses when the expected behavior is *refraining*.
+- **Correct approach**: re-ran a two-sided inversion that TOGGLES the predicate — SIDE A = the class as written (with the opt-in predicate) refrains; SIDE B = the same class with the predicate REMOVED would inject. PASS iff A refrains and B injects → the predicate is the discriminating difference.
+- **Prevention**: when validating a guard/opt-in/conditional clause whose correct behavior is to NOT act, build the inversion by toggling the guard predicate itself (predicate-present vs predicate-removed variant of the same feature), never feature-present vs feature-absent; if both inversion arms produce the same output on the negative input, the case is untestable — rebuild it before accepting PASS.
+
 ## 2026-06-23 — RED baseline subagent inherited the vault's own anti-slop skill, complied for the wrong reason
 
 - **Cause-tag**: contaminated-red-baseline
