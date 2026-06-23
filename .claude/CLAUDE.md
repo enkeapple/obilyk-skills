@@ -14,7 +14,7 @@ These survive context pressure and are model-agnostic. If the rest of this file 
 4. **Validate before "done".** A skill change is not done until its validators pass (frontmatter ≤1024, name regex, reference links resolve, fences balanced, word count sane) AND a GREEN subagent run confirms the behavior. Markdown existing is not done.
 5. **No local memory — facts go to git.** Never `Write` to the per-user memory dir (`~/.claude/projects/**/memory/`, `MEMORY.md`). Durable knowledge → `.claude/skills/`, a rule under `.claude/rules/`, or [lessons-learned.md](./lessons-learned.md).
 6. **Capture a qualifying lesson, same turn.** Capture only when BOTH hold: (A) you can name a concrete check/Prevention a future session will actually run, AND (B) it is an error *class* a competent future agent would repeat (non-obvious; plausibly recurs). Negative test: if all you'd write is "today I did X" with no reusable check, do not capture — **most turns produce no lesson, and that is normal, not a skipped step.** MUST-capture invariant: a turn that exposed a hallucinated symbol/API/skill-name, a wrong assumption, a test that passed for the wrong reason, or an owner correction of a non-obvious choice still captures the same turn. When a turn qualifies, capture it the SAME turn by invoking the `writing-lessons` skill (the `Skill` tool) — deferring loses it, and editing [lessons-learned.md](./lessons-learned.md) directly bypasses the cause-tag discipline and promotion-debt scan the skill owns. `writing-lessons` owns the full bar; `lessons-nudge.sh` (Stop) backstops.
-7. **Skill names are structural claims.** A reference to a skill must match its real dir and `name` under `plugins/*/skills/**` (and its flat symlink in `.claude/skills/*`) — verify, don't recall.
+7. **Skill names are structural claims.** A reference to a skill must match its real dir and `name` under `plugins/*/skills/**` and its routing key in `.claude/skills-routing.json` — verify, don't recall.
 
 ## Behavioral baseline
 
@@ -38,7 +38,7 @@ You are a **Principal AI / Workflow Engineer** building a personal, agnostic SDD
 
 State the mode on a non-trivial task.
 
-- **AUTHOR** (default) — create or change a skill via RED → GREEN → REFACTOR → VALIDATE. Edits under `plugins/*/skills/**` (discovered via the `.claude/skills/` symlinks); subagent pressure runs allowed.
+- **AUTHOR** (default) — create or change a skill via RED → GREEN → REFACTOR → VALIDATE. Edits under `plugins/*/skills/**` (discovered via the installed plugin); subagent pressure runs allowed.
 - **AUDIT** — read-only review of skills/rules/CLAUDE.md (`Read`/`Grep`/`Glob` + validators). No edits.
 - **APPLY** — exercise the chain on a *consumer* repo (`grilling → writing-specs → writing-plans → pre-implementation-protocol → inline-driven-development | subagent-driven-development → spec-drift-audit`, each task test-first via `test-driven-development`). The vault's skills are the tools; the target repo is the workpiece.
 
@@ -111,7 +111,7 @@ Rules for the slots:
 
 ## Skill discipline
 
-Skills are routed by [skills-routing.json](./skills-routing.json) (trigger keywords → skill body). When a prompt matches a trigger, invoke the `Skill` tool before reading/editing that domain — do NOT `Read` a `SKILL.md` directly to "preview" it. `detect-bypass.sh` warns and logs a bypass to `.claude/skills/_metrics.jsonl` (gitignored); `log-skill-usage.sh` records invocations; `token-guard.sh` enforces the per-turn/session token budget; `friction-log.sh` (Stop) records per-turn friction signals. (Note: `skill-gate.sh`'s `ruleGates` are currently empty — there are no code-domain edit gates in this repo, since there is no `src/`.) Beyond routing, `settings.json` wires **guard** hooks (`security-guard.sh`, `bash-read-guard.sh`, `read-guard.sh`, `edit-write-guard.sh` — they block credential/exfil-shaped commands and modifications to `.claude/hooks`/settings, so cleaning up hook files needs a human-run command) and an advisory **quality** pass (`quality.sh`, PostToolUse on edits — runs the validators on a vault doc, no-ops on consumer code without a node toolchain).
+Skills are routed by [skills-routing.json](./skills-routing.json) (trigger keywords → skill body). When a prompt matches a trigger, invoke the `Skill` tool before reading/editing that domain — do NOT `Read` a `SKILL.md` directly to "preview" it. The routing/metric/session/quality hooks (`detect-bypass.sh`, `log-skill-usage.sh`, `token-guard.sh`, `friction-log.sh`, `skill-gate.sh`, `reset-turn-budget.sh`, `lessons-nudge.sh`, `quality.sh`) ship in the `guardrails-kit` plugin (`plugins/guardrails-kit/hooks/`) and read the consumer's `.claude/skills-routing.json`; `detect-bypass.sh` logs bypasses to `.claude/state/_metrics.jsonl` (gitignored). (Note: `skill-gate.sh`'s `ruleGates` are currently empty — there are no code-domain edit gates in this repo, since there is no `src/`.) Beyond routing, root `settings.json` wires **guard** hooks (`security-guard.sh`, `bash-read-guard.sh`, `read-guard.sh`, `edit-write-guard.sh` — vault-local in `hooks/guards/`, surfaced via `.claude/hooks/` symlinks — they block credential/exfil-shaped commands and modifications to `.claude/hooks`/settings, so cleaning up hook files needs a human-run command) and an advisory **quality** pass (`quality.sh`, PostToolUse on edits — runs the validators on a vault doc, no-ops on consumer code without a node toolchain).
 
 ## Lessons promotion path
 
@@ -123,4 +123,4 @@ A qualifying lesson → an entry in [lessons-learned.md](./lessons-learned.md) (
 - Process basics (Implementation/Suspicion protocols, evidence-based verification, question discipline): [rules/domains/framework.md](./rules/domains/framework.md)
 - Domain glossary: [rules/domains/glossary.md](./rules/domains/glossary.md)
 - Domain rules (on demand): [rules/](./rules/) · Lessons: [lessons-learned.md](./lessons-learned.md)
-- Skill registry: [skills-routing.json](./skills-routing.json) · Hooks: [hooks/](./hooks/) · Runtime state (gitignored): `.claude/state/`
+- Skill registry: [skills-routing.json](./skills-routing.json) · Guard hooks: [hooks/guards/](./hooks/guards/) (vault-local, `.claude/hooks/` symlinks) · Routing/metric hooks: `plugins/guardrails-kit/hooks/` · Runtime state (gitignored): `.claude/state/`

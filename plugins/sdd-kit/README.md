@@ -1,4 +1,4 @@
-# sdd-kit
+# Sdd Kit
 
 The gated spec-driven-development chain — turn a fuzzy idea into shipped, spec-checked code one approved step at a time — plus the skills that author and maintain skills, hooks, and rules, and bootstrap the framework into a fresh repo.
 

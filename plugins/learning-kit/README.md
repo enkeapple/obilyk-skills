@@ -1,4 +1,4 @@
-# learning-kit
+# Learning Kit
 
 User-invoked skills for learning something fast and proving you actually got it — translate confusion into plain language, expose the gaps you can't see, and build a plan that reaches a concrete outcome.
 

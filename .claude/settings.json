@@ -73,6 +73,13 @@
         "repo": "software-mansion-labs/skills"
       },
       "autoUpdate": true
+    },
+    "obilyk-skills": {
+      "source": {
+        "source": "github",
+        "repo": "enkeapple/obilyk-skills"
+      },
+      "autoUpdate": true
     }
   },
   "enabledPlugins": {

@@ -7,7 +7,7 @@ How to work in this repo, regardless of which skill or rule you touch. This is a
 Before any change to a skill, rule, or hook:
 
 1. **Read the full request**; restate the change in one line. If it touches a skill, identify the operating mode (AUTHOR / AUDIT / APPLY).
-2. **Scan every layer the change touches** and classify each NONE / PARTIAL / FULL. The layers of a skill change are: `SKILL.md` frontmatter → `SKILL.md` body → `references/*.md` / `assets/*.md` → `skills-routing.json` (triggers) → `.claude/hooks/*.sh`. A new/renamed/deleted skill or a trigger change is NOT done until routing matches disk and the flat symlink exists (see [skill-routing-sync.md](../common/skill-routing-sync.md)).
+2. **Scan every layer the change touches** and classify each NONE / PARTIAL / FULL. The layers of a skill change are: `SKILL.md` frontmatter → `SKILL.md` body → `references/*.md` / `assets/*.md` → the root `skills-routing.json` (triggers). A new/renamed/deleted skill or a trigger change is NOT done until routing matches disk (see [skill-routing-sync.md](../common/skill-routing-sync.md)).
 3. **Write the contract as the artifact, not prose** — for a skill that means the actual `name:`/`description:` frontmatter and the precise prohibition or recipe; for a rule, the `## When` triggers and the canonical table. If you can't write it concretely yet, the task isn't understood — read more.
 4. **Walk the behaviour**: the happy path plus how the skill holds under pressure (the loophole a subagent will try, the edge the rule must name).
 5. **Only then write**, in dependency order: contract/frontmatter → body → references → routing. For PARTIAL, touch only the missing layers.

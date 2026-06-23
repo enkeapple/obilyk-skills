@@ -1,8 +1,11 @@
 {
-  "version": 1,
+  "version": 2,
   "ruleGates": {},
   "skills": {
     "resolving-requirements": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "resolving-requirements",
       "triggers": [
         "[A-Z][A-Z0-9]+-\\d+",
         "get (the )?requirements",
@@ -14,12 +17,12 @@
         "подтяни требовани",
         "резолвни тикет",
         "начни работу над"
-      ],
-      "files": [
-        ".claude/skills/resolving-requirements/SKILL.md"
       ]
     },
     "sdd-lifecycle": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "sdd-lifecycle",
       "triggers": [
         "lifecycle",
         "run the (full )?workflow",
@@ -31,12 +34,12 @@
         "прогон по циклу",
         "весь цикл",
         "начать цикл"
-      ],
-      "files": [
-        ".claude/skills/sdd-lifecycle/SKILL.md"
       ]
     },
     "grilling": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "grilling",
       "triggers": [
         "help me think (this )?through",
         "brainstorm",
@@ -58,12 +61,12 @@
         "продумать",
         "разобрать иде",
         "стоит ли"
-      ],
-      "files": [
-        ".claude/skills/grilling/SKILL.md"
       ]
     },
     "writing-specs": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "writing-specs",
       "triggers": [
         "write a spec",
         "spec this out",
@@ -76,12 +79,12 @@
         "составить спе(ку|цификаци)",
         "оформить специф",
         "спецификаци"
-      ],
-      "files": [
-        ".claude/skills/writing-specs/SKILL.md"
       ]
     },
     "writing-plans": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "writing-plans",
       "triggers": [
         "write a plan",
         "implementation plan",
@@ -94,12 +97,12 @@
         "разбить на (задач|шаг)",
         "распланировать",
         "составить план"
-      ],
-      "files": [
-        ".claude/skills/writing-plans/SKILL.md"
       ]
     },
     "pre-implementation-protocol": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "pre-implementation-protocol",
       "triggers": [
         "start the work",
         "start coding",
@@ -110,12 +113,12 @@
         "погнали кодить",
         "приступить к реализаци",
         "начать работу по плану"
-      ],
-      "files": [
-        ".claude/skills/pre-implementation-protocol/SKILL.md"
       ]
     },
     "test-driven-development": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "test-driven-development",
       "triggers": [
         "fix (this|the) bug",
         "red[- ]green[- ]refactor",
@@ -130,12 +133,12 @@
         "исправить баг",
         "пофиксить баг",
         "починить баг"
-      ],
-      "files": [
-        ".claude/skills/test-driven-development/SKILL.md"
       ]
     },
     "inline-driven-development": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "inline-driven-development",
       "triggers": [
         "inline[- ]driven",
         "inline execution",
@@ -147,12 +150,12 @@
         "выполнить план сам",
         "без сабагентов",
         "пройти план по шагам"
-      ],
-      "files": [
-        ".claude/skills/inline-driven-development/SKILL.md"
       ]
     },
     "subagent-driven-development": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "subagent-driven-development",
       "triggers": [
         "subagent[- ]driven",
         "dispatch a subagent per task",
@@ -162,12 +165,12 @@
         "сабагент на задачу",
         "исполнить план сабагентами",
         "раскидать задачи по агентам"
-      ],
-      "files": [
-        ".claude/skills/subagent-driven-development/SKILL.md"
       ]
     },
     "spec-drift-audit": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "spec-drift-audit",
       "triggers": [
         "audit the spec",
         "spec drift",
@@ -181,12 +184,12 @@
         "соответстви.* спе(ке|цификаци)",
         "дрейф спе",
         "проверить.* спе(ку|цификаци)"
-      ],
-      "files": [
-        ".claude/skills/spec-drift-audit/SKILL.md"
       ]
     },
     "writing-rules": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "writing-rules",
       "triggers": [
         "write a rule",
         "add a rule",
@@ -201,12 +204,12 @@
         "создать (правил|рул)",
         "закрепить правил",
         "оформить правил"
-      ],
-      "files": [
-        ".claude/skills/writing-rules/SKILL.md"
       ]
     },
     "writing-hooks": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "writing-hooks",
       "triggers": [
         "write a hook",
         "add a hook",
@@ -219,12 +222,12 @@
         "добавить хук",
         "создать хук",
         "блокировать инструмент"
-      ],
-      "files": [
-        ".claude/skills/writing-hooks/SKILL.md"
       ]
     },
     "writing-lessons": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "writing-lessons",
       "triggers": [
         "lesson learned",
         "capture this",
@@ -238,24 +241,24 @@
         "захватить урок",
         "это уже было",
         "извлечь урок"
-      ],
-      "files": [
-        ".claude/skills/writing-lessons/SKILL.md"
       ]
     },
     "adopting-framework": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "adopting-framework",
       "triggers": [
         "adopt the framework",
         "bootstrap this repo for sdd",
         "post-install setup",
         "set up sdd in this repo",
         "onboard this repo to sdd"
-      ],
-      "files": [
-        ".claude/skills/adopting-framework/SKILL.md"
       ]
     },
     "bootstrapping-claude-md": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "bootstrapping-claude-md",
       "triggers": [
         "set up CLAUDE.md",
         "initialize CLAUDE.md",
@@ -266,12 +269,12 @@
         "настроить CLAUDE.md",
         "создать CLAUDE.md",
         "инициализировать CLAUDE.md"
-      ],
-      "files": [
-        ".claude/skills/bootstrapping-claude-md/SKILL.md"
       ]
     },
     "auditing-claude-md": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "auditing-claude-md",
       "triggers": [
         "audit CLAUDE.md",
         "is CLAUDE.md accurate",
@@ -282,12 +285,12 @@
         "проверить CLAUDE.md",
         "обновить CLAUDE.md",
         "CLAUDE.md устарел"
-      ],
-      "files": [
-        ".claude/skills/auditing-claude-md/SKILL.md"
       ]
     },
     "bootstrapping-glossary": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "bootstrapping-glossary",
       "triggers": [
         "set up the base rules",
         "create (a )?domain glossary",
@@ -298,12 +301,12 @@
         "настроить базовые правил",
         "создать глоссари",
         "базовые правил"
-      ],
-      "files": [
-        ".claude/skills/bootstrapping-glossary/SKILL.md"
       ]
     },
     "auditing-glossary": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "auditing-glossary",
       "triggers": [
         "audit the rules",
         "is the glossary (still )?accurate",
@@ -315,12 +318,12 @@
         "проверить (базовые )?правил",
         "обновить глоссари",
         "правила устарел"
-      ],
-      "files": [
-        ".claude/skills/auditing-glossary/SKILL.md"
       ]
     },
     "handoff": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "handoff",
       "triggers": [
         "handoff",
         "hand off",
@@ -337,12 +340,12 @@
         "сохранить план",
         "контекст заканчивается",
         "сворачива"
-      ],
-      "files": [
-        ".claude/skills/handoff/SKILL.md"
       ]
     },
     "tightening-prose": {
+      "kind": "ref",
+      "plugin": "craft-kit",
+      "name": "tightening-prose",
       "triggers": [
         "tighten (this|the|it)",
         "de[- ]slop",
@@ -353,12 +356,12 @@
         "убери воду",
         "сделай прямее",
         "де[- ]слоп"
-      ],
-      "files": [
-        ".claude/skills/tightening-prose/SKILL.md"
       ]
     },
     "humanizing-prose": {
+      "kind": "ref",
+      "plugin": "craft-kit",
+      "name": "humanizing-prose",
       "triggers": [
         "polish (this|it) for (the )?(article|post|blog|publication)",
         "make (this|it) publish[- ]ready",
@@ -370,12 +373,12 @@
         "для блога",
         "очеловечь текст",
         "подготовь к публикаци"
-      ],
-      "files": [
-        ".claude/skills/humanizing-prose/SKILL.md"
       ]
     },
     "codebase-design": {
+      "kind": "ref",
+      "plugin": "craft-kit",
+      "name": "codebase-design",
       "triggers": [
         "design (a |the )?(module|interface)",
         "improve (a |the )?(module|interface)",
@@ -387,12 +390,12 @@
         "AI[- ]navigable",
         "design it twice",
         "shallow module"
-      ],
-      "files": [
-        ".claude/skills/codebase-design/SKILL.md"
       ]
     },
     "bootstrapping-readme": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "bootstrapping-readme",
       "triggers": [
         "set up the README",
         "generate the skills catalog",
@@ -400,12 +403,12 @@
         "build the skills index",
         "настроить README",
         "собрать каталог скиллов"
-      ],
-      "files": [
-        ".claude/skills/bootstrapping-readme/SKILL.md"
       ]
     },
     "auditing-readme": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "auditing-readme",
       "triggers": [
         "audit the README",
         "is the skills catalog (still )?accurate",
@@ -414,12 +417,12 @@
         "update the README catalog",
         "проверить README",
         "каталог скиллов устарел"
-      ],
-      "files": [
-        ".claude/skills/auditing-readme/SKILL.md"
       ]
     },
     "writing-skills": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "writing-skills",
       "triggers": [
         "write a skill",
         "create a skill",
@@ -432,9 +435,6 @@
         "создать скилл",
         "отредактировать скилл",
         "новый скилл"
-      ],
-      "files": [
-        ".claude/skills/writing-skills/SKILL.md"
       ]
     }
   }

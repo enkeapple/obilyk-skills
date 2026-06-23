@@ -1,6 +1,6 @@
 # Audit Report Example
 
-Illustrative (a real report covers the README on disk and every skill the glob finds). The report is a per-finding table over the five drift criteria, then a summary, then a recommended disposition.
+Illustrative (a real report covers the README on disk and every skill the glob finds). The report is a per-finding table over the five drift criteria, then a summary, then a recommended disposition. In a marketplace, run one such table per managed block — each per-plugin `skills:` and/or `hooks:` block plus the root `plugins:` index; the example below is a single skills block.
 
 ## Findings
 

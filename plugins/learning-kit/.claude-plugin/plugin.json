@@ -1,7 +1,7 @@
 {
   "name": "learning-kit",
   "description": "User-invoked learning skills: translate confusion, expose gaps, build learning plans.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "skills": [
     "./skills/confusion-translator",
     "./skills/curve-destroyer",

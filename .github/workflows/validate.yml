@@ -17,7 +17,6 @@ jobs:
         run: |
           jq empty .claude-plugin/marketplace.json
           jq empty plugins/*/.claude-plugin/plugin.json
-          jq empty plugins/*/skills-routing.json
           jq empty plugins/*/hooks/hooks.json
           # plugin hooks.json must wrap events in a top-level "hooks" record (loader requirement)
           for hj in plugins/*/hooks/hooks.json; do
@@ -59,16 +58,22 @@ jobs:
           done < <(find plugins -path '*/skills/*' -name SKILL.md)
           [ $bad -eq 0 ] && echo "NAME_INVARIANT_OK"
 
-      - name: Bundled routing files resolve
+      - name: Consumer routing schema (.claude/skills-routing.json v2)
         run: |
-          for rj in plugins/*/skills-routing.json; do
-            base=$(dirname "$rj")
-            for k in $(jq -r '.skills|keys[]' "$rj"); do
-              f=$(jq -r ".skills[\"$k\"].files[0]" "$rj")
-              test -f "$base/$f" || { echo "missing routing file: $base/$f ($k)"; exit 1; }
-            done
+          jq empty .claude/skills-routing.json
+          jq -e '.version==2 and (.skills|type=="object")' .claude/skills-routing.json
+          # every entry has a kind; a ref names a real plugin; a local's files resolve
+          for k in $(jq -r '.skills|keys[]' .claude/skills-routing.json); do
+            kind=$(jq -r ".skills[\"$k\"].kind // \"\"" .claude/skills-routing.json)
+            case "$kind" in
+              ref)   pl=$(jq -r ".skills[\"$k\"].plugin // \"\"" .claude/skills-routing.json)
+                     test -f "plugins/$pl/.claude-plugin/plugin.json" || { echo "ref $k -> unknown plugin: $pl"; exit 1; } ;;
+              local) f=$(jq -r ".skills[\"$k\"].files[0] // \"\"" .claude/skills-routing.json)
+                     test -f "$f" || { echo "local $k -> missing file: $f"; exit 1; } ;;
+              *)     echo "entry $k invalid kind: '$kind'"; exit 1 ;;
+            esac
           done
-          echo "ROUTING_FILES_OK"
+          echo "ROUTING_OK"
 
       - name: Bundled rule links resolve; no stale .claude/rules links
         run: |

@@ -1,4 +1,4 @@
-# craft-kit
+# Craft Kit
 
 Craft skills for the parts of engineering that aren't a pipeline step: designing a module worth depending on, reviewing an architecture for where depth is missing, and making prose read like a human wrote it.
 
@@ -38,6 +38,7 @@ The skills are user-invoked: name the task ("design this module", "de-slop this 
 
 ### prose
 
+- **[drafting-release-notes](skills/prose/drafting-release-notes/SKILL.md)** — Use to turn the diff between the current release branch and the previous one into human, user-facing store release…
 - **[humanizing-prose](skills/prose/humanizing-prose/SKILL.md)** — Use to rewrite an EXISTING draft into natural, publication-ready prose for a narrative / article register — a blog…
 - **[tightening-prose](skills/prose/tightening-prose/SKILL.md)** — Use to remove AI writing tells from an EXISTING chunk of prose — a draft, pasted text, weaker-model output, or…
 

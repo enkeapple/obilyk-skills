@@ -1,6 +1,6 @@
 # SDD Workflow — marketplace & Claude entry point
 
-A **Claude Code skill marketplace** and the in-place dev vault that develops it. The repo publishes 3 plugins via `.claude-plugin/marketplace.json` — **sdd-kit** (the gated Spec-Driven-Development chain plus skill/hook/rule authoring and foundation bootstrapping), **learning-kit** (user-invoked learning skills), and **craft-kit** (deep-module design, architecture review, prose). The product is not an app — it is the skills themselves and *how they interact*. The goal is a flexible system that surfaces its own bottlenecks (a misfiring skill, a leaky hand-off, an over-rigid step), which become lessons → rules → skill edits.
+A **Claude Code skill marketplace** and the in-place dev vault that develops it. The repo publishes 4 plugins via `.claude-plugin/marketplace.json` — **sdd-kit** (the gated Spec-Driven-Development chain plus skill/hook/rule authoring and foundation bootstrapping), **learning-kit** (user-invoked learning skills), **craft-kit** (deep-module design, architecture review, prose), and **guardrails-kit** (the routing-bypass detection, telemetry, session, and quality hooks that the harness reads from `.claude/skills-routing.json`). The product is not an app — it is the skills themselves and *how they interact*. The goal is a flexible system that surfaces its own bottlenecks (a misfiring skill, a leaky hand-off, an over-rigid step), which become lessons → rules → skill edits.
 
 ## How to work here (read first)
 
@@ -12,11 +12,11 @@ Authoring or changing a skill runs through **RED → GREEN → REFACTOR → VALI
 - **Agnostic by default.** A skill never hard-depends on one project's stack, paths, or commands — the consumer repo fills specifics.
 - **Capture a qualifying lesson the same turn.** Only when it passes the (A)+(B) bar — a concrete reusable check AND a recurring/non-obvious class (most turns produce none); `writing-lessons` owns the bar. Recurring (3×) → `writing-rules`.
 - **Verify before "done".** Validators pass AND a GREEN subagent run confirms the behavior — code/markdown existing is not "done".
-- **Skill names are structural claims.** A reference to a skill must match its real dir/`name` in `.claude/skills/*` — verify, don't recall.
+- **Skill names are structural claims.** A reference to a skill must match its real dir/`name` under `plugins/*/skills/**` and its routing key in `.claude/skills-routing.json` — verify, don't recall.
 
 ## What this project is
 
-Agnostic skills authored under `plugins/<kit>/skills/<category>/<name>/` across the three kits (`sdd-kit`, `learning-kit`, `craft-kit`, each with its own `.claude-plugin/plugin.json`) and discovered by Claude Code through flat symlinks in `.claude/skills/`, plus the harness around them: the marketplace manifest `.claude-plugin/marketplace.json`, hooks authored under `hooks/` and surfaced via flat symlinks in `.claude/hooks/` (gates + logging), `.claude/rules/domains/` (framework + domain glossary) and `.claude/rules/common/` (cross-cutting rules), `.claude/skills-routing.json`, `.claude/state/`. No application code, no `package.json`, no build.
+Agnostic skills authored under `plugins/<kit>/skills/<category>/<name>/` across the four kits (`sdd-kit`, `learning-kit`, `craft-kit`, `guardrails-kit`, each with its own `.claude-plugin/plugin.json`) and discovered by Claude Code via the installed marketplace plugins, plus the harness around them: the marketplace manifest `.claude-plugin/marketplace.json`, guard hooks in `hooks/guards/` surfaced via `.claude/hooks/` symlinks (wired by root `settings.json`), routing/metric/session/quality hooks in `plugins/guardrails-kit/hooks/` (wired by its `hooks.json`), `.claude/rules/domains/` (framework + domain glossary) and `.claude/rules/common/` (cross-cutting rules), `.claude/skills-routing.json`, `.claude/state/`. No application code, no `package.json`, no build.
 
 The vault's own design docs follow a single convention: **specs live in `docs/specs/YYYY-MM-DD-<topic>.md`, plans in `docs/plans/YYYY-MM-DD-<topic>.md`** — never bare `specs/` or `plans/` at the root. This is the convention `writing-specs`/`writing-plans` detect via "where the project keeps design docs"; keeping it single-valued is what makes the output path deterministic.
 
@@ -52,7 +52,7 @@ No build / dev / test pipeline — this is a skills vault, not an app. Verificat
 | Approaching the context limit / ending with unfinished work | `handoff` |
 | Short user-typed aliases (deterministic entry; same skills) | `/sdd`→`sdd-lifecycle`, `/grill`→`grilling`, `/spec`→`writing-specs`, `/audit`→`spec-drift-audit` |
 
-When a user prompt contains a registered trigger and the corresponding skill is not invoked within a few tool calls, [.claude/hooks/detect-bypass.sh](./.claude/hooks/detect-bypass.sh) warns and logs the event to `.claude/skills/_metrics.jsonl` (gitignored). Triggers are listed in [.claude/skills-routing.json](./.claude/skills-routing.json).
+When a user prompt contains a registered trigger and the corresponding skill is not invoked within a few tool calls, `detect-bypass.sh` (from `guardrails-kit`) warns and logs the event to `.claude/state/_metrics.jsonl` (gitignored). Triggers are listed in [.claude/skills-routing.json](./.claude/skills-routing.json).
 
 ## Where rules live
 
