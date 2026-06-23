@@ -1,1 +1,0 @@
-../../hooks/session/lessons-nudge.sh

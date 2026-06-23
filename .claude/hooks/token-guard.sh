@@ -1,1 +1,0 @@
-../../hooks/session/token-guard.sh

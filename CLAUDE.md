@@ -1,6 +1,6 @@
-# SDD Workflow Vault — Claude entry point
+# SDD Workflow — marketplace & Claude entry point
 
-A **vault for developing an agnostic Spec-Driven-Development (SDD) skill framework**. The product is not an app — it is the skills themselves and *how they interact*. The goal is a flexible system that surfaces its own bottlenecks (a misfiring skill, a leaky hand-off, an over-rigid step), which become lessons → rules → skill edits.
+A **Claude Code skill marketplace** and the in-place dev vault that develops it. The repo publishes 3 plugins via `.claude-plugin/marketplace.json` — **sdd-kit** (the gated Spec-Driven-Development chain plus skill/hook/rule authoring and foundation bootstrapping), **learning-kit** (user-invoked learning skills), and **craft-kit** (deep-module design, architecture review, prose). The product is not an app — it is the skills themselves and *how they interact*. The goal is a flexible system that surfaces its own bottlenecks (a misfiring skill, a leaky hand-off, an over-rigid step), which become lessons → rules → skill edits.
 
 ## How to work here (read first)
 
@@ -16,7 +16,7 @@ Authoring or changing a skill runs through **RED → GREEN → REFACTOR → VALI
 
 ## What this project is
 
-Agnostic skills authored under `skills/` (grouped into category folders) and discovered by Claude Code through flat symlinks in `.claude/skills/`, plus the harness around them: hooks authored under `hooks/` and surfaced via flat symlinks in `.claude/hooks/` (gates + logging), `.claude/rules/domains/` (framework + domain glossary) and `.claude/rules/common/` (cross-cutting rules), `.claude/skills-routing.json`, `.claude/state/`. No application code, no `package.json`, no build.
+Agnostic skills authored under `plugins/<kit>/skills/<category>/<name>/` across the three kits (`sdd-kit`, `learning-kit`, `craft-kit`, each with its own `.claude-plugin/plugin.json`) and discovered by Claude Code through flat symlinks in `.claude/skills/`, plus the harness around them: the marketplace manifest `.claude-plugin/marketplace.json`, hooks authored under `hooks/` and surfaced via flat symlinks in `.claude/hooks/` (gates + logging), `.claude/rules/domains/` (framework + domain glossary) and `.claude/rules/common/` (cross-cutting rules), `.claude/skills-routing.json`, `.claude/state/`. No application code, no `package.json`, no build.
 
 The vault's own design docs follow a single convention: **specs live in `docs/specs/YYYY-MM-DD-<topic>.md`, plans in `docs/plans/YYYY-MM-DD-<topic>.md`** — never bare `specs/` or `plans/` at the root. This is the convention `writing-specs`/`writing-plans` detect via "where the project keeps design docs"; keeping it single-valued is what makes the output path deterministic.
 

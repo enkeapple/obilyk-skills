@@ -16,7 +16,7 @@
         "начни работу над"
       ],
       "files": [
-        ".claude/skills/resolving-requirements/SKILL.md"
+        "skills/chain/resolving-requirements/SKILL.md"
       ]
     },
     "sdd-lifecycle": {
@@ -33,7 +33,7 @@
         "начать цикл"
       ],
       "files": [
-        ".claude/skills/sdd-lifecycle/SKILL.md"
+        "skills/chain/sdd-lifecycle/SKILL.md"
       ]
     },
     "grilling": {
@@ -60,7 +60,7 @@
         "стоит ли"
       ],
       "files": [
-        ".claude/skills/grilling/SKILL.md"
+        "skills/chain/grilling/SKILL.md"
       ]
     },
     "writing-specs": {
@@ -78,7 +78,7 @@
         "спецификаци"
       ],
       "files": [
-        ".claude/skills/writing-specs/SKILL.md"
+        "skills/chain/writing-specs/SKILL.md"
       ]
     },
     "writing-plans": {
@@ -96,7 +96,7 @@
         "составить план"
       ],
       "files": [
-        ".claude/skills/writing-plans/SKILL.md"
+        "skills/chain/writing-plans/SKILL.md"
       ]
     },
     "pre-implementation-protocol": {
@@ -112,7 +112,7 @@
         "начать работу по плану"
       ],
       "files": [
-        ".claude/skills/pre-implementation-protocol/SKILL.md"
+        "skills/chain/pre-implementation-protocol/SKILL.md"
       ]
     },
     "test-driven-development": {
@@ -132,7 +132,7 @@
         "починить баг"
       ],
       "files": [
-        ".claude/skills/test-driven-development/SKILL.md"
+        "skills/chain/test-driven-development/SKILL.md"
       ]
     },
     "inline-driven-development": {
@@ -149,7 +149,7 @@
         "пройти план по шагам"
       ],
       "files": [
-        ".claude/skills/inline-driven-development/SKILL.md"
+        "skills/chain/inline-driven-development/SKILL.md"
       ]
     },
     "subagent-driven-development": {
@@ -164,7 +164,7 @@
         "раскидать задачи по агентам"
       ],
       "files": [
-        ".claude/skills/subagent-driven-development/SKILL.md"
+        "skills/chain/subagent-driven-development/SKILL.md"
       ]
     },
     "spec-drift-audit": {
@@ -183,7 +183,7 @@
         "проверить.* спе(ку|цификаци)"
       ],
       "files": [
-        ".claude/skills/spec-drift-audit/SKILL.md"
+        "skills/chain/spec-drift-audit/SKILL.md"
       ]
     },
     "writing-rules": {
@@ -203,7 +203,7 @@
         "оформить правил"
       ],
       "files": [
-        ".claude/skills/writing-rules/SKILL.md"
+        "skills/authoring/writing-rules/SKILL.md"
       ]
     },
     "writing-hooks": {
@@ -221,7 +221,7 @@
         "блокировать инструмент"
       ],
       "files": [
-        ".claude/skills/writing-hooks/SKILL.md"
+        "skills/authoring/writing-hooks/SKILL.md"
       ]
     },
     "writing-lessons": {
@@ -240,7 +240,7 @@
         "извлечь урок"
       ],
       "files": [
-        ".claude/skills/writing-lessons/SKILL.md"
+        "skills/authoring/writing-lessons/SKILL.md"
       ]
     },
     "adopting-framework": {
@@ -252,7 +252,7 @@
         "onboard this repo to sdd"
       ],
       "files": [
-        ".claude/skills/adopting-framework/SKILL.md"
+        "skills/setup/adopting-framework/SKILL.md"
       ]
     },
     "bootstrapping-claude-md": {
@@ -268,7 +268,7 @@
         "инициализировать CLAUDE.md"
       ],
       "files": [
-        ".claude/skills/bootstrapping-claude-md/SKILL.md"
+        "skills/setup/bootstrapping-claude-md/SKILL.md"
       ]
     },
     "auditing-claude-md": {
@@ -284,7 +284,7 @@
         "CLAUDE.md устарел"
       ],
       "files": [
-        ".claude/skills/auditing-claude-md/SKILL.md"
+        "skills/setup/auditing-claude-md/SKILL.md"
       ]
     },
     "bootstrapping-glossary": {
@@ -300,7 +300,7 @@
         "базовые правил"
       ],
       "files": [
-        ".claude/skills/bootstrapping-glossary/SKILL.md"
+        "skills/setup/bootstrapping-glossary/SKILL.md"
       ]
     },
     "auditing-glossary": {
@@ -317,7 +317,7 @@
         "правила устарел"
       ],
       "files": [
-        ".claude/skills/auditing-glossary/SKILL.md"
+        "skills/setup/auditing-glossary/SKILL.md"
       ]
     },
     "handoff": {
@@ -339,57 +339,7 @@
         "сворачива"
       ],
       "files": [
-        ".claude/skills/handoff/SKILL.md"
-      ]
-    },
-    "tightening-prose": {
-      "triggers": [
-        "tighten (this|the|it)",
-        "de[- ]slop",
-        "remove the AI tells",
-        "make this less AI",
-        "cut the (fluff|slop)",
-        "почисти текст",
-        "убери воду",
-        "сделай прямее",
-        "де[- ]слоп"
-      ],
-      "files": [
-        ".claude/skills/tightening-prose/SKILL.md"
-      ]
-    },
-    "humanizing-prose": {
-      "triggers": [
-        "polish (this|it) for (the )?(article|post|blog|publication)",
-        "make (this|it) publish[- ]ready",
-        "rewrite (this|it) as an? (article|post|blog)",
-        "humanize (this|the|it)",
-        "make it (read|sound) (like a )?(human|person)",
-        "под стать?ю",
-        "перепиши под (пост|стать)",
-        "для блога",
-        "очеловечь текст",
-        "подготовь к публикаци"
-      ],
-      "files": [
-        ".claude/skills/humanizing-prose/SKILL.md"
-      ]
-    },
-    "codebase-design": {
-      "triggers": [
-        "design (a |the )?(module|interface)",
-        "improve (a |the )?(module|interface)",
-        "deep module",
-        "deepening opportunit",
-        "where (does |should )?the seam",
-        "place a seam",
-        "make (it|this|the code) (more )?testable",
-        "AI[- ]navigable",
-        "design it twice",
-        "shallow module"
-      ],
-      "files": [
-        ".claude/skills/codebase-design/SKILL.md"
+        "skills/session/handoff/SKILL.md"
       ]
     },
     "bootstrapping-readme": {
@@ -402,7 +352,7 @@
         "собрать каталог скиллов"
       ],
       "files": [
-        ".claude/skills/bootstrapping-readme/SKILL.md"
+        "skills/setup/bootstrapping-readme/SKILL.md"
       ]
     },
     "auditing-readme": {
@@ -416,7 +366,7 @@
         "каталог скиллов устарел"
       ],
       "files": [
-        ".claude/skills/auditing-readme/SKILL.md"
+        "skills/setup/auditing-readme/SKILL.md"
       ]
     },
     "writing-skills": {
@@ -434,7 +384,7 @@
         "новый скилл"
       ],
       "files": [
-        ".claude/skills/writing-skills/SKILL.md"
+        "skills/authoring/writing-skills/SKILL.md"
       ]
     }
   }

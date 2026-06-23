@@ -1,0 +1,14 @@
+{
+  "name": "learning-kit",
+  "description": "User-invoked learning skills: translate confusion, expose gaps, build learning plans.",
+  "version": "0.1.0",
+  "skills": [
+    "./skills/confusion-translator",
+    "./skills/curve-destroyer",
+    "./skills/forced-feynman",
+    "./skills/hidden-gaps-detector",
+    "./skills/plan-architect",
+    "./skills/real-mistakes-simulator",
+    "./skills/router"
+  ]
+}

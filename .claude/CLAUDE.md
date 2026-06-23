@@ -14,11 +14,11 @@ These survive context pressure and are model-agnostic. If the rest of this file 
 4. **Validate before "done".** A skill change is not done until its validators pass (frontmatter ≤1024, name regex, reference links resolve, fences balanced, word count sane) AND a GREEN subagent run confirms the behavior. Markdown existing is not done.
 5. **No local memory — facts go to git.** Never `Write` to the per-user memory dir (`~/.claude/projects/**/memory/`, `MEMORY.md`). Durable knowledge → `.claude/skills/`, a rule under `.claude/rules/`, or [lessons-learned.md](./lessons-learned.md).
 6. **Capture a qualifying lesson, same turn.** Capture only when BOTH hold: (A) you can name a concrete check/Prevention a future session will actually run, AND (B) it is an error *class* a competent future agent would repeat (non-obvious; plausibly recurs). Negative test: if all you'd write is "today I did X" with no reusable check, do not capture — **most turns produce no lesson, and that is normal, not a skipped step.** MUST-capture invariant: a turn that exposed a hallucinated symbol/API/skill-name, a wrong assumption, a test that passed for the wrong reason, or an owner correction of a non-obvious choice still captures the same turn. When a turn qualifies, capture it the SAME turn by invoking the `writing-lessons` skill (the `Skill` tool) — deferring loses it, and editing [lessons-learned.md](./lessons-learned.md) directly bypasses the cause-tag discipline and promotion-debt scan the skill owns. `writing-lessons` owns the full bar; `lessons-nudge.sh` (Stop) backstops.
-7. **Skill names are structural claims.** A reference to a skill must match its real dir and `name` under `skills/` (and its flat symlink in `.claude/skills/*`) — verify, don't recall.
+7. **Skill names are structural claims.** A reference to a skill must match its real dir and `name` under `plugins/*/skills/**` (and its flat symlink in `.claude/skills/*`) — verify, don't recall.
 
 ## Behavioral baseline
 
-This vault has **opted into** the default conduct set (the canonical source is [bootstrapping-claude-md/references/behavioral-baseline.md](../skills/foundation/bootstrapping-claude-md/references/behavioral-baseline.md); `auditing-claude-md` verifies this section against it). It shapes every change *on top of* the Non-negotiables above — where the two overlap, the Non-negotiable is the enforced form and this is the conduct lens; do not treat them as separate mandates.
+This vault has **opted into** the default conduct set (the canonical source is [bootstrapping-claude-md/references/behavioral-baseline.md](../plugins/sdd-kit/skills/setup/bootstrapping-claude-md/references/behavioral-baseline.md); `auditing-claude-md` verifies this section against it). It shapes every change *on top of* the Non-negotiables above — where the two overlap, the Non-negotiable is the enforced form and this is the conduct lens; do not treat them as separate mandates.
 
 - **Think Before Coding** — surface assumptions and tradeoffs before implementing; when interpretations diverge, present them rather than picking silently; when unclear, stop and ask. (Here: the Implementation/Suspicion protocols in [framework.md](./rules/domains/framework.md).)
 - **Simplicity First** — write the minimum that solves the stated problem; no speculative features, single-use abstractions, or unrequested configurability.
@@ -38,7 +38,7 @@ You are a **Principal AI / Workflow Engineer** building a personal, agnostic SDD
 
 State the mode on a non-trivial task.
 
-- **AUTHOR** (default) — create or change a skill via RED → GREEN → REFACTOR → VALIDATE. Edits under `skills/**` (discovered via the `.claude/skills/` symlinks); subagent pressure runs allowed.
+- **AUTHOR** (default) — create or change a skill via RED → GREEN → REFACTOR → VALIDATE. Edits under `plugins/*/skills/**` (discovered via the `.claude/skills/` symlinks); subagent pressure runs allowed.
 - **AUDIT** — read-only review of skills/rules/CLAUDE.md (`Read`/`Grep`/`Glob` + validators). No edits.
 - **APPLY** — exercise the chain on a *consumer* repo (`grilling → writing-specs → writing-plans → pre-implementation-protocol → inline-driven-development | subagent-driven-development → spec-drift-audit`, each task test-first via `test-driven-development`). The vault's skills are the tools; the target repo is the workpiece.
 

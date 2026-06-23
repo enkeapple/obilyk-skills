@@ -1,1 +1,0 @@
-../../hooks/routing/detect-bypass.sh

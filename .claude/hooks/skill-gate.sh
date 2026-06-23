@@ -1,1 +1,0 @@
-../../hooks/routing/skill-gate.sh

@@ -4,6 +4,24 @@ Transient backlog of un-promoted candidate rules — newest at the top of `## En
 
 ## Entries
 
+## 2026-06-23 — Catalog re-derivation reported false drift: parser assumed all descriptions were folded scalars, missed quoted ones
+
+- **Cause-tag**: parser-format-assumption
+- **Symptom**: re-deriving the README catalog to verify the marketplace `bootstrapping-readme` run, a hand-rolled Python parser emitted every learning-kit description with a leading `"` (`— "Make confusing material click…`), implying the on-disk READMEs had drifted. They had not.
+- **Root cause**: the parser captured the raw `description:` line and only handled `>-` folded block scalars (sdd-kit/craft-kit); learning-kit skills use a double-quoted YAML scalar (`description: "..."`), so the opening quote leaked into the "derived" string. The catalog-derivation DESCRIPTION algorithm operates on the PARSED YAML value (quotes are syntax, not content) — the parser, not the catalog, was wrong.
+- **Wrong approach**: nearly read the leading-quote mismatch as catalog drift, since the deterministic re-derivation is supposed to be the source of truth.
+- **Correct approach**: stripped matching surrounding quotes before the Triggers-strip + 120-truncate; the re-derived blocks then matched disk byte-for-byte (4/7/26 rows). Suspected the parser once the artifact (a leading quote) was itself implausible output.
+- **Prevention**: when a hand-rolled check parses frontmatter, handle ALL YAML scalar forms a repo mixes (`>-`/`>`/`|` folded AND single/double-quoted) — parse YAML properly or strip matching surrounding quotes before deriving; and treat an implausible-looking derived artifact (a stray leading quote, doubled punctuation) as a parser bug to rule out before believing it is real drift. (Kin to `broken-grep-false-verification`: a hand-rolled verification mechanism fabricating a false signal — if a third such case lands, cluster them under one "sanity-check ad-hoc verification tooling" rule.)
+
+## 2026-06-23 — Manifest passed jq but failed the real loader; verified-facts listed a field floor, not the full schema
+
+- **Cause-tag**: incomplete-schema-verification
+- **Symptom**: authored `.claude-plugin/marketplace.json` from a pre-implementation schema check (dispatched to `claude-code-guide`) that reported "each plugin entry needs `name` + `source`". The file passed `jq empty` and a `jq -e` field check, but `/plugin marketplace add ./` rejected it: `owner: Invalid input: expected object, received undefined` — the top-level required `owner` object was never mentioned by the verification and never added.
+- **Root cause**: treated an enumerated "verified facts" field list as the COMPLETE schema (a ceiling) when it was only a floor — the fields it named are required, but it did not claim to be exhaustive, and other required fields (`owner`) went unlisted. Compounded by treating `jq`-valid JSON as schema-valid; structural validity says nothing about required-field conformance.
+- **Wrong approach**: ran the real-loader (`/plugin marketplace add`) check as the LAST step (Task 10 GREEN) after building everything on it, and let jq validity stand in for it through all prior tasks.
+- **Correct approach**: added `"owner": {"name": "..."}`; re-validated; the real `/plugin marketplace add ./` parse is the GREEN signal, not jq.
+- **Prevention**: for any manifest consumed by a real loader (plugin.json, marketplace.json, package manifests, CI config), the GREEN signal is the actual loader/installer parsing it — run it early, not as a final gate; `jq`/structural validity is necessary, not sufficient. And when a verification subagent returns an enumerated required-field set, treat it as a floor (what's named is needed), never a ceiling (other required fields may be unnamed) — confirm against the loader before calling the manifest done.
+
 ## 2026-06-23 — Negative/guard validation case proved only the guard's existence, not that it discriminates
 
 - **Cause-tag**: guard-case-inversion-design

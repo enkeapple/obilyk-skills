@@ -1,1 +1,0 @@
-../../hooks/quality/quality.sh

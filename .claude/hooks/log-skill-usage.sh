@@ -1,1 +1,0 @@
-../../hooks/routing/log-skill-usage.sh

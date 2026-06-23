@@ -1,0 +1,23 @@
+{
+  "name": "obilyk-skills",
+  "owner": {
+    "name": "Oleksandr Bilyk"
+  },
+  "metadata": {
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "sdd-kit",
+      "source": "sdd-kit"
+    },
+    {
+      "name": "learning-kit",
+      "source": "learning-kit"
+    },
+    {
+      "name": "craft-kit",
+      "source": "craft-kit"
+    }
+  ]
+}

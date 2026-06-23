@@ -1,0 +1,86 @@
+name: Validate marketplace
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  validate:
+    name: Structural validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: JSON validity (marketplace + plugin manifests + bundled routing + hooks)
+        run: |
+          jq empty .claude-plugin/marketplace.json
+          jq empty plugins/*/.claude-plugin/plugin.json
+          jq empty plugins/*/skills-routing.json
+          jq empty plugins/*/hooks/hooks.json
+          # plugin hooks.json must wrap events in a top-level "hooks" record (loader requirement)
+          for hj in plugins/*/hooks/hooks.json; do
+            jq -e '.hooks | type == "object"' "$hj" >/dev/null || { echo "hooks.json must wrap events under a top-level \"hooks\" object: $hj"; exit 1; }
+          done
+          echo "JSON_OK"
+
+      - name: Marketplace schema (name + owner object + plugins[].name/source)
+        run: |
+          jq -e '.name and (.owner|type=="object") and (.owner.name) and (.plugins|type=="array" and length>0)' \
+            .claude-plugin/marketplace.json
+          # every plugin entry's source dir exists with a manifest whose name matches
+          for i in $(jq -r '.plugins|keys[]' .claude-plugin/marketplace.json); do
+            name=$(jq -r ".plugins[$i].name" .claude-plugin/marketplace.json)
+            src=$(jq -r ".plugins[$i].source" .claude-plugin/marketplace.json)
+            test -f "plugins/$src/.claude-plugin/plugin.json" || { echo "missing manifest: $src"; exit 1; }
+            pn=$(jq -r '.name' "plugins/$src/.claude-plugin/plugin.json")
+            [ "$pn" = "$name" ] || { echo "name mismatch: entry=$name manifest=$pn"; exit 1; }
+          done
+          echo "MARKETPLACE_SCHEMA_OK"
+
+      - name: plugin.json skills paths resolve
+        run: |
+          for pj in plugins/*/.claude-plugin/plugin.json; do
+            base=$(dirname "$(dirname "$pj")")
+            for s in $(jq -r '.skills[]? // empty' "$pj"); do
+              test -f "$base/$s/SKILL.md" || { echo "missing skill: $base/$s/SKILL.md"; exit 1; }
+            done
+          done
+          echo "SKILLS_PATHS_OK"
+
+      - name: Skill name === dir invariant
+        run: |
+          bad=0
+          while IFS= read -r f; do
+            d=$(basename "$(dirname "$f")")
+            n=$(grep -m1 '^name:' "$f" | sed 's/^name:[[:space:]]*//')
+            [ "$d" = "$n" ] || { echo "MISMATCH dir=$d name=$n ($f)"; bad=1; }
+          done < <(find plugins -path '*/skills/*' -name SKILL.md)
+          [ $bad -eq 0 ] && echo "NAME_INVARIANT_OK"
+
+      - name: Bundled routing files resolve
+        run: |
+          for rj in plugins/*/skills-routing.json; do
+            base=$(dirname "$rj")
+            for k in $(jq -r '.skills|keys[]' "$rj"); do
+              f=$(jq -r ".skills[\"$k\"].files[0]" "$rj")
+              test -f "$base/$f" || { echo "missing routing file: $base/$f ($k)"; exit 1; }
+            done
+          done
+          echo "ROUTING_FILES_OK"
+
+      - name: Bundled rule links resolve; no stale .claude/rules links
+        run: |
+          # no shipped skill links back to a project .claude/rules path
+          if grep -rl '\.\./\.\./\.\./\.claude/rules' plugins/*/skills/ ; then
+            echo "stale .claude/rules link in a shipped skill"; exit 1
+          fi
+          # every plugin-internal rule link resolves from its skill dir
+          bad=0
+          for f in $(grep -rl '\.\./\.\./\.\./rules/' plugins/*/skills/ 2>/dev/null); do
+            ( cd "$(dirname "$f")" && for t in $(grep -oE '\.\./\.\./\.\./rules/[a-z/-]+\.md' "$(basename "$f")"); do
+                test -f "$t" || { echo "BROKEN $f -> $t"; exit 1; }
+              done )
+          done
+          echo "RULE_LINKS_OK"
