@@ -36,6 +36,7 @@ Each phase is its own skill and ends at an explicit approval gate — nothing au
 
 ### aliases
 
+- **[adr](skills/aliases/adr/SKILL.md)** — Short user-typed entry point to record an architectural decision as an ADR. Alias for the writing-adrs skill.
 - **[audit](skills/aliases/audit/SKILL.md)** — Short user-typed entry point to check shipped code against an approved spec. Alias for the spec-drift-audit skill.
 - **[grill](skills/aliases/grill/SKILL.md)** — Short user-typed entry point to grill a fuzzy idea into a shared design. Alias for the grilling skill.
 - **[sdd](skills/aliases/sdd/SKILL.md)** — Short user-typed entry point that runs the full gated SDD pipeline. Alias for the sdd-lifecycle skill.
@@ -43,6 +44,7 @@ Each phase is its own skill and ends at an explicit approval gate — nothing au
 
 ### authoring
 
+- **[writing-adrs](skills/authoring/writing-adrs/SKILL.md)** — Record an architectural decision as an immutable ADR — gate that it is worth one, write it in the repo's own convention,…
 - **[writing-hooks](skills/authoring/writing-hooks/SKILL.md)** — Use when authoring or editing a Claude Code hook — a PreToolUse/PostToolUse/ Stop/UserPromptSubmit gate or logger wired…
 - **[writing-lessons](skills/authoring/writing-lessons/SKILL.md)** — Use when a session exposed a wrong assumption, a hallucinated symbol or API, a test that passed for the wrong reason, a…
 - **[writing-rules](skills/authoring/writing-rules/SKILL.md)** — Use when writing or editing a project rule under .claude/rules/, capturing a convention so the agent stops repeating a…

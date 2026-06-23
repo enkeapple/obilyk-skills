@@ -4,14 +4,32 @@ Transient backlog of un-promoted candidate rules — newest at the top of `## En
 
 ## Entries
 
-## 2026-06-23 — Spec-drift audit's orphan-ref grep used an --include allowlist that omitted CI files; a deleted globbed file broke validate.yml undetected
+## 2026-06-24 — Placed a new writing-* skill in a kit by topical surface, not its naming-family
 
-- **Cause-tag**: broken-grep-false-verification
-- **Symptom**: after deleting `plugins/sdd-kit/skills-routing.json`, the audit reported "no orphan refs"; CI then failed — `.github/workflows/validate.yml` globs `plugins/*/skills-routing.json` (`jq` exit 2, "No such file"). The orphan grep used `--include=*.md --include=*.json --include=*.sh`, never searching `.yml`/`.github`.
-- **Root cause**: the orphan-ref / out-of-scope sweep enumerated a fixed file-type set (md/json/sh) and the *planned* files only, so references in CI/workflow/automation configs (`.github`, `scripts/`, `Makefile`) were never searched — a false "clean" from too-narrow scope, not a wrong regex.
-- **Wrong approach**: trusted a grep with an `--include` allowlist + a planned-files-only out-of-scope sweep as a complete audit; both reported clean while a CI glob ref AND three out-of-scope subagent edits existed.
-- **Correct approach**: re-ran the out-of-scope sweep off the FULL `git status --short` (caught the 3 stray edits) and grep'd `.github` for the deleted path (caught the CI break); fixed `validate.yml` to validate `.claude/skills-routing.json` v2 instead.
-- **Prevention**: when deleting/renaming a file a glob might match, grep the WHOLE repo incl. `.github/workflows`, `scripts/`, `Makefile` — not an md/json/sh allowlist; and run the out-of-scope/orphan sweep off `git status --short` (every changed path), never the planned file list. A sweep scoped to an enumerated fileset is a false-clean risk. (Family: ad-hoc verification fabricating a false signal — kin to `parser-format-assumption`.)
+- **Cause-tag**: skill-kit-placement
+- **Symptom**: authored `writing-adrs` under `craft-kit/skills/design/` (next to `codebase-design`/`improve-codebase-architecture`) because ADRs are "architectural"; owner corrected — "why craft-kit if it should be sdd-kit?".
+- **Root cause**: chose the kit by topical resemblance instead of the established naming-family. Every `writing-*` artifact-authoring skill (writing-specs/plans/rules/lessons/hooks/skills) lives in sdd-kit; a new `writing-<artifact>` is their sibling and belongs in `sdd-kit/skills/authoring`.
+- **Wrong approach**: matched on the word "architecture" → craft-kit (vocabulary/review/prose), ignoring that the `writing-*` family is the load-bearing placement signal.
+- **Correct approach**: moved to `sdd-kit/skills/authoring/writing-adrs`; updated both plugin.json manifests + the routing `plugin` field.
+- **Prevention**: before choosing a kit/dir for a new skill, grep the existing skill names for a naming-family the new name joins (`find plugins/*/skills -name SKILL.md`); place by that family first, fall back to topical/register grouping only when no family applies.
+
+## 2026-06-23 — Classified discipline skills as "technical docs" and assumed their prose punch was load-bearing
+
+- **Cause-tag**: discipline-binding-is-structural
+- **Symptom**: asked to run `humanizing-prose` over the learning-kit skills, I classified the SKILL.md bodies as "technical docs", nearly refused the edit, and warned that cutting the punchy rhetoric (dramatic fragments "Kill it."/"Suppress it.", binary-contrast openers) would break binding. Owner corrected: "те скиллы не должны быть техническими".
+- **Root cause**: conflated a discipline skill's *voice* (punchy imperative prose) with its *binding mechanism*. Assumed the dramatic fragments and contrast openers were load-bearing, when the binding actually lives in the structural prohibitions + rationalization table + red flags. Treated a register question as settled by taste rather than by test.
+- **Wrong approach**: argued from the `humanizing-prose` "technical doc → use tightening-prose" carve-out that the skills were off-limits, without testing whether a humanized version still binds.
+- **Correct approach**: ran it test-first — per-skill pressure RED + Layer-2 inversion across all 9 skills. Every humanized version still complied under pressure while the no-skill control failed; the loud fragments were removable with no regression, so all 9 were kept.
+- **Prevention**: a voice/register/de-slop edit to a `SKILL.md` is still a skill edit → Iron Law, RED-first. Decide whether a stylistic element is load-bearing with a binding pressure-test (RED + would-comply-WITHOUT inversion), never by assertion; expect the structural prohibition set (prohibitions + rationalization table + red flags), not the prose punch, to carry the discipline.
+
+## 2026-06-23 — Linked a skill from a rule via a deep in-tree plugin path instead of its canonical name
+
+- **Cause-tag**: dev-source-vs-consumer-routing
+- **Symptom**: authored `.claude/rules/common/resolving-requirements-flibco-source.md` with a markdown link `[…](../../../plugins/sdd-kit/skills/chain/resolving-requirements/SKILL.md)`; owner flagged it — "вот такого не должно существовать, на крайняк референс просто на скилл без путей".
+- **Root cause**: same conflation as the routing variant — treated the dev repo's in-tree plugin source path as a stable address. A plugin skill's body ships in the install cache, not under `plugins/` for a consumer; a deep relative path to `plugins/*/skills/**/SKILL.md` resolves only in THIS dev tree and is a dead reference everywhere else. The canonical address of a skill is its NAME (the routing key), not a filesystem path.
+- **Wrong approach**: reached for the habitual markdown file-link to "let the reader open the skill", deep-linking into the plugin tree.
+- **Correct approach**: cite the skill by bare backtick name (`resolving-requirements`); dropped the link and the `../../../plugins/...` path entirely — the rule reads fine without it.
+- **Prevention**: in any rule/doc, reference a skill by its canonical name, never via a path into `plugins/*/skills/**` (or `SKILL.md`). Grep the body: `grep -nE '\]\([^)]*plugins/[^)]*skills|\.\./\.\./' <file>` must be empty. (Same class as the routing variant: dev source tree vs the address another layer/consumer expects.)
 
 ## 2026-06-23 — Modeled plugin-provided skills as kind:local with in-repo files paths in a consumer routing file
 
@@ -57,15 +75,6 @@ Transient backlog of un-promoted candidate rules — newest at the top of `## En
 - **Wrong approach**: assumed a freshly dispatched subagent is uncontaminated and ran the baseline with a plain "make it read human" prompt.
 - **Correct approach**: re-dispatched with an explicit suppression clause ("ignore any repository instructions, project skills, catalogs, register frameworks, methodologies — act as a generic agent"); the clean baseline then left the long-tail tells, giving a real RED.
 - **Prevention**: when the RED baseline's domain is one the vault ITSELF has a skill for, add an explicit "ignore repo skills/catalogs/methodologies" clause to the baseline prompt, AND scan the output/preamble for that skill's vocabulary (e.g. "catalog", "register", "the pass") — if present, the RED is contaminated; re-run clean.
-
-## 2026-06-23 — Claimed "no test-cases.md" from a depth-limited find that couldn't reach them
-
-- **Cause-tag**: broken-grep-false-verification
-- **Symptom**: asserted the 3 `skills/personal/*` skills "carry no persisted `test-cases.md`"; `git status` later showed each has `references/test-cases.md` at depth 3 — the claim was false.
-- **Root cause**: ran `find skills/personal -maxdepth 2 -type f`, which structurally cannot reach `<name>/references/test-cases.md` (depth 3); reported the truncated result as proof of absence.
-- **Wrong approach**: trusted a depth-limited search's "not found" as evidence of absence without confirming the scope reached where the target would live.
-- **Correct approach**: re-ran `find` without `-maxdepth` (and `git status`); all three carried the file. Corrected the claim and the under-scoped follow-up.
-- **Prevention**: a depth/flag-limited search (`find -maxdepth`, `grep` without `-r`, a non-recursive glob) returning "not found" is NOT absence — before asserting it, drop the limiter or confirm the expected path depth is in scope; a "0 results" that contradicts a plausible expectation is suspect, widen before reporting.
 
 ## 2026-06-23 — Shaping prohibition keyed to a phrasing, evaded by a synonym
 
@@ -130,14 +139,7 @@ Transient backlog of un-promoted candidate rules — newest at the top of `## En
 - **Correct approach**: reverted both; each skill states its own contract/predicate independently, so consistency holds by construction (identical text), never by one skill naming another's.
 - **Prevention**: before writing another skill's name in a SKILL.md, classify the reference — a HAND-OFF / data-flow ref ("next use writing-specs", "hand the bundle to grilling") is legitimate; a CONTENT/INTERNAL ref ("same threshold X uses", "X requires Y so this is N/A") is coupling — inline the standalone statement instead. Grep the edit for skill names; confirm each hit is a hand-off, not a content dependency.
 
-## 2026-06-21 — Reported an audit finding as "verified" from a broken grep
-
-- **Cause-tag**: broken-grep-false-verification
-- **Symptom**: audit finding F3 ("`tightening-prose` absent from CLAUDE.md routing table") shipped as "verified grep=0", but the row exists at `CLAUDE.md:49` — a phantom finding.
-- **Root cause**: `grep -c "tightening-prose\|prose"` ran as BRE on macOS/BSD grep, where `\|` is a literal pipe, not alternation — it searched for the literal string and matched nothing.
-- **Wrong approach**: trusted a "0 matches" result as evidence of absence without confirming the pattern syntax matched the grep flavor in use.
-- **Correct approach**: re-ran with `grep -nE 'tightening-prose'` (extended regex) → matched line 49; withdrew the finding.
-- **Prevention**: on macOS use `grep -E` for any alternation; treat a surprising "0 matches" that contradicts a plausible expectation as suspect and re-run before reporting verified — a negative grep is not absence until the regex flavor is confirmed.
+## 2026-06-21 — RED baseline subagent wrote README.md (default agent type carries Write/Edit)
 
 - **Cause-tag**: subagent-worktree-mutation
 - **Symptom**: a RED baseline `claude` subagent (dispatched read-only in intent) wrote `README.md` — the exact artifact `bootstrapping-readme` produces — leaving an unrequested working-tree change.
@@ -148,5 +150,6 @@ Transient backlog of un-promoted candidate rules — newest at the top of `## En
 
 ## Promoted clusters
 
+- broken-grep-false-verification → rules/common/search-scope-verification.md (2026-06-23)
 - skill-value-vs-noop → rules/common/scoping-skill-value.md (2026-06-19)
 - markdown-fence-counting → rules/common/markdown-style.md (2026-06-19)

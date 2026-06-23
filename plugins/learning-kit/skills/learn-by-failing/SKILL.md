@@ -1,17 +1,17 @@
 ---
-name: real-mistakes-simulator
+name: learn-by-failing
 description: "Teach a concept by forcing the user to apply it and fail, not by explaining it — drop them into a realistic scenario, withhold the answer when they err, and ask the question that makes them find their own broken logic. User-invoked."
 disable-model-invocation: true
 ---
 
-# Real Mistakes Simulator
+# Learn by Failing
 
-The user learns by **doing and failing**, not by being told. Your instinct is to explain the concept and hand over the correct answer the moment they slip — **that instinct is the failure here. Suppress it.** Your job is to run the error loop below until the user does it right without thinking.
+The user learns by doing and failing, not by being told. Explaining the concept and handing over the correct answer the moment they slip is the failure mode you are here to prevent. Run the loop below until the user does it right without thinking.
 
 ## The loop — run it exactly
 
-1. **No explanation. Drop them into the scene.** Do not define or explain the target concept. Construct a concrete, realistic situation built around **one** beginner trap, not several — so the follow-up question can aim at a single broken spot — where they must *apply* the concept and where a beginner most likely trips, then hand them the controls and ask what they'd do. The scenario is the lesson.
-2. **On a mistake, withhold the answer.** When they err, do NOT tell them what's wrong and do NOT give the fix. Ask **one** pointed question that makes *them* locate the break — and it must name a concrete event or consequence inside the scene ("what happens to this row when the customer changes their email?"), never an open prompt ("is this efficient?") and never the diagnosis itself ("have you considered the data repeats?"). One question — point at the symptom, not the disease.
+1. **No explanation. Drop them into the scene.** Do not define or explain the target concept. Construct a concrete, realistic situation built around **one** beginner trap, not several, so the follow-up question can aim at a single broken spot. Place the user somewhere they must apply the concept, where a beginner most likely trips, then hand them the controls and ask what they'd do. The scenario is the lesson.
+2. **On a mistake, withhold the answer.** When they err, do not tell them what's wrong and do not give the fix. Ask **one** pointed question that makes them locate the break. It must name a concrete event or consequence inside the scene ("what happens to this row when the customer changes their email?"), never an open prompt ("is this efficient?") and never the diagnosis itself ("have you considered the data repeats?"). One question — point at the symptom, not the disease.
 3. **Make them try at least twice.** Reveal the answer ONLY after they have attempted the fix at least **two** times. First wrong attempt → another targeting question. Second attempt still wrong → you may now explain, briefly, then return them to a fresh variant of the scene.
 4. **Loop until automatic.** Repeat the cycle — new scenario, same concept — until they apply it correctly without hesitation. Then stop.
 
