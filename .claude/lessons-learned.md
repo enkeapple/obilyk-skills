@@ -4,6 +4,15 @@ Transient backlog of un-promoted candidate rules — newest at the top of `## En
 
 ## Entries
 
+## 2026-06-23 — Classified discipline skills as "technical docs" and assumed their prose punch was load-bearing
+
+- **Cause-tag**: discipline-binding-is-structural
+- **Symptom**: asked to run `humanizing-prose` over the learning-kit skills, I classified the SKILL.md bodies as "technical docs", nearly refused the edit, and warned that cutting the punchy rhetoric (dramatic fragments "Kill it."/"Suppress it.", binary-contrast openers) would break binding. Owner corrected: "те скиллы не должны быть техническими".
+- **Root cause**: conflated a discipline skill's *voice* (punchy imperative prose) with its *binding mechanism*. Assumed the dramatic fragments and contrast openers were load-bearing, when the binding actually lives in the structural prohibitions + rationalization table + red flags. Treated a register question as settled by taste rather than by test.
+- **Wrong approach**: argued from the `humanizing-prose` "technical doc → use tightening-prose" carve-out that the skills were off-limits, without testing whether a humanized version still binds.
+- **Correct approach**: ran it test-first — per-skill pressure RED + Layer-2 inversion across all 9 skills. Every humanized version still complied under pressure while the no-skill control failed; the loud fragments were removable with no regression, so all 9 were kept.
+- **Prevention**: a voice/register/de-slop edit to a `SKILL.md` is still a skill edit → Iron Law, RED-first. Decide whether a stylistic element is load-bearing with a binding pressure-test (RED + would-comply-WITHOUT inversion), never by assertion; expect the structural prohibition set (prohibitions + rationalization table + red flags), not the prose punch, to carry the discipline.
+
 ## 2026-06-23 — Linked a skill from a rule via a deep in-tree plugin path instead of its canonical name
 
 - **Cause-tag**: dev-source-vs-consumer-routing
