@@ -1,0 +1,5 @@
+{
+  "name": "guardrails-kit",
+  "description": "Skill-routing guardrails over a marketplace: usage/friction telemetry, bypass detection, token-budget and edit gates. Reads routing from the consumer repo's .claude/skills-routing.json.",
+  "version": "0.1.0"
+}

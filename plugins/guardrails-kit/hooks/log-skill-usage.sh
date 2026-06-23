@@ -11,7 +11,7 @@ printf '%s' "$INPUT" | jq -e . >/dev/null 2>&1 || exit 0
 SID=$(printf '%s' "$INPUT" | jq -r '.session_id // empty' 2>/dev/null | tr -cd 'A-Za-z0-9._-') || SID=""
 [ -z "$SID" ] && SID=default
 STATE_DIR="${CLAUDE_PROJECT_DIR:-.}/.claude/state/$SID"
-ROUTING="${CLAUDE_PLUGIN_ROOT:-${CLAUDE_PROJECT_DIR:-.}/.claude}/skills-routing.json"
+ROUTING="${CLAUDE_PROJECT_DIR:-.}/.claude/skills-routing.json"
 METRICS="${CLAUDE_PROJECT_DIR:-.}/.claude/state/_metrics.jsonl"
 TURN_SKILLS_FILE="$STATE_DIR/turn-skills-invoked.json"
 LAST_PROMPT_FILE="$STATE_DIR/last-prompt.txt"
