@@ -5,16 +5,13 @@
 
 set -euo pipefail
 
+GUARDRAILS_LIB="${BASH_SOURCE[0]%/*}/lib/common.sh"
+[ -r "$GUARDRAILS_LIB" ] || exit 0   # missing/unreadable lib → fail open (`.` is a special builtin: under set -e its open-failure exits the shell before `|| exit 0` can run, so guard readability first)
+. "$GUARDRAILS_LIB"
 INPUT=$(cat 2>/dev/null) || exit 0
-# Fail open: unreadable / non-JSON stdin must not disrupt the tool call (or spam jq errors).
-printf '%s' "$INPUT" | jq -e . >/dev/null 2>&1 || exit 0
-
-# Per-session state isolation: parallel Claude Code sessions must not share budget/accounting
-# files. Key the state dir by session_id from the payload; absent → "default" (single-session,
-# no regression). See lessons-learned: hook-state-not-session-keyed.
-SID=$(printf '%s' "$INPUT" | jq -r '.session_id // empty' 2>/dev/null | tr -cd 'A-Za-z0-9._-') || SID=""
-[ -z "$SID" ] && SID=default
-STATE_DIR="${CLAUDE_PROJECT_DIR:-.}/.claude/state/$SID"
+hook_require_json "$INPUT"
+SID=$(hook_sid "$INPUT")
+STATE_DIR=$(hook_state_dir "$SID")
 TURN_FILE="$STATE_DIR/turn-budget.json"
 SESSION_FILE="$STATE_DIR/session-budget.json"
 BY_MODEL_FILE="$STATE_DIR/by-model-budget.json"

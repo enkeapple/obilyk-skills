@@ -4,6 +4,15 @@ Transient backlog of un-promoted candidate rules — newest at the top of `## En
 
 ## Entries
 
+## 2026-06-24 — `. lib || exit 0` fails CLOSED under set -e (`.` is a POSIX special builtin)
+
+- **Cause-tag**: errexit-failopen-idiom
+- **Symptom**: extracting a shared `hooks/lib/common.sh`, the 4 hooks under `set -euo pipefail` exited **1** (not 0) when the lib was absent — a fail-open violation — while the 3 `set -uo` hooks exited 0. The missing-lib fixture (Task 5) caught it; the design, spec, plan, and an independent readiness review had all blessed the wrong idiom.
+- **Root cause**: `.`/`source` is a POSIX **special builtin**; under `set -e` its open-failure (missing/unreadable file) terminates the shell with status 1 BEFORE the trailing `|| exit 0` — even `if ! . lib` — can run. So `. lib 2>/dev/null || exit 0` fails CLOSED under errexit.
+- **Wrong approach**: used `. lib 2>/dev/null || exit 0` as the uniform "fail-open" source idiom; it reads as obviously-fail-open and survived four reasoning passes (design/spec/plan/readiness) because none of them executed the missing-lib case.
+- **Correct approach**: guard readability with an ordinary builtin first — `L="${BASH_SOURCE[0]%/*}/lib/common.sh"; [ -r "$L" ] || exit 0; . "$L"`. `[ -r ]`'s `|| exit 0` runs normally; the unconditional `.` then only runs on a readable file.
+- **Prevention**: never rely on `<special-builtin> || exit 0` for fail-open under `set -e` (`.`/`source`, `eval`, `exec`, `:`); guard the precondition with an ordinary `test`/`[ ]` first. And ALWAYS prove fail-open by EXECUTING the failure (run the hook with the file missing → assert exit 0), never by eyeballing the `||` — a missing-input fixture per fail-open path is mandatory.
+
 ## 2026-06-24 — Placed a new writing-* skill in a kit by topical surface, not its naming-family
 
 - **Cause-tag**: skill-kit-placement

@@ -7,14 +7,13 @@
 # Also logs events to metrics. (Edit/Write/MultiEdit events are needed for check 1b.)
 set -euo pipefail
 
+GUARDRAILS_LIB="${BASH_SOURCE[0]%/*}/lib/common.sh"
+[ -r "$GUARDRAILS_LIB" ] || exit 0   # missing/unreadable lib → fail open (`.` is a special builtin: under set -e its open-failure exits the shell before `|| exit 0` can run, so guard readability first)
+. "$GUARDRAILS_LIB"
 INPUT=$(cat 2>/dev/null) || exit 0
-# Fail open: unreadable / non-JSON stdin must not disrupt the tool call (or spam jq errors).
-printf '%s' "$INPUT" | jq -e . >/dev/null 2>&1 || exit 0
-# Per-session state isolation (see lessons-learned: hook-state-not-session-keyed): key the
-# per-turn tracking files by session_id so parallel sessions don't cross-count/cross-gate.
-SID=$(printf '%s' "$INPUT" | jq -r '.session_id // empty' 2>/dev/null | tr -cd 'A-Za-z0-9._-') || SID=""
-[ -z "$SID" ] && SID=default
-STATE_DIR="${CLAUDE_PROJECT_DIR:-.}/.claude/state/$SID"
+hook_require_json "$INPUT"
+SID=$(hook_sid "$INPUT")
+STATE_DIR=$(hook_state_dir "$SID")
 ROUTING="${CLAUDE_PROJECT_DIR:-.}/.claude/skills-routing.json"
 METRICS="${CLAUDE_PROJECT_DIR:-.}/.claude/state/_metrics.jsonl"
 TURN_SKILLS_FILE="$STATE_DIR/turn-skills-invoked.json"
@@ -77,8 +76,8 @@ if [[ "$TOOL" == "Read" ]]; then
       INVOKED=$(jq -r --arg s "$MATCHED_SKILL" 'index($s) // empty' "$TURN_SKILLS_FILE" 2>/dev/null || true)
       if [[ -z "$INVOKED" ]]; then
         echo "SKILL-BYPASS warn: you read '$REL_PATH' which is registered as body of Skill '$MATCHED_SKILL'. Next time invoke the Skill tool instead -- body is loaded lazily and description goes to metrics." >&2
-        jq -cn --arg ts "$(date -u +%FT%TZ)" --arg s "$MATCHED_SKILL" --arg p "$REL_PATH" \
-          '{ts:$ts, event:"read_instead_of_skill", skill:$s, path:$p}' >> "$METRICS"
+        jq -cn --arg ts "$(date -u +%FT%TZ)" --arg sid "$SID" --arg s "$MATCHED_SKILL" --arg p "$REL_PATH" \
+          '{v:1, type:"skill_event", ts:$ts, session:$sid, event:"read_instead_of_skill", skill:$s, path:$p}' >> "$METRICS"
       fi
     fi
   fi
@@ -92,8 +91,8 @@ if [[ "$TOOL" == "Edit" || "$TOOL" == "Write" || "$TOOL" == "MultiEdit" ]]; then
     INVOKED=$(jq -r 'index("writing-lessons") // empty' "$TURN_SKILLS_FILE" 2>/dev/null || true)
     if [[ -z "$INVOKED" ]]; then
       echo "SKILL-BYPASS warn: you edited 'lessons-learned.md' directly without invoking the 'writing-lessons' Skill. That skill owns cause-tag reuse and the promotion-debt scan -- a direct edit skips both. Invoke the Skill tool to capture lessons." >&2
-      jq -cn --arg ts "$(date -u +%FT%TZ)" --arg p "$WRITE_PATH" \
-        '{ts:$ts, event:"direct_edit_lessons_log", path:$p}' >> "$METRICS"
+      jq -cn --arg ts "$(date -u +%FT%TZ)" --arg sid "$SID" --arg p "$WRITE_PATH" \
+        '{v:1, type:"skill_event", ts:$ts, session:$sid, event:"direct_edit_lessons_log", path:$p}' >> "$METRICS"
     fi
   fi
 fi
@@ -123,8 +122,8 @@ done | head -1)
 
 if [[ -n "$MATCHED_MISSED" ]]; then
   echo "SKILL-BYPASS warn: user prompt matched trigger for Skill '$MATCHED_MISSED' and you have run ${NEW_COUNT} tools without invoking it. If the task touches that domain, invoke Skill('$MATCHED_MISSED') to load the relevant rules before continuing." >&2
-  jq -cn --arg ts "$(date -u +%FT%TZ)" --arg s "$MATCHED_MISSED" --argjson c "$NEW_COUNT" \
-    '{ts:$ts, event:"trigger_bypass_warn", skill:$s, tool_count:$c}' >> "$METRICS"
+  jq -cn --arg ts "$(date -u +%FT%TZ)" --arg sid "$SID" --arg s "$MATCHED_MISSED" --argjson c "$NEW_COUNT" \
+    '{v:1, type:"skill_event", ts:$ts, session:$sid, event:"trigger_bypass_warn", skill:$s, tool_count:$c}' >> "$METRICS"
   touch "$BYPASS_WARNED_FILE"
 fi
 

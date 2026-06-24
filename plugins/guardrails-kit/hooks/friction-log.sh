@@ -18,12 +18,12 @@
 # Fail-open: any error / missing transcript / no jq exits 0 with no output.
 set -uo pipefail
 
+GUARDRAILS_LIB="${BASH_SOURCE[0]%/*}/lib/common.sh"
+[ -r "$GUARDRAILS_LIB" ] || exit 0   # missing/unreadable lib → fail open (`.` is a special builtin: under set -e its open-failure exits the shell before `|| exit 0` can run, so guard readability first)
+. "$GUARDRAILS_LIB"
 INPUT=$(cat 2>/dev/null) || exit 0
 command -v jq >/dev/null 2>&1 || exit 0
-
-# Per-session state isolation (see lessons-learned: hook-state-not-session-keyed).
-SID=$(printf '%s' "$INPUT" | jq -r '.session_id // empty' 2>/dev/null | tr -cd 'A-Za-z0-9._-') || SID=""
-[ -z "$SID" ] && SID=default
+SID=$(hook_sid "$INPUT")
 PROJECT_DIR="${CLAUDE_PROJECT_DIR:-.}"
 STATE_DIR="$PROJECT_DIR/.claude/state/$SID"
 METRICS="$PROJECT_DIR/.claude/state/_metrics.jsonl"
@@ -61,7 +61,8 @@ s_error=$(jq -r '.error // 0' "$SEEN_FILE" 2>/dev/null || echo 0)
 emit() { # class, delta
   local cls="$1" d="$2"
   (( d > 0 )) || return 0
-  jq -cn --arg c "$cls" --argjson n "$d" '{event:"friction", class:$c, count:$n}' >> "$METRICS" 2>/dev/null || true
+  jq -cn --arg ts "$(date -u +%FT%TZ)" --arg sid "$SID" --arg c "$cls" --argjson n "$d" \
+    '{v:1, type:"friction", ts:$ts, session:$sid, class:$c, count:$n}' >> "$METRICS" 2>/dev/null || true
 }
 emit denied  $(( cur_denied  - s_denied ))
 emit blocked $(( cur_blocked - s_blocked ))

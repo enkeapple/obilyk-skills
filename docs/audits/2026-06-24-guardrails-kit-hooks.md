@@ -122,16 +122,18 @@ It deliberately does **not** attempt a semantic "wrong approach" label — that 
 
 **Caveat from this audit (H2):** its per-class counts are computed by line-counting the extracted text, so multi-line error messages inflate the counts and fabricate phantom `error` events. Treat its current numbers as directional, not exact, until H2 is fixed.
 
-## Ranked remediation backlog (fixes NOT applied — each should go through `writing-hooks` test-first)
+## Ranked remediation backlog (status updated 2026-06-24 — each fix went through `writing-hooks` test-first)
 
-1. **H1** — `reset-turn-budget` GC deletes live session dir (crash + state loss). `touch "$STATE_DIR"` after `mkdir -p`, or GC before create.
-2. **H2** — `friction-log` multi-line over-count (telemetry wrong on common input). Make `jq` emit one line per result.
-3. **M2** — `log-skill-usage` `exit 5` on malformed routing (fail-open gap) + line-volume noise. `jq '.skills // {}'`; consider tightening triggers.
-4. **M1** — `quality` backtick-skip false negative. Tighten the inline-code detection so a closed span before a real link doesn't suppress it.
-5. **L1** — `detect-bypass` `exit 5` on corrupt state. Guard the two bare jq assignments.
-6. **L2** — `\d` → `[0-9]` in the `resolving-requirements` trigger (routing-data fix; restores ticket-ID detection on non-PCRE grep).
-7. **L3 / L4** — `skill-gate` comment + trailing-slash hardening; `token-guard` +1-byte trim. Cosmetic/robustness.
-8. **Config decision (not a code bug):** decide whether the dead branches (`skill-gate` Pass 1/2, `detect-bypass` check 1) should be activated here by populating `editGlobs` / `ruleGates` / `local` skill `files` in `skills-routing.json`, or whether the inert state is intended for this repo. This is the largest lever on "do the guardrails actually guard."
+Status legend: **[DONE]** applied + RED→GREEN + independent Layer-2 verified · **[DEFERRED]** intentionally not in the build that addressed its neighbours.
+
+1. **[DONE]** **H1** — `reset-turn-budget` GC deletes live session dir (crash + state loss). Fix applied: `touch "$STATE_DIR"` after `mkdir -p`. (build #1: correctness fixes)
+2. **[DONE]** **H2** — `friction-log` multi-line over-count. Fix applied: `gsub("[\r\n]+";" ")` so one result = one line. (build #1)
+3. **[DONE]** **M2** — `log-skill-usage` `exit 5` on malformed routing (fail-open gap). Fix applied: `jq '.skills // {}'` (build #1). Line-volume noise: addressed by build #2 (dropped `triggers` + `invoked_without_trigger`); "tighten triggers" itself remains **[DEFERRED]**.
+4. **[DONE]** **M1** — `quality` backtick-skip false negative. Fix applied: strip closed inline-code spans before the link check. (build #1)
+5. **[DONE]** **L1** — `detect-bypass` `exit 5` on corrupt state. Fix applied: guarded both bare `jq` reads with `2>/dev/null || true`. (build #1)
+6. **[DEFERRED]** **L2** — `\d` → `[0-9]` in the `resolving-requirements` trigger (routing-data fix; config bucket, not hook code).
+7. **[DEFERRED]** **L3 / L4** — `skill-gate` comment + trailing-slash hardening; `token-guard` +1-byte trim. Cosmetic/robustness.
+8. **[DEFERRED — open decision]** **Config decision (not a code bug):** whether to activate the dead branches (`skill-gate` Pass 1/2, `detect-bypass` check 1) by populating `editGlobs` / `ruleGates` / `local` skill `files` in `skills-routing.json`, or accept the inert state. The largest lever on "do the guardrails actually guard."
 
 ## Improvements — `.claude/state` folder & logging
 
@@ -149,12 +151,12 @@ This is forward-looking design (not bugs). Measured on the live tree at audit ti
 
 ### Proposed improvements (ranked, cheapest-highest-impact first)
 
-1. **Drop the `triggers` field from every metric line.** Instant −61% file size; the analyzer re-derives triggers from routing by skill key. Target schema: `{ts, session, skill, event}` (+ `prompt_hash` only where dedup needs it). One-line change in `log-skill-usage.sh` and `detect-bypass.sh`.
-2. **Stop logging non-signal events.** Remove `invoked_without_trigger` entirely. Keep only actionable events: `bypass`, `friction`, `direct_edit_lessons_log`, `read_instead_of_skill`.
-3. **One writer per signal — kill the double-count.** `detect-bypass` (PostToolUse, mid-turn) and `log-skill-usage` (Stop) both record the same missed-skill (`trigger_bypass_warn` + `bypass`). Make **Stop the sole metric writer**; let `detect-bypass` only *warn* to stderr. Removes the systematic duplication and roughly halves bypass-related volume.
-4. **Split ephemeral from durable; tear down at session end.** Put per-turn scratch under an OS temp dir keyed by session (e.g. `${TMPDIR}/guardrails-<sid>/`) so it never lands in `.claude/state`; keep only durable telemetry (`_metrics.jsonl`, per-session budget summary) under `.claude/state`. Add a `SessionEnd` hook (authored test-first via `writing-hooks`) that removes the session's scratch. This makes the dir-pileup impossible *by construction* rather than relying on age-based GC.
-5. **Fix + tighten GC, add rotation.** Fix H1 regardless. Parameterize `GC_DAYS` lower for the durable tree, and rotate `_metrics.jsonl` (roll per day → `_metrics-YYYY-MM-DD.jsonl`, or cap by size) so it never grows unbounded.
-6. **Document the state contract.** A short `state/README` or a `glossary` row stating which files are ephemeral (temp, per-turn) vs durable (telemetry, per-session), who writes each, and the retention policy — so future hook edits don't reintroduce scratch into the durable tree.
+1. **[DONE — build #2]** **Drop the `triggers` field from every metric line.** Applied across `log-skill-usage.sh` + `detect-bypass.sh` (+ `friction-log.sh`); records now carry `{v, type, ts, session, …}` and the analyzer (`scripts/metrics-report.sh`) re-derives triggers from routing. `prompt_hash` retained on `skill_event` records.
+2. **[DONE — build #2]** **Stop logging non-signal events.** `invoked_without_trigger` removed from `log-skill-usage.sh`. (Note: `used_correctly` + `trigger_bypass_warn` were intentionally kept — only `invoked_without_trigger` was in build #2's scope.)
+3. **[DEFERRED — handoff #3]** **One writer per signal — kill the double-count.** Make Stop the sole metric writer; `detect-bypass` only warns. Not yet done.
+4. **[DEFERRED — handoff #3]** **Split ephemeral from durable; tear down at session end.** `${TMPDIR}/guardrails-<sid>/` scratch + a `SessionEnd` hook. Not yet done.
+5. **[DEFERRED — handoff #3]** **Fix + tighten GC, add rotation.** (H1's crash itself is fixed in build #1; the rotation/`GC_DAYS`-tuning part remains.)
+6. **[DEFERRED — handoff #3]** **Document the state contract.** `state/README` or a glossary row. Not yet done.
 
 **Net effect:** the durable footprint becomes a single slim, rotated `_metrics.jsonl` of only actionable events; per-session scratch lives in temp and vanishes at session end; no unbounded growth, no 61%-redundant lines.
 
@@ -168,9 +170,11 @@ This is forward-looking design (not bugs). Measured on the live tree at audit ti
 
 Three buckets. Every code change goes through `writing-hooks` test-first (fixture RED → fix → GREEN); routing-data changes are validated by `skill-routing-sync` + `jq`.
 
-1. **Correctness bugs (fix first):** H1 (`reset-turn-budget` GC crash + state loss) → H2 (`friction-log` multi-line over-count) → M2 (`log-skill-usage` fail-open gap) → M1 (`quality` hidden broken link) → L1 (`detect-bypass` `exit 5` on corrupt state).
-2. **Logging/state hygiene (the noise you flagged):** improvements 1–3 above are quick wins (drop `triggers`, drop `invoked_without_trigger`, single writer); 4–6 are the structural cleanup (temp-scratch + `SessionEnd` teardown + rotation).
-3. **Data/config decisions (not code bugs):** L2 (`\d` → `[0-9]` in the `resolving-requirements` trigger); and the big one — decide whether to activate the dead enforcement branches (`skill-gate` Pass 1/2, `detect-bypass` check 1) by populating `editGlobs`/`ruleGates`/`local`-skill `files`, or accept them as intentionally inert here.
+1. **[DONE — build #1]** **Correctness bugs:** H1 → H2 → M2 → M1 → L1 all fixed, RED→GREEN + independent Layer-2 verified.
+2. **Logging/state hygiene:** improvements 1–2 **[DONE — build #2]** (drop `triggers`, drop `invoked_without_trigger`, add `v`/`type`/`session`; consumer `metrics-report.sh` updated to `.type` + correct `.claude/state` path); improvements 3–6 **[DEFERRED — handoff #3]** (single writer, temp-scratch + `SessionEnd` teardown, rotation, state-contract doc).
+3. **[DEFERRED]** **Data/config decisions:** L2 (`\d` → `[0-9]`) and the dead-branch activation decision — both still open.
+
+> **In progress (separate refactor, not an original audit finding):** extracting the duplicated session/state boilerplate (`hook_sid` / `hook_state_dir` / `hook_require_json`) into `hooks/lib/common.sh`, migrating the 7 SID-deriving hooks — currently in the SDD chain (spec phase). This partially realises the "Consolidate the two bypass detectors / shared helper" idea under "Other hook improvements", though scoped to the session/state preamble, not the trigger-match loop.
 
 ## Proposed logging architecture (approved design)
 

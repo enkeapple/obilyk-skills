@@ -2,12 +2,12 @@
 # UserPromptSubmit hook: reset per-turn state (budget + skill tracking) and cache user prompt.
 set -euo pipefail
 
+GUARDRAILS_LIB="${BASH_SOURCE[0]%/*}/lib/common.sh"
+[ -r "$GUARDRAILS_LIB" ] || exit 0   # missing/unreadable lib → fail open (`.` is a special builtin: under set -e its open-failure exits the shell before `|| exit 0` can run, so guard readability first)
+. "$GUARDRAILS_LIB"
 INPUT=$(cat 2>/dev/null) || INPUT=""
-# Per-session state isolation (see lessons-learned: hook-state-not-session-keyed): key the
-# per-turn state dir by session_id so parallel sessions don't reset each other's turn budget.
-SID=$(printf '%s' "$INPUT" | jq -r '.session_id // empty' 2>/dev/null | tr -cd 'A-Za-z0-9._-') || SID=""
-[ -z "$SID" ] && SID=default
-STATE_DIR="${CLAUDE_PROJECT_DIR:-.}/.claude/state/$SID"
+SID=$(hook_sid "$INPUT")
+STATE_DIR=$(hook_state_dir "$SID")
 mkdir -p "$STATE_DIR"
 touch "$STATE_DIR"   # refresh mtime: mkdir -p is a no-op (no mtime bump) on an existing dir, so a
                      # resumed >GC_DAYS-old session dir would otherwise be deleted by the GC below.

@@ -4,13 +4,13 @@
 # used_correctly (triggered + skill invoked).
 set -euo pipefail
 
+GUARDRAILS_LIB="${BASH_SOURCE[0]%/*}/lib/common.sh"
+[ -r "$GUARDRAILS_LIB" ] || exit 0   # missing/unreadable lib → fail open (`.` is a special builtin: under set -e its open-failure exits the shell before `|| exit 0` can run, so guard readability first)
+. "$GUARDRAILS_LIB"
 INPUT=$(cat 2>/dev/null) || exit 0
-# Fail open: unreadable / non-JSON stdin must not disrupt turn end (or spam jq errors).
-printf '%s' "$INPUT" | jq -e . >/dev/null 2>&1 || exit 0
-# Per-session state isolation (see lessons-learned: hook-state-not-session-keyed).
-SID=$(printf '%s' "$INPUT" | jq -r '.session_id // empty' 2>/dev/null | tr -cd 'A-Za-z0-9._-') || SID=""
-[ -z "$SID" ] && SID=default
-STATE_DIR="${CLAUDE_PROJECT_DIR:-.}/.claude/state/$SID"
+hook_require_json "$INPUT"
+SID=$(hook_sid "$INPUT")
+STATE_DIR=$(hook_state_dir "$SID")
 ROUTING="${CLAUDE_PROJECT_DIR:-.}/.claude/skills-routing.json"
 METRICS="${CLAUDE_PROJECT_DIR:-.}/.claude/state/_metrics.jsonl"
 TURN_SKILLS_FILE="$STATE_DIR/turn-skills-invoked.json"
@@ -50,18 +50,16 @@ jq -r '.skills // {} | to_entries[] | "\(.key)\t\(.value.triggers // [] | join("
     EVENT="bypass"
   elif [[ "$MATCHED" == "yes" && "$INVOKED" != "null" ]]; then
     EVENT="used_correctly"
-  elif [[ "$MATCHED" != "yes" && "$INVOKED" != "null" ]]; then
-    EVENT="invoked_without_trigger"
   else
     continue
   fi
 
   jq -cn --arg ts "$(date -u +%FT%TZ)" \
+         --arg sid "$SID" \
          --arg h "$PROMPT_HASH" \
          --arg s "$skill" \
          --arg e "$EVENT" \
-         --arg t "$trigger_union" \
-         '{ts:$ts, prompt_hash:$h, skill:$s, event:$e, triggers:$t}' >> "$METRICS"
+         '{v:1, type:"skill_event", ts:$ts, session:$sid, prompt_hash:$h, skill:$s, event:$e}' >> "$METRICS"
 done
 
 # Clear per-turn skill tracking

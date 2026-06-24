@@ -19,11 +19,11 @@
 # Fail-open: any error exits 0 with no output.
 set -uo pipefail
 
+GUARDRAILS_LIB="${BASH_SOURCE[0]%/*}/lib/common.sh"
+[ -r "$GUARDRAILS_LIB" ] || exit 0   # missing/unreadable lib → fail open (`.` is a special builtin: under set -e its open-failure exits the shell before `|| exit 0` can run, so guard readability first)
+. "$GUARDRAILS_LIB"
 INPUT=$(cat 2>/dev/null) || INPUT=""
-# Per-session state isolation (see lessons-learned: hook-state-not-session-keyed): read this
-# session's own bypass/nudge flags so a parallel session's flags don't cross-trigger.
-SID=$(printf '%s' "$INPUT" | jq -r '.session_id // empty' 2>/dev/null | tr -cd 'A-Za-z0-9._-') || SID=""
-[ -z "$SID" ] && SID=default
+SID=$(hook_sid "$INPUT")
 PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$(pwd)}"
 STATE_DIR="$PROJECT_DIR/.claude/state/$SID"
 BYPASS_FLAG="$STATE_DIR/turn-bypass-warned.flag"
