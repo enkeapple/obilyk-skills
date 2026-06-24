@@ -71,7 +71,10 @@ if [[ -f "$PENDING" ]]; then
   TRIGGERS_MATCHED=$(jq -r '.skills // {} | to_entries[] | "\(.key)\t\(.value.triggers // [] | join("|"))"' "$ROUTING" \
     | while IFS=$'\t' read -r skill trig; do
         [[ -n "$trig" ]] || continue
-        echo "$USER_PROMPT" | grep -qiE "$trig" && printf '%s\n' "$skill"
+        # if/then/fi (not `grep -q && printf`): under `set -euo pipefail` a non-matching grep on the
+        # LAST routing entry would make the loop's last command exit 1 → pipefail → the $() exits 1 →
+        # set -e kills the hook before the corpus is written. `if` keeps the loop's last command exit 0.
+        if echo "$USER_PROMPT" | grep -qiE "$trig"; then printf '%s\n' "$skill"; fi
       done | jq -R . | jq -cs .)
   TOOLS_USED=$(jq -r '.count // 0' "$STATE_DIR/turn-tool-count.json" 2>/dev/null || echo 0)
   FRICTION=$(cat "$STATE_DIR/friction-seen.json" 2>/dev/null || echo '{"denied":0,"blocked":0,"error":0}')

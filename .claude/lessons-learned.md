@@ -4,6 +4,15 @@ Transient backlog of un-promoted candidate rules — newest at the top of `## En
 
 ## Entries
 
+## 2026-06-24 — Happy-path-only hook fixtures false-greened a corpus-finalize branch that crashed on every real Stop
+
+- **Cause-tag**: untested-empty-branch
+- **Symptom**: `log-skill-usage.sh` Stop hook errored live ("Failed with non-blocking status code"); the prompt corpus (`prompts/YYYY-MM-DD.jsonl`) had NEVER been written since 3a and `pending-prompt.json` was never cleared — yet every 3a/3b fixture passed GREEN.
+- **Root cause**: `TRIGGERS_MATCHED=$(jq ... | while read skill trig; do ...; echo "$P" | grep -qiE "$trig" && printf '%s\n' "$skill"; done | jq ...)` — under `set -euo pipefail` the loop's last command is the `grep -q` for the LAST routing entry; on no-match it exits 1, the while inherits 1, pipefail raises it to the `$()`, and set -e kills the hook right after the assignment. Fires for almost any prompt (the last routing skill rarely matches).
+- **Wrong approach**: fixtured only the happy path — 3b's GREEN runs omitted `pending-prompt.json` entirely (so the corpus block never executed), and 3a's matched cases never hit a non-matching LAST entry. Both false-greened the broken branch.
+- **Correct approach**: `if echo "$P" | grep -qiE "$trig"; then printf '%s\n' "$skill"; fi` so the loop's last command is always exit 0; added a fixture with `pending-prompt.json` present AND a prompt whose LAST routing trigger does not match.
+- **Prevention**: fixture a hook's NON-happy path, not just the populated/matching case — for a per-entry loop, a prompt where the LAST entry's trigger misses; and never end a loop body (inside `$()` under set -e+pipefail) with a bare `cmd && action` whose left side can exit non-zero — use `if/then/fi` so the loop's last command is exit 0. (Same class as the grep -c "0\n0" entry: a path the happy-path fixture never exercises ships broken.)
+
 ## 2026-06-24 — `nullglob` does NOT drop an explicit absent path listed in a bash array
 
 - **Cause-tag**: shell-glob-assumption
