@@ -444,6 +444,20 @@
         "каталог скиллов устарел"
       ]
     },
+    "auditing-conflicts": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "auditing-conflicts",
+      "triggers": [
+        "audit conflicts",
+        "check for (skill|rule) conflicts",
+        "find contradictions",
+        "conflicting triggers",
+        "проверь конфликты",
+        "аудит конфликтов",
+        "противоречия между (скиллами|правилами)"
+      ]
+    },
     "writing-skills": {
       "kind": "ref",
       "plugin": "sdd-kit",

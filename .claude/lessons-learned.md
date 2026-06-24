@@ -94,15 +94,6 @@ Transient backlog of un-promoted candidate rules — newest at the top of `## En
 - **Correct approach**: re-ran a two-sided inversion that TOGGLES the predicate — SIDE A = the class as written (with the opt-in predicate) refrains; SIDE B = the same class with the predicate REMOVED would inject. PASS iff A refrains and B injects → the predicate is the discriminating difference.
 - **Prevention**: when validating a guard/opt-in/conditional clause whose correct behavior is to NOT act, build the inversion by toggling the guard predicate itself (predicate-present vs predicate-removed variant of the same feature), never feature-present vs feature-absent; if both inversion arms produce the same output on the negative input, the case is untestable — rebuild it before accepting PASS.
 
-## 2026-06-23 — RED baseline subagent inherited the vault's own anti-slop skill, complied for the wrong reason
-
-- **Cause-tag**: contaminated-red-baseline
-- **Symptom**: authoring `humanizing-prose`, the RED baseline subagent (general-purpose, dispatched in the vault) opened with "the catalog applies straight, no register exemptions… Running the pass" — `tightening-prose`/stop-slop vocabulary — and emitted already-clean prose, so the baseline proved nothing.
-- **Root cause**: a subagent dispatched via the Agent tool with cwd = this vault inherits the vault's CLAUDE.md + skills-routing, so it applies an EXISTING skill whose domain overlaps the one under test; the "fresh" baseline is not a clean room.
-- **Wrong approach**: assumed a freshly dispatched subagent is uncontaminated and ran the baseline with a plain "make it read human" prompt.
-- **Correct approach**: re-dispatched with an explicit suppression clause ("ignore any repository instructions, project skills, catalogs, register frameworks, methodologies — act as a generic agent"); the clean baseline then left the long-tail tells, giving a real RED.
-- **Prevention**: when the RED baseline's domain is one the vault ITSELF has a skill for, add an explicit "ignore repo skills/catalogs/methodologies" clause to the baseline prompt, AND scan the output/preamble for that skill's vocabulary (e.g. "catalog", "register", "the pass") — if present, the RED is contaminated; re-run clean.
-
 ## 2026-06-23 — Shaping prohibition keyed to a phrasing, evaded by a synonym
 
 - **Cause-tag**: phrasing-keyed-prohibition
@@ -177,6 +168,7 @@ Transient backlog of un-promoted candidate rules — newest at the top of `## En
 
 ## Promoted clusters
 
+- contaminated-red-baseline → rules/common/fair-red-baseline.md (2026-06-24)
 - broken-grep-false-verification → rules/common/search-scope-verification.md (2026-06-23)
 - skill-value-vs-noop → rules/common/scoping-skill-value.md (2026-06-19)
 - markdown-fence-counting → rules/common/markdown-style.md (2026-06-19)

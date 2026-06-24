@@ -42,6 +42,7 @@ No build / dev / test pipeline — this is a skills vault, not an app. Verificat
 | Create / audit the two CLAUDE.md files | `bootstrapping-claude-md` / `auditing-claude-md` |
 | Create / audit the base domain rules (glossary, framework) | `bootstrapping-glossary` / `auditing-glossary` |
 | Create / audit the README skills catalog | `bootstrapping-readme` / `auditing-readme` |
+| Find conflicts/contradictions across skills, rules, and routing | `auditing-conflicts` |
 | Capture a lesson; promote a recurring one to a rule | `writing-lessons` → `writing-rules` |
 | Author or change any skill (test-first) | `writing-skills` |
 | Author or change a Claude Code hook (test-first) | `writing-hooks` |
