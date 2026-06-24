@@ -19,6 +19,10 @@
     {
       "name": "guardrails-kit",
       "source": "./plugins/guardrails-kit"
+    },
+    {
+      "name": "react-native-kit",
+      "source": "./plugins/react-native-kit"
     }
   ]
 }

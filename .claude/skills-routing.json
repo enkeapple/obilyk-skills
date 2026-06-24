@@ -455,6 +455,23 @@
         "отредактировать скилл",
         "новый скилл"
       ]
+    },
+    "accessibility": {
+      "kind": "ref",
+      "plugin": "react-native-kit",
+      "name": "accessibility",
+      "triggers": [
+        "accessibility audit",
+        "a11y",
+        "check accessibility",
+        "is this screen accessible",
+        "WCAG",
+        "(screen reader|VoiceOver|TalkBack) support",
+        "fix accessibility",
+        "проверь доступность",
+        "аудит доступности",
+        "сделай экран доступным"
+      ]
     }
   }
 }

@@ -1,6 +1,6 @@
 # Workflow
 
-A Claude Code **skill marketplace**. It publishes three plugins that turn a fuzzy idea into shipped, spec-checked code — and the skills that author and maintain those skills. The product is not an app; it is the skills and *how they hand off to each other*.
+A Claude Code **skill marketplace** — its plugins turn a fuzzy idea into shipped, spec-checked code, and author and maintain the skills that do it. The product is not an app; it is the skills and *how they hand off to each other*.
 
 ## Quickstart
 
@@ -27,6 +27,7 @@ Swap `sdd-kit` for `learning-kit` or `craft-kit` to install another plugin. Each
 - **[craft-kit](plugins/craft-kit/README.md)** — Deep-module design vocabulary, architecture review, and prose tightening/humanizing.
 - **[guardrails-kit](plugins/guardrails-kit/README.md)** — Skill-routing guardrails over a marketplace: usage/friction telemetry, bypass detection, token-budget and edit gates.…
 - **[learning-kit](plugins/learning-kit/README.md)** — User-invoked learning skills: translate confusion, expose gaps, build learning plans.
+- **[react-native-kit](plugins/react-native-kit/README.md)** — React Native domain skills. Each skill is independent and self-contained; the first audits a screen or component…
 - **[sdd-kit](plugins/sdd-kit/README.md)** — Gated spec-driven-development chain plus skill/hook/rule authoring and foundation bootstrapping.
 
 <!-- plugins:end -->
