@@ -5,18 +5,7 @@
     "CLAUDE_CODE_DISABLE_ADVISOR_TOOL": "1"
   },
   "permissions": {
-    "allow": [
-      "Bash(pnpm run start:*)",
-      "Bash(pnpm run lint:*)",
-      "Bash(pnpm run android:*)",
-      "Bash(pnpm run watchman:clean:*)",
-      "Bash(pnpm run android:clean:*)",
-      "Bash(pnpm run node:clean:*)",
-      "Bash(pnpm run ports:kill:*)",
-      "Bash(pnpm run config:clean:*)",
-      "Bash(pnpm run postinstall:*)",
-      "Bash(pnpm run version:name:*)"
-    ],
+    "allow": [],
     "deny": [
       "Bash(git push --force*)",
       "Bash(git reset --hard*)",
@@ -60,35 +49,8 @@
       }
     ]
   },
-  "extraKnownMarketplaces": {
-    "callstack-agent-skills": {
-      "source": {
-        "source": "github",
-        "repo": "callstackincubator/agent-skills"
-      },
-      "autoUpdate": true
-    },
-    "swmansion": {
-      "source": {
-        "source": "github",
-        "repo": "software-mansion-labs/skills"
-      },
-      "autoUpdate": true
-    },
-    "obilyk-skills": {
-      "source": {
-        "source": "github",
-        "repo": "enkeapple/obilyk-skills"
-      },
-      "autoUpdate": true
-    }
-  },
   "enabledPlugins": {
-    "react-native-best-practices@callstack-agent-skills": true,
-    "upgrading-react-native@callstack-agent-skills": true,
-    "superpowers@claude-plugins-official": true,
-    "context7@claude-plugins-official": true,
-    "skills@swmansion": false
+    "context7@claude-plugins-official": true
   },
   "attribution": {
     "commit": "",
