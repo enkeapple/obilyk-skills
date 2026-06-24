@@ -1,6 +1,12 @@
 {
   "version": 2,
-  "ruleGates": {},
+  "ruleGates": {
+    "_comment": "Path-or-prompt-triggered MANDATORY reads. skill-gate.sh (Pass 2) DENIES an Edit/Write until 'rule' was Read this turn. Unlike skills (which carry rules in their body), these gate plain rule files that must be loaded before touching the domain. Start narrow; add gates as lessons accrue.",
+    "routing-sync": {
+      "rule": ".claude/rules/common/skill-routing-sync.md",
+      "editGlobs": [".claude/skills-routing.json"]
+    }
+  },
   "skills": {
     "resolving-requirements": {
       "kind": "ref",
