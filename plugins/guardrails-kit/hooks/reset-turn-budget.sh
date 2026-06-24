@@ -33,4 +33,15 @@ printf '%s' "$INPUT" | jq -e . >/dev/null 2>&1 || exit 0
 PROMPT=$(echo "$INPUT" | jq -r '.prompt // .user_prompt // ""')
 printf '%s' "$PROMPT" > "$STATE_DIR/last-prompt.txt"
 
+# Open the prompt-corpus record (finalized at Stop by log-skill-usage). Monotone session-turn
+# counter (NOT among the per-turn files reset above). Guarded: a failure must not abort the reset.
+TURN_N_FILE="$STATE_DIR/session-turn.json"
+[ -f "$TURN_N_FILE" ] || echo '{"n":0}' > "$TURN_N_FILE"
+TURN_N=$(( $(jq -r '.n // 0' "$TURN_N_FILE" 2>/dev/null || echo 0) + 1 ))
+jq -cn --argjson n "$TURN_N" '{n:$n}' > "$TURN_N_FILE.tmp" 2>/dev/null && mv "$TURN_N_FILE.tmp" "$TURN_N_FILE" || true
+jq -cn --arg ts "$(date -u +%FT%TZ)" --arg sid "$SID" --argjson turn "$TURN_N" --arg p "$PROMPT" \
+  '{v:1, type:"prompt", ts:$ts, session:$sid, turn:$turn, prompt:$p, chars:($p|length)}' \
+  > "$STATE_DIR/pending-prompt.json.tmp" 2>/dev/null \
+  && mv "$STATE_DIR/pending-prompt.json.tmp" "$STATE_DIR/pending-prompt.json" || true
+
 exit 0

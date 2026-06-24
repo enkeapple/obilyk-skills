@@ -122,8 +122,9 @@ done | head -1)
 
 if [[ -n "$MATCHED_MISSED" ]]; then
   echo "SKILL-BYPASS warn: user prompt matched trigger for Skill '$MATCHED_MISSED' and you have run ${NEW_COUNT} tools without invoking it. If the task touches that domain, invoke Skill('$MATCHED_MISSED') to load the relevant rules before continuing." >&2
-  jq -cn --arg ts "$(date -u +%FT%TZ)" --arg sid "$SID" --arg s "$MATCHED_MISSED" --argjson c "$NEW_COUNT" \
-    '{v:1, type:"skill_event", ts:$ts, session:$sid, event:"trigger_bypass_warn", skill:$s, tool_count:$c}' >> "$METRICS"
+  # The bypass signal is recorded solely by log-skill-usage at Stop (outcome.bypass) — emitting a
+  # trigger_bypass_warn metric here too would double-count. Keep the stderr warn + the flag (read
+  # by lessons-nudge); do not write a metric line.
   touch "$BYPASS_WARNED_FILE"
 fi
 

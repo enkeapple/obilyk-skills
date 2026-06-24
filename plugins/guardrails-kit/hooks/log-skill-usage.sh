@@ -62,6 +62,30 @@ jq -r '.skills // {} | to_entries[] | "\(.key)\t\(.value.triggers // [] | join("
          '{v:1, type:"skill_event", ts:$ts, session:$sid, prompt_hash:$h, skill:$s, event:$e}' >> "$METRICS"
 done
 
+# --- Prompt-corpus finalize (single writer). Only if reset-turn-budget opened a record. ---
+PENDING="$STATE_DIR/pending-prompt.json"
+if [[ -f "$PENDING" ]]; then
+  PROMPTS_DIR="${CLAUDE_PROJECT_DIR:-.}/.claude/state/prompts"
+  mkdir -p "$PROMPTS_DIR"
+  # skills whose trigger union matches the prompt (same match as the metric loop above)
+  TRIGGERS_MATCHED=$(jq -r '.skills // {} | to_entries[] | "\(.key)\t\(.value.triggers // [] | join("|"))"' "$ROUTING" \
+    | while IFS=$'\t' read -r skill trig; do
+        [[ -n "$trig" ]] || continue
+        echo "$USER_PROMPT" | grep -qiE "$trig" && printf '%s\n' "$skill"
+      done | jq -R . | jq -cs .)
+  TOOLS_USED=$(jq -r '.count // 0' "$STATE_DIR/turn-tool-count.json" 2>/dev/null || echo 0)
+  FRICTION=$(cat "$STATE_DIR/friction-seen.json" 2>/dev/null || echo '{"denied":0,"blocked":0,"error":0}')
+  BYPASS=$(printf '%s' "$TRIGGERS_MATCHED" | jq --argjson inv "$INVOKED_SKILLS" 'map(select(($inv | index(.)) | not)) | length > 0')
+  jq -cn --slurpfile pend "$PENDING" \
+        --argjson tm "$TRIGGERS_MATCHED" --argjson inv "$INVOKED_SKILLS" \
+        --argjson tu "$TOOLS_USED" --argjson fr "$FRICTION" --argjson bp "$BYPASS" \
+        '$pend[0] + {triggers_matched:$tm, skills_invoked:$inv,
+                     lang:(if ($pend[0].prompt|test("[Ѐ-ӿ]")) then "ru" else "en" end),
+                     outcome:{tools_used:$tu, friction:$fr, bypass:$bp}}' \
+    >> "$PROMPTS_DIR/$(date -u +%F).jsonl" 2>/dev/null || true
+  rm -f "$PENDING"
+fi
+
 # Clear per-turn skill tracking
 echo '[]' > "$TURN_SKILLS_FILE"
 exit 0
