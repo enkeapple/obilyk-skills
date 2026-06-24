@@ -51,8 +51,9 @@ case "$FILE" in
       # reference links resolve (skip illustrative links shown inside inline backticks)
       dirpath=$(dirname "$FILE")
       grep -nE '\]\([^)]+\.md[^)]*\)' "$FILE" 2>/dev/null | while IFS= read -r line; do
-        printf '%s' "$line" | grep -q '`[^`]*\](' && continue
-        target=$(printf '%s' "$line" | sed -E 's/.*\]\(([^)#]+\.md)[^)]*\).*/\1/')
+        cleaned=$(printf '%s' "$line" | sed 's/`[^`]*`//g')
+        printf '%s' "$cleaned" | grep -qE '\]\([^)]+\.md[^)]*\)' || continue
+        target=$(printf '%s' "$cleaned" | sed -E 's/.*\]\(([^)#]+\.md)[^)]*\).*/\1/')
         case "$target" in
           http*|/*) continue ;;
         esac

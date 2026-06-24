@@ -74,7 +74,7 @@ if [[ "$TOOL" == "Read" ]]; then
       ) | .key
     ' "$ROUTING" 2>/dev/null | head -1)
     if [[ -n "$MATCHED_SKILL" ]]; then
-      INVOKED=$(jq -r --arg s "$MATCHED_SKILL" 'index($s) // empty' "$TURN_SKILLS_FILE")
+      INVOKED=$(jq -r --arg s "$MATCHED_SKILL" 'index($s) // empty' "$TURN_SKILLS_FILE" 2>/dev/null || true)
       if [[ -z "$INVOKED" ]]; then
         echo "SKILL-BYPASS warn: you read '$REL_PATH' which is registered as body of Skill '$MATCHED_SKILL'. Next time invoke the Skill tool instead -- body is loaded lazily and description goes to metrics." >&2
         jq -cn --arg ts "$(date -u +%FT%TZ)" --arg s "$MATCHED_SKILL" --arg p "$REL_PATH" \
@@ -89,7 +89,7 @@ fi
 if [[ "$TOOL" == "Edit" || "$TOOL" == "Write" || "$TOOL" == "MultiEdit" ]]; then
   WRITE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // ""')
   if [[ "$WRITE_PATH" == *lessons-learned.md ]]; then
-    INVOKED=$(jq -r 'index("writing-lessons") // empty' "$TURN_SKILLS_FILE")
+    INVOKED=$(jq -r 'index("writing-lessons") // empty' "$TURN_SKILLS_FILE" 2>/dev/null || true)
     if [[ -z "$INVOKED" ]]; then
       echo "SKILL-BYPASS warn: you edited 'lessons-learned.md' directly without invoking the 'writing-lessons' Skill. That skill owns cause-tag reuse and the promotion-debt scan -- a direct edit skips both. Invoke the Skill tool to capture lessons." >&2
       jq -cn --arg ts "$(date -u +%FT%TZ)" --arg p "$WRITE_PATH" \

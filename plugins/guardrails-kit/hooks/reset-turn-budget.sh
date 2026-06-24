@@ -9,6 +9,8 @@ SID=$(printf '%s' "$INPUT" | jq -r '.session_id // empty' 2>/dev/null | tr -cd '
 [ -z "$SID" ] && SID=default
 STATE_DIR="${CLAUDE_PROJECT_DIR:-.}/.claude/state/$SID"
 mkdir -p "$STATE_DIR"
+touch "$STATE_DIR"   # refresh mtime: mkdir -p is a no-op (no mtime bump) on an existing dir, so a
+                     # resumed >GC_DAYS-old session dir would otherwise be deleted by the GC below.
 
 # Opportunistic GC: per-session state dirs (#11) accumulate forever otherwise. Remove direct
 # subdirs of .claude/state older than GC_DAYS by mtime; the current session's dir was just

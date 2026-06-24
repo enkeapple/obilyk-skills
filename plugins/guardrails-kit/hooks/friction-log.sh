@@ -41,6 +41,7 @@ TEXTS=$(jq -rc '
   | .message.content[]
   | select((type == "object") and (.type == "tool_result") and (.is_error == true))
   | (if (.content | type) == "array" then (.content | map(.text? // "") | join(" ")) else (.content | tostring) end)
+  | gsub("[\r\n]+"; " ")
 ' "$TRANSCRIPT" 2>/dev/null) || exit 0
 
 # Current totals by class (priority: denied > blocked > error).

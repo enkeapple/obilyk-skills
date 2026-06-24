@@ -38,7 +38,7 @@ PROMPT_HASH=$(printf '%s' "$USER_PROMPT" | shasum -a 256 | cut -c1-16)
 INVOKED_SKILLS=$([[ -f "$TURN_SKILLS_FILE" ]] && cat "$TURN_SKILLS_FILE" || echo '[]')
 
 # For each skill in routing, check triggers against prompt
-jq -r '.skills | to_entries[] | "\(.key)\t\(.value.triggers // [] | join("|"))"' "$ROUTING" | while IFS=$'\t' read -r skill trigger_union; do
+jq -r '.skills // {} | to_entries[] | "\(.key)\t\(.value.triggers // [] | join("|"))"' "$ROUTING" | while IFS=$'\t' read -r skill trigger_union; do
   [[ -n "$trigger_union" ]] || continue
   MATCHED=""
   if echo "$USER_PROMPT" | grep -qiE "$trigger_union"; then
