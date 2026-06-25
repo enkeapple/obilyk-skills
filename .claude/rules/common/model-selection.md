@@ -26,6 +26,7 @@ Pick the model by the dispatched agent's **role**, and state the cost rationale 
 
 - **review → a model DIFFERENT from the one that implemented (the load-bearing rule).** This is the lever a capable agent skips by default — it reuses the implementer's model, reasoning "review is as hard as writing". For a routine per-task review prefer a different, often *cheaper* tier: independence, not raw power, is what catches the implementer's blind spots, and it saves tokens. For the final whole-change or high-risk review use the most-capable tier — but still a different model than the implementer where the harness offers more than one. _Rationale: the model switch buys defect-catching a same-model reviewer structurally cannot._
 - **cost-tiering of the other roles (a strong caller usually already does this — light scaffolding, not the point):** the operative default is *the cheapest model sufficient for the task* — escalating capability is the exception you justify per dispatch, not the starting point. A read-only research/explore role takes the cheapest capable tier (bulk-token, low-judgment); a well-specified implement task takes the cheapest tier that reliably does it (count turns, not just per-token price), escalating to the most-capable tier only for subtle, correctness-critical, or multi-file integration work. Do NOT default every implement task to the premium model.
+- **reuse / existing-code search before implementing → dispatch it cheap, do NOT search inline on the implementer's tier.** The lookup for an existing implementation or wrapper (the search behind [reuse-before-reimplement](../anti-patterns/reuse-before-reimplement.md) — see-also, not required to apply this rule) is mechanical, high-recall, low-judgment work. When it is non-trivial (a large or unfamiliar codebase), dispatch it to a cheap-tier subagent rather than spending the implementer's often-premium tier grepping inline. _Rationale: an implementer searching on its own expensive model is the silent default — a cheap search subagent returns the same hits for a fraction of the tokens._
 
 Name **tiers**, not a fixed model — the current Claude mapping is illustrative (cheap ≈ Haiku, standard ≈ Sonnet, most-capable ≈ Opus) and will shift as models are renamed.
 
@@ -38,6 +39,7 @@ The **Tier** column is authoritative; the model in parentheses is illustrative a
 | Task type | Tier (illustrative model) | Why |
 | --- | --- | --- |
 | Exploration / search | cheap (≈ Haiku) | fast, cheap, good enough for finding files |
+| Reuse / existing-code search before implementing | cheap (≈ Haiku) | mechanical high-recall lookup; don't burn the implementer's tier grepping inline |
 | Simple, single-file edit | cheap (≈ Haiku) | clear instructions, low judgment |
 | Writing docs | cheap (≈ Haiku) | structure is simple |
 | Multi-file implementation | standard (≈ Sonnet) | best balance for coding |
@@ -72,5 +74,6 @@ The **Tier** column is authoritative; the model in parentheses is illustrative a
 - [ ] The review tier was derived from the implementer's model (one tier different), NOT read as a fixed task-type row from the quick-reference table.
 - [ ] Each subagent/workflow dispatch states the model tier AND a one-line cost rationale for that role.
 - [ ] No premium model used for a pure research/explore/read-only role, and no premium default for a mechanical implement task.
+- [ ] A non-trivial pre-implementation reuse/existing-code search was dispatched to a cheap tier, not run inline on the implementer's (premium) model.
 - [ ] Model named as a tier (cheap/standard/most-capable) with any concrete model marked illustrative — not a hard-coded model as the only option.
 - [ ] Not applied to non-dispatched, in-context work.

@@ -4,6 +4,15 @@ Transient backlog of un-promoted candidate rules — newest at the top of `## En
 
 ## Entries
 
+## 2026-06-25 — RED'd an export-bound rule against the strong in-vault agent; nearly cut a rule valuable only for weaker/non-agentic targets
+
+- **Cause-tag**: export-baseline-mismatch
+- **Symptom**: triaging the "10 AI anti-patterns" into rules, I RED-tested `reuse-before-reimplement` against cold subagents in this vault — Opus, then a clean Haiku, then BOTH Haiku and Sonnet on a real RN repo (`crewing-mobile`) — and all 5 reconned-before-coding and reused a buried helper (`getCompactRelativeTime` in a large `Dates.ts`) with no rule. I concluded "no-op, don't ship" and deleted the file. Owner corrected: the rules are to be COPIED into other projects (weaker models / non-agentic harnesses) where recon is NOT the default.
+- **Root cause**: judged an EXPORT-bound artifact by the wrong baseline — the strong, tool-equipped Claude Code agent running in THIS vault. A Claude Code agent with grep/Explore recons and verifies by default across ALL tiers (Haiku included), even in a large real codebase, so a reuse/recon-discipline rule is a no-op FOR IT — which says nothing about the export targets the rule actually exists for.
+- **Wrong approach**: applied the in-vault no-op test to an artifact whose value lives in a different execution environment, and treated 5 green in-vault REDs as a verdict to delete the rule.
+- **Correct approach**: restored the rule as a minimal portable reuse rule (value = export to weak/non-agentic targets) and split the cost concern into `model-selection.md` (dispatch the reuse-search to a cheap tier). The honest verdict was "no-op HERE, valuable THERE", not "no-op, cut".
+- **Prevention**: when authoring or triaging a rule/skill destined for EXPORT to other repos, RED it against a representative TARGET environment (the target's model tier AND a realistic repo/harness), not the strong in-vault agent — and remember a tool-equipped Claude Code agent recons/verifies by default at every tier, so a green in-vault RED systematically UNDER-values an export-bound discipline rule. A "no-op in this vault" verdict on an export artifact is a "no-op here / valuable there" note, never a cut decision. (Kin to `contaminated-red-baseline`/`skill-value-vs-noop`: the baseline must represent the real test conditions — here the conditions are the export target, not the vault.)
+
 ## 2026-06-24 — Happy-path-only hook fixtures false-greened a corpus-finalize branch that crashed on every real Stop
 
 - **Cause-tag**: untested-empty-branch
