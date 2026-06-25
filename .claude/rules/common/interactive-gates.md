@@ -24,7 +24,7 @@ Do NOT add a picker where the choice is **agent-derivable** (e.g. routing an inp
 
 ## Why
 
-Without one canonical form, gate prompts drift run to run — prose one time, a different option set the next, no clickable choice — and the user re-reads a bespoke sentence at every gate. The value is **convergence**, not "offer a choice": one mechanism plus fixed option templates make every gate recognizable and the approval explicit and one-click. This rule owns only the **presentation** of the gate choice; the **stop** and the **progress-list visual** are separate concerns owned elsewhere, and this rule applies without them.
+Without one canonical form, gate prompts drift run to run — prose one time, a different option set the next, no clickable choice — and the user re-reads a bespoke sentence at every gate. The value is **convergence**, not "offer a choice": one mechanism plus fixed option templates make every gate recognizable and the approval explicit and one-click. This rule owns only the **presentation** of the gate choice; the **stop** and the **progress-list visual** are separate concerns — the progress list is owned by [phase-task-visualization](./phase-task-visualization.md) (see-also) — and this rule applies without them.
 
 ## Implementation
 

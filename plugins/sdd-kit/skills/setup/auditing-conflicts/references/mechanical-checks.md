@@ -70,7 +70,9 @@ A skill/rule pair is shortlisted for the judgment layer iff **any** signal fires
 | Same category | Same `skills/<category>/` path segment |
 | Mutual hand-off ref | One body backtick-names the other in a `REQUIRED SUB-SKILL`/Upstream/Downstream/hand-off context |
 
-**Stop-word list** (exact): `the a an to of and or use when this that is be it in on for with your you i as by from skill rule skills rules`
+**Stop-word list** (exact): `the a an to of and or use when this that is be it in on for with your you i as by from skill rule skills rules triggers trigger then into after right fresh want need make turn check run via new change create edit`
+
+(Note the boilerplate `triggers` — every skill description ends "Triggers on: …", so without it the keyword signal matches almost every pair.)
 
 **Sample-prompt set** (exact, extend only by an explicit edit to this file): `audit the spec`, `write a skill`, `grill me`, `help me think this through`, `start coding`, `find conflicts`, `check the rules`, `hand off`, `write a plan`, `fix this bug`.
 

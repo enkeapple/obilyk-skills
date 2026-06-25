@@ -7,7 +7,7 @@ description: >-
   Re-aim GREEN at the failure that actually reproduces (shaping / efficacy /
   skipped process). Caveat: an in-vault subagent control inherits framework.md,
   so a discipline-RED can read as a false "no failure".
-paths: ['skills/**/SKILL.md']
+paths: ['plugins/**/SKILL.md', '.claude/skills/**/SKILL.md']
 ---
 
 # Scoping Skill Value to a Reproduced Failure
@@ -47,7 +47,7 @@ recipe for one fixed readiness-block shape; GREEN = the shape converges across r
 
 RED it with a **clean misread** — an artifact internally consistent but wrong against its source. If the cold reviewer, given only the artifact, approves it, the layer is a no-op: wire the source in, make the remits disjoint, and re-RED.
 
-**Caveat — a contaminated discipline control reads as a false "no failure."** A subagent spawned in this repo inherits the vault's operating manual ([framework.md](../domains/framework.md): the Iron Law, read-before-assert, the chain), so a discipline-RED run that "complies" may be obeying the force-injected manual, not your skill — agents will even cite "the vault's discipline" verbatim. To measure a true discipline baseline, use an environment WITHOUT that injection (a controlled system prompt, or a real consumer repo). Shaping failures (output-shape variance) stay cleanly measurable in-repo regardless. If you cannot reproduce the discipline failure at all, do not build the gate — find the shaping / efficacy failure that is reproducible, or write nothing.
+**Caveat — a contaminated discipline control reads as a false "no failure."** A discipline-RED run inside this vault may "comply" by obeying the force-injected operating manual, not your skill. If you cannot reproduce the discipline failure against a *clean* baseline, do not build the gate — find the shaping / efficacy failure that is reproducible, or write nothing. (The protocol for keeping that baseline clean — suppression clause, clean-room — is owned by [fair-red-baseline](./fair-red-baseline.md), see-also; shaping failures stay cleanly measurable in-repo regardless.)
 
 ## Edge Cases
 

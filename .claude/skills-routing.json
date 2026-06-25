@@ -381,6 +381,21 @@
         "подготовь к публикаци"
       ]
     },
+    "drafting-release-notes": {
+      "kind": "ref",
+      "plugin": "craft-kit",
+      "name": "drafting-release-notes",
+      "triggers": [
+        "write the release notes",
+        "draft (store )?release notes",
+        "what'?s new for (this|the) release",
+        "release notes for (google play|app store)",
+        "generate release notes from the diff",
+        "релиз-ноуты",
+        "что нового для релиза",
+        "опиши изменения для стора"
+      ]
+    },
     "codebase-design": {
       "kind": "ref",
       "plugin": "craft-kit",

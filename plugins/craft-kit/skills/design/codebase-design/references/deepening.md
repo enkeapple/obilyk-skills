@@ -1,6 +1,6 @@
 # Deepening
 
-How to deepen a cluster of shallow modules safely, given its dependencies. Assumes the vocabulary in [SKILL.md](SKILL.md) — **module**, **interface**, **seam**, **adapter**. Concrete technologies named below are **illustrative**; the consumer repo's stack fills in the specifics.
+How to deepen a cluster of shallow modules safely, given its dependencies. Assumes the vocabulary in [SKILL.md](../SKILL.md) — **module**, **interface**, **seam**, **adapter**. Concrete technologies named below are **illustrative**; the consumer repo's stack fills in the specifics.
 
 ## Dependency categories
 

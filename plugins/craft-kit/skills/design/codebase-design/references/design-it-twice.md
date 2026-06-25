@@ -2,7 +2,7 @@
 
 When the user wants to explore alternative interfaces for a chosen deepening candidate, use this parallel sub-agent pattern. Based on "Design It Twice" (Ousterhout) — your first idea is unlikely to be the best. Left to itself, an agent produces a single design and defends it; this pattern forces genuinely different alternatives onto the table before anyone commits.
 
-Uses the vocabulary in [SKILL.md](SKILL.md) — **module**, **interface**, **seam**, **adapter**, **leverage**.
+Uses the vocabulary in [SKILL.md](../SKILL.md) — **module**, **interface**, **seam**, **adapter**, **leverage**.
 
 ## Process
 
@@ -27,7 +27,7 @@ Prompt each sub-agent with a separate technical brief (file paths, coupling deta
 - Agent 3: "Optimise for the most common caller — make the default case trivial."
 - Agent 4 (if applicable): "Design around ports & adapters for cross-seam dependencies."
 
-Include both the [SKILL.md](SKILL.md) vocabulary and the project's domain glossary (whatever the consumer repo calls it) in the brief, so each sub-agent names things consistently with the architecture language and the project's own domain language.
+Include both the [SKILL.md](../SKILL.md) vocabulary and the project's domain glossary (whatever the consumer repo calls it) in the brief, so each sub-agent names things consistently with the architecture language and the project's own domain language.
 
 Each sub-agent outputs:
 

@@ -1,6 +1,15 @@
 ---
 name: codebase-design
-description: Shared vocabulary for designing deep modules. Use when the user wants to design or improve a module's interface, find deepening opportunities, decide where a seam goes, make code more testable or AI-navigable, or when another skill needs the deep-module vocabulary.
+description: >-
+  Shared vocabulary for designing deep modules — a lot of behaviour behind a
+  small interface, placed at a clean seam, testable through that interface. Use
+  when designing or improving a module's interface, finding deepening
+  opportunities, deciding where a seam goes, making code more testable or
+  AI-navigable, or when another skill needs the deep-module vocabulary.
+  Triggers on: "design a module/interface", "improve a module/interface",
+  "deep module", "deepening opportunities", "where the seam goes", "place a
+  seam", "make this testable", "AI-navigable", "design it twice",
+  "shallow module".
 ---
 
 # Codebase Design
@@ -112,5 +121,5 @@ Good interfaces make testing natural. The examples below are **illustrative** �
 
 ## Going deeper
 
-- **Deepening a cluster given its dependencies** — see [deepening.md](deepening.md): dependency categories, seam discipline, and replace-don't-layer testing.
-- **Exploring alternative interfaces** — see [design-it-twice.md](design-it-twice.md): spin up parallel sub-agents to design the interface several radically different ways, then compare on depth, locality, and seam placement. A capable agent left to itself produces *one* design; this is the process that forces more than one.
+- **Deepening a cluster given its dependencies** — see [deepening.md](references/deepening.md): dependency categories, seam discipline, and replace-don't-layer testing.
+- **Exploring alternative interfaces** — see [design-it-twice.md](references/design-it-twice.md): spin up parallel sub-agents to design the interface several radically different ways, then compare on depth, locality, and seam placement. A capable agent left to itself produces *one* design; this is the process that forces more than one.

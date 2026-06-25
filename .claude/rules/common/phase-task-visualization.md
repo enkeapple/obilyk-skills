@@ -59,7 +59,7 @@ Before touching the list, check whether a phase task list **already exists this 
 - **No task tooling in the runtime** → skip silently; this rule shapes the list when one is rendered, it does not mandate a tool that is absent.
 - **A single-behavior test-first change outside the chain** is not a phase — no list (one RED→GREEN loop is not a pipeline).
 - **The execution phase keeps its own per-task ledger** — a separate, finer-grained concern from this phase list. When a phase list already occupies the harness task list, keep that per-task ledger in plan-file markers so the two never collide; the execution phase's single item is driven like any other.
-- This rule owns only the **visual + its status-to-approval binding**. The approval gate itself and the concrete phase set are owned elsewhere (the chain orchestrator); this rule is fully applicable without them — do not restate either here.
+- This rule owns only the **visual + its status-to-approval binding**. The approval gate itself and the concrete phase set are owned elsewhere — the gate-choice *presentation* by [interactive-gates](./interactive-gates.md) (see-also), the concrete phase set by the chain orchestrator; this rule is fully applicable without them — do not restate either here.
 
 ## Review Checklist
 

@@ -1,6 +1,10 @@
 ---
 name: improve-codebase-architecture
-description: Use when the user wants an architecture review, asks to improve/refactor a codebase's structure, find deepening opportunities, reduce shallow modules, or make an area more testable or AI-navigable — and wants candidates surfaced visually before committing.
+description: >-
+  Use when the user wants an architecture review, asks to improve/refactor a
+  codebase's structure, find deepening opportunities, reduce shallow modules, or
+  make an area more testable or AI-navigable — and wants candidates surfaced
+  visually before committing.
 disable-model-invocation: true
 ---
 
@@ -10,7 +14,7 @@ Surface architectural friction and propose **deepening opportunities** — refac
 
 A capable agent, asked to "review the architecture", will jump straight to a prose list of recommendations. This skill exists to stop that: it forces an explicit process — explore, then present candidates *visually*, then grill the chosen one — and a shared vocabulary, neither of which happens by default.
 
-This command is _informed_ by the project's domain model and built on a shared design vocabulary:
+This skill is _informed_ by the project's domain model and built on a shared design vocabulary:
 
 - Run the `codebase-design` skill for the architecture vocabulary (**module**, **interface**, **depth**, **seam**, **adapter**, **leverage**, **locality**) and its principles (the deletion test, "the interface is the test surface", "one adapter = hypothetical seam, two = real"). Use these terms exactly in every suggestion — don't drift into "component," "service," "API," or "boundary."
 - The project's **domain glossary** (whatever the consumer repo calls it — a `CONTEXT.md`, a domain-rules glossary, etc.) gives names to good seams; the project's **architecture decision records (ADRs)**, wherever they live, record decisions this command should not re-litigate.
@@ -33,7 +37,7 @@ Apply the **deletion test** to anything you suspect is shallow: would deleting i
 
 ### 2. Present candidates visually
 
-The deliverable is **always a written, self-contained visual artifact** — never a prose or markdown bullet list in the chat. The diagrams carry the weight; a chat list is the exact failure this skill exists to prevent, and "I'm in a hurry", "just read them aloud", "markdown is fine", or "skip the report" are the pressure to resist, not an exception that converts the deliverable into chat prose. The recommended, illustrative format is a self-contained HTML file (Tailwind + Mermaid via CDN) written to the OS temp directory so nothing lands in the repo. A consumer repo may substitute another medium **only if it stays visual, self-contained, and written to a file** — substitution swaps the format, it never downgrades it to a chat list. See [HTML-REPORT.md](HTML-REPORT.md) for the full scaffold, diagram patterns, and styling guidance.
+The deliverable is **always a written, self-contained visual artifact** — never a prose or markdown bullet list in the chat. The diagrams carry the weight; a chat list is the exact failure this skill exists to prevent, and "I'm in a hurry", "just read them aloud", "markdown is fine", or "skip the report" are the pressure to resist, not an exception that converts the deliverable into chat prose. The recommended, illustrative format is a self-contained HTML file (Tailwind + Mermaid via CDN) written to the OS temp directory so nothing lands in the repo. A consumer repo may substitute another medium **only if it stays visual, self-contained, and written to a file** — substitution swaps the format, it never downgrades it to a chat list. See [html-report.md](assets/html-report.md) for the full scaffold, diagram patterns, and styling guidance.
 
 If the user insists on chat prose *after* being told the report is one temp file with zero repo footprint, that is an explicit, informed override of the skill — name what it costs ("dropping the visual report loses the before/after diagrams that carry the deepening case") and do not slide into it silently as though the first request settled it.
 

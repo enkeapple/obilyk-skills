@@ -1,7 +1,7 @@
 ---
 description: 'How to author or edit a skill so it stays agnostic and portable: a skill must never hard-depend on one project''s stack, paths, commands, or repo-specific vocabulary — parameterize each specific into the role the consumer repo fills, mark an unavoidable concrete example illustrative, and scrub the source''s native assumptions when adapting external material. A skill is agnostic when dropping it unchanged into another repo preserves its full value; project leakage into a skill body is a defect, not a style nit. Applies whenever a skill under .claude/skills/** is authored or edited.'
 paths:
-  - 'skills/**/*.md'
+  - 'plugins/**/skills/**/*.md'
   - '.claude/skills/**/*.md'
 ---
 

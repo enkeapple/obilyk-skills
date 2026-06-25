@@ -59,4 +59,4 @@ Baseline prompt: "Check this repo for internal inconsistencies before a release.
 - [ ] The baseline prompt does NOT name the data location, corpus path, schema, or extraction recipe.
 - [ ] If dispatched inside the vault and the skill overlaps an existing one: a suppression clause is present AND the output was scanned for residual vocabulary (none found).
 - [ ] Any contaminated baseline was discarded and re-run clean before the RED result was recorded.
-- [ ] The clean-baseline result was handed to [scoping-skill-value](./scoping-skill-value.md) for the build / no-build decision.
+- [ ] If the clean baseline showed no failure, the literal skill was cut or re-aimed — not shipped as-is (the build / no-build call; see-also [scoping-skill-value](./scoping-skill-value.md)).
