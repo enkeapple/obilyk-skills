@@ -32,6 +32,18 @@ Without one canonical form, gate prompts drift run to run — prose one time, a 
 
 Present the choice as a **numbered picker of options-with-descriptions**. In a harness with a dedicated picker tool, use it (typically 1–4 questions; each 2–4 explicit options; a free-text "Other" option is usually added automatically, so never list it). When no picker tool exists, **fall back** to a markdown numbered list with one-line descriptions and ask the user to reply with a number — never silently drop the choice.
 
+```text
+❌ WRONG — bespoke prose, no clickable choice; drifts run to run, approval is implicit.
+"The spec is ready. Let me know if it looks good or if you want changes, otherwise I'll
+continue to the plan."
+
+✅ CORRECT — archetype A approval gate as a picker (auto-"Other" omitted):
+  1. Approve          → approve this artifact, advance
+  2. Request changes  → revise this same artifact (say what)
+  3. Redo a previous phase → defect upstream, name the phase to rework
+(No picker tool → the same three as a numbered markdown list; reply with a number.)
+```
+
 ### Archetypes and option templates
 
 The archetype letters (A, B, C-readiness, C-drift) are a **stable contract** — other SDD work cites them by letter, so keep them fixed. Each list is the 2–4 explicit options (auto-"Other" omitted):
