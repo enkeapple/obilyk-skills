@@ -4,6 +4,15 @@ Transient backlog of un-promoted candidate rules — newest at the top of `## En
 
 ## Entries
 
+## 2026-06-25 — Authored scoping-rule-value; its in-vault RED reproduced no failure (strong agent already complies) and was self-contaminated by the rule on disk
+
+- **Cause-tag**: export-baseline-mismatch
+- **Symptom**: authoring `scoping-rule-value.md` (rule-side sibling of `scoping-skill-value`), I RED-tested it on cold subagents in this vault. First target case (a duplicate "reuse" rule): the cold agent grepped-before-forking and refused on its own. Re-aimed to a vague no-op rule ("descriptive names"): cold Opus/Sonnet agents recognised the no-op and declined unprompted. So the rule's gates 1/2/4 reproduced no failure on the strong in-vault agent — and worse, both cold explorers read `scoping-rule-value.md` straight off disk and applied it, so the control was contaminated too.
+- **Root cause**: same class as the `reuse-before-reimplement` incident below — judged an EXPORT-bound scoping/discipline rule by the wrong baseline (the strong, tool-equipped in-vault Claude Code agent), which recons and self-no-op-checks by default at every tier; that says nothing about the weaker / non-agentic consumer harnesses the rule exists for. Compounded by the on-disk rule contaminating its own RED.
+- **Wrong approach**: nearly read "clean RED in-vault" as "no-op, cut it", repeating the trap the `export-baseline-mismatch` entry already documents.
+- **Correct approach**: kept the rule on the same policy basis as its sibling `scoping-skill-value` (always-on distillate for weak/non-agentic targets + manual `.claude/rules/**` edits bypassing the skill); added an explicit Edge-Case caveat in the rule recording the strong-model no-op + contaminated control + gate-4-skip; owner confirmed the ship decision.
+- **Prevention**: an in-vault RED of an EXPORT-bound scoping/anti-pattern rule is not a cut signal — expect a false no-op (strong agent already complies) AND a self-contaminated control (the rule, once on disk, is read by cold explorers). Justify such a rule on the weaker-consumer-harness / policy basis and skip gate 4 explicitly, exactly as `scoping-skill-value` and the `reuse-before-reimplement` entry already do. (Kin: `skill-value-vs-noop`→scoping-skill-value, `contaminated-red-baseline`→fair-red-baseline — both already promoted; this is the rule-authoring instance of the same export-baseline class.)
+
 ## 2026-06-25 — RED'd an export-bound rule against the strong in-vault agent; nearly cut a rule valuable only for weaker/non-agentic targets
 
 - **Cause-tag**: export-baseline-mismatch
