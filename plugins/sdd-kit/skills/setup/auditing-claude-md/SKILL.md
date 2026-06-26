@@ -30,7 +30,7 @@ Mirrors `auditing-glossary` (same discipline, applied to the foundational rules)
 ## Process
 
 1. **Enumerate every concrete claim across BOTH files.** List each: command (tables + checklist verification rows), file/folder path & cross-link, stack/version claim, routed skill or slash command, and any named protocol.
-2. **Verify each against the repo this session.** The repo's manifest (`package.json`/`Cargo.toml`/`go.mod`/…)/Makefile/CI for commands; the filesystem for paths/folders; the lockfile for versions; the skill/command registry for routing targets. Do not stop at the obvious one — the unrunnable checklist row is usually the one you'd skim. Then apply, to every generated slot in both files, the five **manual-governance drift classes** in [references/drift-classes.md](./references/drift-classes.md) — bypass wording, over-broad capture criterion, append-only lessons model, design-docs convention, missing/incomplete behavioral baseline — and the **placeholder-key** detection contract in [references/placeholder-keys.md](./references/placeholder-keys.md) (an unresolved `<key>`, or a registry example-noun baked into a generator-owned slot; cautionary prose naming a noun is not drift).
+2. **Verify each against the repo this session.** The repo's manifest (`package.json`/`Cargo.toml`/`go.mod`/…)/Makefile/CI for commands; the filesystem for paths/folders; the lockfile for versions; the skill/command registry for routing targets. Do not stop at the obvious one — the unrunnable checklist row is usually the one you'd skim. Then apply, to every generated slot in both files, the five **manual-governance drift classes** in [references/drift-classes.md](./references/drift-classes.md) and the **placeholder-key** detection contract in [references/placeholder-keys.md](../shared/placeholder-keys.md). Each reference carries its own falsifiable signals — read them per signal, don't eyeball.
 3. **Run the cross-file consistency pass.** The root and the manual must agree: same pipeline name/vocabulary, same Role/position, same commands, no contradiction. The root stays a thin index — governance that is duplicated in both files is drift waiting to happen; it should live in the manual and be pointed to.
 4. **Classify each finding:** Confirmed / Stale doc (repo right, doc outdated) / Code drift (doc states an intended rule the repo violated — fix may be the *code*) / Broken (command/path/skill that resolves to nothing) / Inconsistent (the two files disagree).
 5. **Decide direction before editing:** Stale/Broken → fix the doc. Inconsistent → pick the single source (usually the manual) and make the other point to it, don't duplicate. Code drift → surface as a decision, don't silently rewrite the doc to bless it.
@@ -54,12 +54,9 @@ Produce a report before editing (see [assets/audit-report-example.md](./assets/a
 ## Red Flags — STOP
 
 - "I read it, looks fine" — no per-claim verification = the audit didn't happen.
-- Checking only the claim that was pointed out, leaving the rest of both files unverified.
 - Auditing one file and ignoring the other, or skipping the cross-file consistency pass.
-- Assuming every disagreement means the doc is stale — the repo can have drifted from an intended rule.
 - Fixing a drifted command by duplicating governance into the root instead of pointing to the manual.
-- "I remember this script exists" — verify against the repo's manifest (package.json/Cargo.toml/go.mod/…)/Makefile/CI, or it is unverified.
-- A **manual-governance drift signal** fires — bypass wording, an over-broad capture criterion, an append-only lessons model, a missing/multi-valued design-docs home, or a declared-but-absent/incomplete behavioral baseline — and you let it pass; each is drift in a repo that governs that construct (signals + correct forms in [references/drift-classes.md](./references/drift-classes.md)).
+- A **manual-governance drift signal** fires and you let it pass — eyeballing the lessons / design-docs / baseline wording instead of running the falsifiable signals in [references/drift-classes.md](./references/drift-classes.md).
 
 ## Rationalizations
 
@@ -69,5 +66,4 @@ Produce a report before editing (see [assets/audit-report-example.md](./assets/a
 | "Only the flagged line is wrong." | Nothing flags the rest. The audit covers every command, path, and pointer in both files. |
 | "Repo changed, so the doc is stale." | Maybe — or the repo drifted from an intended rule. Decide direction; don't auto-bless the code. |
 | "The two files say it differently, I'll leave both." | Two copies drift apart — that's how they got here. One source; the other points to it. |
-| "The manual's lessons/design-docs wording is close enough." | The five manual-governance drift classes (bypass, over-broad capture, append-only, multi-valued design-docs, missing/incomplete behavioral baseline) each misfire silently; apply [references/drift-classes.md](./references/drift-classes.md) per signal, don't eyeball them. |
-| "No behavioral baseline section, so nothing to audit." | Only true if the repo declared none. If it opted into a baseline (bootstrapped with one, section present, or owner states it), an absent/incomplete section is drift — present it and fill the missing principles. |
+| "The manual's lessons/design-docs/baseline wording is close enough." | The five manual-governance drift classes each misfire silently; apply [references/drift-classes.md](./references/drift-classes.md) per signal, don't eyeball them — including a baseline section that's absent only when the repo *declared* none. |

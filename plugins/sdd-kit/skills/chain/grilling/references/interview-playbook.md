@@ -10,25 +10,32 @@ A design is a tree of decisions, and later decisions depend on earlier ones. Res
 - Each answer opens the next branch. Follow it before backing out to a sibling.
 - When a branch is fully resolved, say so and move to the next sibling explicitly, so the user tracks where you are.
 
-## One question at a time, with your recommended answer
+## One decision per question — sequence dependents, batch independent siblings
 
 This is the core mechanic. Every question:
 
-1. States **one** decision (never bundle).
+1. States **one** decision (a question carries one decision, not a grab-bag).
 2. Leads with **the answer you'd pick** and one line of reasoning.
 3. Prefers a small **multiple-choice** set over open-ended where possible.
 4. Then waits.
 
 The recommended answer is not optional — it turns a quiz into a collaboration. The user confirms, corrects, or picks a different option, which is far faster than authoring an answer from scratch.
 
+**Sequence dependents; batch independent siblings.** Resolve **dependent** decisions one at a time, depth-first — never ask a leaf while its trunk is open, because the trunk's answer changes the leaf's options. But decisions that are **mutually independent** — no answer changes the options or relevance of another — may be asked together in **one message** as a short numbered set, each still carrying its own recommended answer. This cuts round-trips without the bewilderment the one-at-a-time rule guards against. Two limits keep a batch from becoming a wall: **at most 3–4** decisions per message, and **a recommended answer on every one**. When unsure whether two decisions are independent, treat them as dependent and ask sequentially — an answer invalidated by another costs more than one extra round-trip.
+
 ```text
-✅ "How should matches be delivered? I'd start in-app only (notifications list)
-    and add email/push later — smallest thing that delivers the value, and the
-    matching engine doesn't change when you add channels. In-app only, or is a
-    specific channel the actual point of the feature?"
+✅ batch — three INDEPENDENT decisions, one message, a recommendation each:
+   "Three independent calls on the export feature:
+    1. Default format — I'd pick CSV (opens anywhere, no dep). CSV / JSON / XLSX?
+    2. Action placement — I'd put Export in the toolbar (discoverable). Toolbar / row menu?
+    3. Filename — I'd default to a timestamp (no collisions). Timestamp / user-named?"
+
+✅ sequential — a DEPENDENT pair, trunk first:
+   "How are matches delivered? I'd start in-app only … In-app, or is a channel the point?"
+   (wait — the answer decides whether a follow-up about per-channel prefs even applies)
 
 ❌ "How should notifications work? What channels? Real-time or batched? What
-    about dedup? And do we need user preferences?"   ← five questions, no rec
+    about dedup? And do we need user preferences?"   ← unbounded, no recs, and dependent
 ```
 
 ## Explore before you ask

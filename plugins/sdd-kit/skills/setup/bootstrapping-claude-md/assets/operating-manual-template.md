@@ -6,11 +6,12 @@ The system prompt for HOW to work in this repo. Mirror the section order below �
 
 1. Title + rule precedence
 2. `## Non-negotiables (read first, every session, every model)` — the discipline set that survives summarization
+2b. `## Behavioral baseline` — **conditional**: include ONLY if a conduct set was adopted at intake (seed from `references/behavioral-baseline.md`); else omit
 3. `## Role` · 4. `## Communication` · 5. `## Operating modes`
-6. `## Workflow: <PIPELINE>` (sub-phases) · 7. `## Completeness Checklist`
-8. `## Plan persistence` (handoff skill) · 9. `## Search-before-ask`
-10. `## Git boundary` · 11. `## Status block`
-12. `## Skill discipline` (routing registry + hooks) · 13. `## Lessons promotion path` · 14. `## Pointers`
+4. `## Workflow: <PIPELINE>` (sub-phases) · 7. `## Completeness Checklist`
+5. `## Plan persistence` (handoff skill) · 9. `## Search-before-ask`
+6. `## Git boundary` · 11. `## Status block`
+7. `## Skill discipline` (routing registry + hooks) · 13. `## Lessons promotion path` · 14. `## Pointers`
 
 ## Template
 
@@ -32,6 +33,8 @@ These survive context pressure and are model-agnostic. If the rest of this file 
 5. **Capture a qualifying lesson, in git, same turn.** Capture only when BOTH hold: (A) you can name a concrete check/Prevention a future session will run, AND (B) it is a non-obvious failure *class* that would recur (hallucinated symbol, missed duplication, wrong-domain edit, contract contradicting an assumption) or the owner corrects/confirms a non-obvious choice. If all you'd write is "today I did X" with no reusable check, do not capture — **most turns produce no lesson, and that is normal.** When a turn qualifies, capture it the SAME turn — deferring loses it. If the repo has a lessons-capture skill (e.g. `writing-lessons`), capture by **invoking that skill (the `Skill` tool)**, not by editing [lessons-learned.md](./lessons-learned.md) directly — a direct edit bypasses the skill's cause-tag/promotion discipline; absent such a skill, append to the log.
 
 These five are universal. **Repo-specific, infrastructure-tied invariants go below in their own sections, not here** — e.g. a skill-gate / rule-gate harness (→ Skill discipline), a model-pinning protocol, a memory-write gate. Add a sixth non-negotiable only if it is genuinely load-bearing every session AND not already enforced by a hook documented elsewhere.
+
+<!-- ## Behavioral baseline — include this section ONLY if a conduct set was adopted at intake. Seed from references/behavioral-baseline.md: each adopted principle (the default four: Think Before Coding, Simplicity First, Surgical Changes, Goal-Driven Execution) with its one-line meaning, so auditing-claude-md can verify it. Declined at intake → omit this section entirely; never inject unrequested conduct rules. -->
 
 ## Role
 

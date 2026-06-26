@@ -28,9 +28,10 @@ it. Start over. No exception for "simple additions", "just a section", or "it's 
 ## create
 
 1. **RED.** Run the baseline pressure scenario(s) WITHOUT the skill; record the agent's
-   rationalizations verbatim. Suppress any injected operating manual for a *discipline* skill, or
-   the baseline is contaminated and "complies" for the wrong reason. No failure reproduces → there
-   is nothing to fix; stop.
+   rationalizations verbatim. For a *discipline* skill, suppress any injected operating manual
+   (else the baseline is contaminated — see
+   [`testing-with-subagents.md`](./references/testing-with-subagents.md)). No failure reproduces →
+   there is nothing to fix; stop.
 2. **Match the form to the failure** (table below) before writing.
 3. **GREEN (author check).** Write the minimal skill addressing those exact failures — in the form
    the failure calls for. Re-run the scenarios WITH the skill; confirm compliance. This is YOUR
@@ -41,9 +42,8 @@ it. Start over. No exception for "simple additions", "just a section", or "it's 
 5. **REFACTOR.** Close each new loophole the agent invents (rationalization-table row + red flag).
 6. **Stage the test cases for the gate — do NOT persist them in the skill.** Write the RED
    baselines (verbatim) and GREEN expectations to a temporary working file OUTSIDE the skill tree
-   (an OS temp location), and hand its path to Layer 2. The gate consumes that file and then
-   deletes it (see `validate`). The cases are ephemeral validation scaffolding, not skill content —
-   nothing about them stays under `references/`.
+   and hand its path to Layer 2; the gate consumes and deletes it. Cases are ephemeral scaffolding,
+   never skill content under `references/`.
 7. **validate** (the gate).
 
 ## edit
@@ -58,7 +58,7 @@ Two layers, both defined inside this skill — no dependency on any repo hook:
 
 1. **Layer 1 — static pre-flight.** Run the checks in
    [`validation-checklist.md`](./references/validation-checklist.md): frontmatter size, `name`
-   regex, `name === dir === symlink`, balanced fences, links resolve, legal frontmatter keys,
+   regex, `name === dir`, balanced fences, links resolve, legal frontmatter keys,
    routing invariant, word count. Fail fast here before spending a subagent.
 2. **Layer 2 — dynamic run.** Dispatch the validation subagent
    ([`validation-subagent-prompt.md`](./assets/validation-subagent-prompt.md)) to RUN the
@@ -69,8 +69,7 @@ Two layers, both defined inside this skill — no dependency on any repo hook:
    inversion (would it comply WITHOUT?) that your GREEN never asks. **After recording the verdict,
    delete the temporary cases file** — the skill keeps no persisted test-cases artifact.
 
-Never declare a skill done on Layer 1 alone, never substitute your own GREEN run for the Layer-2
-dispatch, and never ship on a Layer-2 FAIL.
+Never declare a skill done on Layer 1 alone, and never ship on a Layer-2 FAIL.
 
 ## Match the Form to the Failure
 
@@ -105,11 +104,11 @@ its own conditional.
 - Reaching the gate with no staged cases though you observed RED/GREEN this run, forcing the validator to synthesize and re-derive with author bias.
 - A baseline that "complies" inside a repo whose manual it inherited (contaminated RED).
 - A nuance/exemption clause smuggled into a recipe.
-- `name` ≠ dir ≠ symlink, or a routing entry for a `disable-model-invocation` skill.
+- `name` ≠ dir, or a routing entry for a `disable-model-invocation` skill.
 
 ## References
 
-Bundled files split by **role** into two sibling dirs: `references/` = read for guidance (methodology, registry, checklist); `assets/` = instantiated/copied (a template the skill fills, an example it emulates, a prompt it injects into a subagent). Test: copy/fill/inject → `assets/`; read-for-guidance → `references/`.
+Bundled files split by **role** into two sibling dirs — `references/` (read for guidance) vs `assets/` (instantiated/copied); the copy/fill/inject test lives in [`vocabulary.md`](./references/vocabulary.md) under *External file*.
 
 - [`vocabulary.md`](./references/vocabulary.md) — the leading words.
 - [`testing-with-subagents.md`](./references/testing-with-subagents.md) — pressure scenarios, the control, reps.

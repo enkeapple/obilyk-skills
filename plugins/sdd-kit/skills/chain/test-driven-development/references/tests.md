@@ -18,6 +18,8 @@ If renaming an internal function or reshaping internal state breaks the test whi
 
 ## Good vs bad
 
+_The examples below are TypeScript/Vitest — illustrative; apply the same shape in your stack's test framework._
+
 ```ts
 // BAD — vague name, asserts on a mock instead of behavior
 test("retry works", async () => {

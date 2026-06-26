@@ -10,13 +10,9 @@ allowed-tools: Read, Grep, Glob, Write, Edit
 
 # Bootstrapping README
 
-Generate the human-facing **README landing page(s)** a browser reads — distinct from the agent-facing `CLAUDE.md`. Each README has two zones: a one-time **scaffold** of placeholder prose sections (intro, Quickstart, How it works, Installation, What's Inside, Philosophy, Contributing) the human fills, and a **managed marker block**, every row sourced from disk. Only the marker block is derived, regenerated, and audited; the scaffold prose is human-owned once written.
+Generate the human-facing **README landing page(s)** a browser reads — distinct from the agent-facing `CLAUDE.md`. Each README has two zones: a one-time **scaffold** of placeholder prose sections (intro, Quickstart, How it works, Installation, What's Inside, Philosophy, Contributing) the human fills, and a **managed marker block** regenerated from disk. Only the marker block is derived and audited; the scaffold prose is human-owned once written.
 
-The layout decides what you emit. In a **single-repo** (no `.claude-plugin/marketplace.json`) it is one root README with one **skills-catalog** block. In a **marketplace** (marketplace.json present) it is one self-contained README per plugin at `plugins/<name>/README.md` (each carrying a skills-catalog block and/or a **hooks-catalog** block scoped to that plugin, links plugin-relative — only the kinds it has) **plus** a root README whose block is a **plugin index**, not a flat catalog of every skill. The repo mode, the block kinds, the per-plugin composition (which blocks, Title-Case H1), and the link bases are all defined in the [catalog-derivation contract](./references/catalog-derivation.md) → Repo mode / Per-plugin README composition.
-
-**Every row is derived, never hand-written.** The full derivation — repo mode, ROOT discovery, category, the description algorithm, ordering, the marker blocks — is the [catalog-derivation contract](./references/catalog-derivation.md); follow it verbatim. A hand-curated catalog drifts and cannot be audited; a derived one regenerates identically and `auditing-readme` can check it.
-
-Pairs with `auditing-readme`, which checks the block this skill writes for drift.
+**Every row in the managed block is derived from disk, never hand-written.** What you emit — repo mode (single-repo vs marketplace), block kinds (skills / hooks / plugin index), ROOT discovery, category, the description algorithm, ordering, link bases, per-plugin composition, the marker blocks — is fully specified by the [catalog-derivation contract](./references/catalog-derivation.md); classify the layout in step 0 and follow the contract verbatim. A hand-curated catalog drifts and cannot be audited; a derived one regenerates identically, so `auditing-readme` (which checks the block this skill writes) can verify it.
 
 ## When to use
 
@@ -40,23 +36,15 @@ Pairs with `auditing-readme`, which checks the block this skill writes for drift
 
 ## Edge cases
 
-Handle exactly as the [catalog-derivation contract](./references/catalog-derivation.md) → Edge cases states:
-
-- **Malformed/duplicate markers** → refuse to edit, report the file state; do not guess where the block belongs.
-- **Duplicate `name`** → error naming both paths; do not merge.
-- **Missing/empty `name` or `description`** → a `malformed frontmatter: <path>` row, not a crash.
-- **Hook wired but its script file is missing** → a `malformed hook: <path>` row, not a crash.
-- **A plugin with neither skills nor hooks** → a single empty skills block with `<!-- no skills found -->`. A hooks-only plugin emits a hooks block and NO empty skills block.
+Handle each exactly as the [catalog-derivation contract](./references/catalog-derivation.md) → Edge cases states — malformed/duplicate markers, duplicate `name`, missing/empty `name`/`description`, a wired hook whose script is missing, and a plugin with neither skills nor hooks. Never guess past an ambiguous file state (step 5): refuse and report.
 
 ## Red Flags — STOP
 
 - Writing a description by hand instead of deriving it from frontmatter.
 - Rendering the catalog as a table, dropping the bold link, or re-adding a kind column instead of the derived `- **[name](link)** — …` bullet list.
 - Regenerating or overwriting the scaffold prose on a re-run — only the managed block is regenerated; the placeholder sections are human-owned after the first write.
-- Emitting any prose section INSIDE the markers, or scaffolding a README that already carries prose.
-- Overwriting prose outside the markers, or inserting a second `## Skills` section.
+- Emitting any prose section INSIDE the markers, scaffolding a README that already carries prose, overwriting prose outside the markers, or inserting a second `## Skills` section.
 - Editing a README whose markers are malformed instead of refusing and reporting.
-- Inventing a skill, or omitting one the glob found, so the block disagrees with disk.
-- Emitting an empty `<!-- no skills found -->` block for a hooks-only plugin instead of its hooks catalog — or cataloging a `hooks/*.sh` not wired in `hooks.json`.
+- Inventing a skill, omitting one the glob found, or cataloging a `hooks/*.sh` not wired in `hooks.json` — so the block disagrees with disk.
 - Writing a slug H1 (`# guardrails-kit`) instead of the Title-Case H1 (`# Guardrails Kit`) when first creating a per-plugin README.
 - In a marketplace, emitting one flat root catalog of every skill instead of a per-plugin README + a root plugin index — or using repo-root-relative skill/hook links in a per-plugin README (they must be plugin-relative so the plugin is self-contained).

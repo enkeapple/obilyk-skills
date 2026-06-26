@@ -35,10 +35,6 @@ A concrete reference for the report format and the level of detail expected. Pla
 - sort param + sortItems() (silent expansion, out of scope): Fix code — remove.
 - Avatar in Row (silent expansion): Fix code — remove.
 - nextCursor→cursor + hasMore (schema drift, external): Fix code — revert to spec contract.
-
-## Decision
-Presented as one batched picker (interactive-gates archetype C-drift):
-- Apply recommended → apply all four dispositions above.
-- Adjust per-finding → walk the four findings one by one.
-- Stop → take no action now.
 ```
+
+The report ends here, at the recommended dispositions. The post-report decision picker (archetype C-drift) is owned by `SKILL.md` → "Required decision after the report", not by the report itself.

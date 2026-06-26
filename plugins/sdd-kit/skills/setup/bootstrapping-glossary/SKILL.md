@@ -13,57 +13,30 @@ allowed-tools: Read, Grep, Glob, Write, Edit
 
 Create the two foundational, always-on rules every other rule hangs off, by default under `.claude/rules/domains/`:
 
-- **Domain glossary** — what the app's concepts *mean*, who owns what, and how to disambiguate overlapping terms. The source of truth for domain vocabulary.
-- **Framework charter** — how to approach work in this repo regardless of which module you touch: the implementation protocol, the suspicion/verification discipline, the question discipline.
+- **Domain glossary** ([assets/domain-glossary-template.md](./assets/domain-glossary-template.md)) — what the app's concepts *mean*, who owns what, and how to disambiguate overlapping terms. The source of truth for domain vocabulary.
+- **Framework charter** ([assets/framework-charter-template.md](./assets/framework-charter-template.md)) — how to approach work in this repo regardless of which module you touch: implementation protocol, suspicion/verification discipline, question discipline.
 
-**Core principle: these are built from the real codebase, not from boilerplate.** A glossary that invents entities, or a charter of generic platitudes, is worse than none — it launders guesses into a "source of truth". Discover first; write only what the code confirms.
-
-These are foundational, always-on rules. This skill owns the two specific docs and exactly what each must contain — their full anatomy and filled examples are self-contained in the templates referenced below.
+Each template carries the full required anatomy and a filled example; write each doc to its template. This skill owns only the one thing the templates cannot enforce: **that every part is grounded in the real codebase.**
 
 ## When to use
 
 - A new or unruled project: there is no `.claude/rules/domains/` glossary or framework yet.
 - Recurring confusion about what a term means or who owns a concept → the project needs a glossary.
-- Repeated process failures (hallucinated symbols, skipped verification, guessed structure) → the project needs a framework charter.
+- Repeated process failures (hallucinated symbols, skipped verification, guessed structure) → the project needs a charter.
 
-## When NOT to use
+**Not** when the docs already exist and only need correcting (that is `auditing-glossary`), nor for a single narrow convention (that is one ordinary area-scoped rule, not a foundational doc).
 
-- The docs already exist and just need correcting — that is `auditing-glossary`.
-- A single narrow convention — that is one ordinary, area-scoped rule, not a foundational doc.
+## Discover first — this is the whole job
 
-## Discover first (non-negotiable)
+**These are built from the real codebase, never from boilerplate.** A glossary that invents entities, or a charter of generic platitudes, is worse than none — it launders guesses into a "source of truth". If you cannot ground a claim in something you read this session, it does not go in the doc. Everything else lives in the templates; this is the one principle they cannot enforce for you.
 
-Before writing a line, explore the actual repo:
+Before writing a line:
 
-- **For the glossary:** grep the overlapping noun-roots and the domains that share them; open each owning module to learn the real boundaries, the real route/type/API names, and the actual incident that proves they collide. Do not invent entities or naming conventions — capture the ones the code already uses.
-- **For the charter:** find the repo's real verification commands (package.json / Makefile / CI), the established patterns to mirror, and the real failure modes this codebase has hit. The charter cites *these*, not generic advice. The charter template's stack-specific slots use the keys in [references/placeholder-keys.md](./references/placeholder-keys.md) — resolve them by the same hybrid rule (auto off disk only when unambiguous, else intake).
-
-If you cannot ground a claim in something you read this session, it does not go in the doc.
-
-## The two artifacts
-
-Write each to its anatomy; full templates + filled examples are in references.
-
-**Domain glossary** ([assets/domain-glossary-template.md](./assets/domain-glossary-template.md)) — required parts:
-
-- `## When` — every trigger that must make the agent STOP and read this: each ambiguous term (in every language the team uses) and each owning path.
-- `## Why` — the confusion it prevents, ideally the concrete incident that motivated it.
-- `## Implementation` — the canonical **ownership table** (concept → owning module/route/type → what it represents) AND the **term-disambiguation rules** (what each word maps to, and how to resolve the genuinely ambiguous ones by context).
-- `## Edge Cases` + `## Review Checklist`.
-- State the **source-of-truth principle**: when code and glossary disagree, fix the glossary first, then the code — never silently diverge.
-
-**Framework charter** ([assets/framework-charter-template.md](./assets/framework-charter-template.md)) — required parts:
-
-- **Implementation protocol** — read the request, scan every layer the change touches (classify none/partial/full), write contracts as code (not prose), think through happy + edge cases, then code in dependency order.
-- **Suspicion protocol** — the concrete failure modes this repo hits (missed duplicate code, shortcut/silent cut, hallucinated symbol, test-passes-for-wrong-reason, unverified structure claim), each with a detection check.
-- **Evidence-based verification** — the repo's real commands, output shown (not "should pass").
-- **Question discipline** — don't ask what the repo/rules already answer; pick the smallest-diff default and state it; reserve questions for genuine product/business decisions.
+- **For the glossary:** grep the overlapping noun-roots and the domains that share them; open each owning module for the real boundaries, the real route/type/API names, and the actual incident that proves they collide. Capture the conventions the code already uses — never invent them.
+- **For the charter:** find the repo's real verification commands (manifest scripts / Makefile / CI), the established patterns to mirror, and the real failure modes this codebase has hit — the charter cites *these*, not generic advice. Resolve the template's stack-specific slots via the keys in [references/placeholder-keys.md](../shared/placeholder-keys.md): auto off disk only when exactly one fact maps with no judgment, else raise an intake question.
 
 ## Red Flags — STOP
 
-- Writing the glossary/charter before grepping the actual code.
-- A glossary with no `## When` triggers — it will never load at the moment of confusion.
-- A glossary that lists definitions but no term→owner disambiguation for the words that actually collide.
-- Inventing entities, routes, or naming conventions not found in the repo.
-- A framework charter of generic platitudes ("write clean code") instead of this repo's concrete protocol, failure modes, and real commands.
-- Any structural claim (symbol, path, route, command) not verified by a read this session.
+- Writing either doc before grepping the code, or naming any symbol/path/route/command not verified by a read this session.
+- Inventing entities, routes, or naming conventions not in the repo; a charter of platitudes ("write clean code") instead of this repo's concrete protocol and real commands.
+- A glossary with no `## When` triggers (it never loads at the moment of confusion), or with definitions but no term→owner disambiguation for the words that actually collide.

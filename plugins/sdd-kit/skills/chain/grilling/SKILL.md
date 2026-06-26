@@ -16,12 +16,10 @@ Interview the user relentlessly until a fuzzy idea becomes a shared, concrete de
 
 **Two core principles:**
 
-- **One question at a time, each with your recommended answer.** Asking several at once is bewildering. Lead with the answer you'd pick and why; the user corrects or confirms.
+- **One decision per question, each with your recommended answer.** Sequence dependent decisions one at a time; batch only genuinely independent siblings into one message, a recommendation on each (limits and examples in the playbook). Bundling dependent questions, or asking without recommendations, is what bewilders. Lead with the answer you'd pick and why; the user corrects or confirms.
 - **Explore before you ask.** If the codebase or docs can answer a question, go read them — don't spend a question on it.
 
-<HARD-GATE>
-Do NOT write code, scaffold, split tickets, or invoke an implementation/planning skill until the design is shared AND the user approves it. This holds for every task, however simple. "Too simple to design" is the rationalization that wastes the most work — the design can be three sentences, but it gets presented and approved.
-</HARD-GATE>
+> **Hard gate:** Do NOT write code, scaffold, split tickets, or invoke an implementation/planning skill until the design is shared AND the user approves it. This holds for every task, however simple. "Too simple to design" is the rationalization that wastes the most work — the design can be three sentences, but it gets presented and approved.
 
 **Progress:** before your first artifact, reflect this phase in the harness task list (one item `in_progress`; an item turns `completed` only on the user's explicit approval of that phase's artifact; a skipped phase stays listed, marked skipped) — under `sdd-lifecycle` update the existing item; run standalone, seed a single item for this phase.
 
@@ -30,7 +28,7 @@ Do NOT write code, scaffold, split tickets, or invoke an implementation/planning
 Walk the decision tree, resolving dependencies one at a time. The full technique — depth-first ordering, the recommended-answer pattern, explore-vs-ask, good/bad questions, knowing when to stop — is in [references/interview-playbook.md](./references/interview-playbook.md).
 
 1. **Explore context first** — files, docs, recent commits — so questions are informed, not generic.
-2. **Ask ONE question.** Prefer multiple-choice. Lead with your recommended answer + one line of reasoning. Wait for the response before the next question.
+2. **Ask the next question** following the one-decision rule above. Sequence dependents: wait for the response before opening a branch that depends on it; independent siblings may share one message (see the playbook).
 3. **Follow dependencies** — each answer opens the next branch. Resolve a decision before the ones that depend on it.
 4. **Keep a running Decisions list** — one line per resolved question: the decision + why (+ the alternative rejected). This is the material you hand to the spec; don't lose it. Format: [assets/decisions-template.md](./assets/decisions-template.md).
 5. **YAGNI** — actively prune features the user doesn't need.
@@ -64,7 +62,7 @@ A source file plus its own test is **one** test-first cycle, not "multiple compo
 
 ## Red Flags — STOP
 
-- Asking several questions in one message (ask one).
+- Bundling **dependent** questions in one message (independent siblings may batch; dependents stay sequential).
 - Stating a question with no recommended answer of your own.
 - Asking something the codebase already answers (go read it).
 - Proposing a design/solution before you understand the goal.
@@ -77,7 +75,7 @@ A source file plus its own test is **one** test-first cycle, not "multiple compo
 | Excuse | Reality |
 | -------- | --------- |
 | "It's simple, I'll just build it." | Simple ideas hide the most unexamined assumptions. Present a 3-sentence design and get approval. |
-| "Faster to ask everything at once." | A wall of questions is bewildering and gets half-answered. One at a time converges faster. |
+| "Faster to ask everything at once." | A wall of unrelated and dependent questions is bewildering and gets half-answered. Sequence the dependent ones; batch only independent siblings — that converges faster. |
 | "I'll just propose my design." | A design dropped before understanding is a guess. Grill first; let answers shape it. |
 | "It's simple — I'll skip the spec and just TDD it." | The off-ramp is only for a single-behavior change with no shared contract and no new surface. Touches an API/schema/event, spans components, or needs a multi-step plan? That is the full chain via `writing-specs`. When in doubt, full chain. |
 | "We're done, I'll start on tickets / planning." | grilling never plans or splits tickets. There are exactly two exits — `test-driven-development` (small) or `writing-specs` (full chain) — and only after the design is approved. |

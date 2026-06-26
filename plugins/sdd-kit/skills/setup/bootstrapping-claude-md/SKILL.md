@@ -40,23 +40,24 @@ Before writing, collect what only the human can tell you — one question at a t
 - **Where rules/skills/commands live** and any **session-handoff** preference.
 - **Behavioral baseline (opt-in)** — whether the team adopts a stack-agnostic conduct set (the recommended default four: Think Before Coding, Simplicity First, Surgical Changes, Goal-Driven Execution), a variant of it, or none. Recommend the default; if declined, emit no baseline section. The canonical default set is in [references/behavioral-baseline.md](./references/behavioral-baseline.md).
 
-**Resolve placeholder keys (hybrid).** The templates use the keys in [references/placeholder-keys.md](./references/placeholder-keys.md); resolve each by that file's HYBRID rule — auto only when exactly one disk fact maps with no judgment, else the key stays a `<key>` and becomes an intake question. Never infer a command silently.
+**Resolve placeholder keys (hybrid).** The templates use the keys in [references/placeholder-keys.md](../shared/placeholder-keys.md); resolve each by that file's HYBRID rule — auto only when exactly one disk fact maps with no judgment, else the key stays a `<key>` and becomes an intake question. Never infer a command silently.
 
 Discover the rest (stack pins, folder layout, existing rules) by reading the repo.
 
 ## Step 2 — Write the two files
 
-Each template carries the fixed section order, a filled example, and per-section notes — follow it, don't re-derive the structure here.
+Open each template and follow the fixed section order, filled example, and per-section notes it already carries — the structure (and the per-section guidance: real commands not validator one-liners, Role = the intake position, "no test pipeline → say so") lives there, don't re-derive it here:
 
-- **Root `CLAUDE.md`** ([assets/root-claude-md-template.md](./assets/root-claude-md-template.md)) — the scannable entry point: "How to work here" with a distinct **Hard rules** block, What this project is, **Common commands** (the *real* ones — never validator one-liners; if there's no test pipeline, say so), **Skill routing**, Slash commands / Where rules live, and a substantial **Engineering system** pointer.
-- **`.claude/CLAUDE.md`** ([assets/operating-manual-template.md](./assets/operating-manual-template.md)) — the operating manual: Rule precedence; **Non-negotiables** (the discipline set that survives summarization, each with WHY + enforcement); **Role** (the intake position, not a generic "senior engineer"); Operating modes; **Workflow pipeline** + **Completeness Checklist** (real commands); Plan persistence; Search-before-ask; Git boundary; Status block; **Skill discipline**, **Lessons promotion path**, **Pointers**.
-- **Behavioral baseline (only when adopted at intake)** — one named section in the operating manual seeded from [references/behavioral-baseline.md](./references/behavioral-baseline.md): each adopted principle with a one-line meaning. This is the section `auditing-claude-md` later verifies. Declined → emit nothing; never inject conduct rules a repo did not ask for.
+- **Root `CLAUDE.md`** ([assets/root-claude-md-template.md](./assets/root-claude-md-template.md)) — the scannable entry point.
+- **`.claude/CLAUDE.md`** ([assets/operating-manual-template.md](./assets/operating-manual-template.md)) — the operating manual.
 
-**Three rules that override the templates' defaults:**
+What a template can't know is your repo. Three rules override its defaults:
 
 - **Ground every command, path, skill, and hook in the repo this session** — a cited command/hook/path that doesn't exist is a hallucination.
 - **Hook-tied clauses are conditional** — keep skill-gate / bypass / token-guard / lessons-nudge references ONLY for hooks the repo actually has.
 - **Skill-owned workflows route through the `Skill` tool, not a direct file edit.** When the manual documents a workflow a skill owns — lesson capture, handoff/plan persistence, spec authoring — instruct invoking that skill, never an `Edit`/`Write` to the artifact the skill manages (`lessons-learned.md`, a `/tmp` plan): a direct edit bypasses the skill's discipline, routing, and metrics. Keep it conditional — route through the skill only where the repo HAS one; else document the direct fallback. (The templates already do this for `handoff`; match that pattern for lessons.)
+
+**Behavioral baseline (only when adopted at intake)** — seed one named section in the operating manual from [references/behavioral-baseline.md](./references/behavioral-baseline.md), each adopted principle with its one-line meaning (the section `auditing-claude-md` later verifies). Declined → emit nothing; never inject conduct rules a repo did not ask for.
 
 ## Step 3 — Session-jumping / handoff flow (required)
 
@@ -71,6 +72,5 @@ Document how work survives the context limit, because long tasks will hit it. Th
 - A non-negotiable or pointer that tells the agent to `append`/`Edit` a skill-owned artifact (e.g. the lessons log) directly when the repo has the skill that owns it — that bypasses the skill; route through the `Skill` tool instead.
 - A pipeline with no Completeness Checklist, or verification rows with invented commands.
 - A flat single-line status block (fields joined by `·`/`,`) instead of the structured, verdict-first markdown form in the template — or reaching for emoji to make it scannable, which breaks the manual's own "no emoji" rule.
-- No session-handoff flow — long tasks will silently lose state at the context limit.
 - Any stack/command/path claim not verified by a read this session.
 - Emitting a behavioral-baseline section the team did not adopt (injecting unrequested conduct rules) — or, having adopted one, naming a principle without its one-line meaning so the audit cannot verify it.

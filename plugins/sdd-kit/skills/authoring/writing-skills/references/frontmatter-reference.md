@@ -10,7 +10,7 @@ A frontmatter key not in this list is a likely typo — the validator flags it.
 
 | Field | Type / values | What it does |
 | --- | --- | --- |
-| `name` | `^[a-z0-9-]+$`; MUST equal the dir name (and the flat-symlink name) | the skill's identity / invocation key |
+| `name` | `^[a-z0-9-]+$`; MUST equal the dir name | the skill's identity / invocation key |
 | `description` | string | model-invoked: triggers + reach (every word costs context load). user-invoked: human-facing one-liner, no trigger list |
 | `when_to_use` | string | optional elaboration of triggering conditions |
 | `argument-hint` | string | hint shown for `$ARGUMENTS` |

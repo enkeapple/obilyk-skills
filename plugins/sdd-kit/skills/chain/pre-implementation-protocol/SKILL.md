@@ -11,9 +11,7 @@ description: >-
 
 # Pre-Implementation Protocol
 
-The output of this skill is a single **Readiness block**, emitted in the response before the first `Edit`/`Write` of the change, then a hand-off to execution. It exists so the move from a written plan into code has one consistent shape every time — not a different ad-hoc reaction per run.
-
-Reading code, running `grep`, opening files is expected at this step — that is how the slots below get filled with verified facts rather than assumptions.
+The output of this skill is a single **Readiness block**, emitted in the response before the first `Edit`/`Write` of the change, then a hand-off to execution. It exists so the move from a written plan into code has one consistent shape every run — not an ad-hoc reaction per run. Fill its slots from the repo itself: reading code, running `grep`, opening files here is what turns assumptions into verified facts.
 
 Project-agnostic: discover the real commands, paths, and test syntax from the target repo. The signatures and commands shown below are **illustrative** — copy the consumer repo's actual ones.
 
@@ -36,6 +34,15 @@ Emit the Readiness block with these five slots, in this order:
 4. **Execution** — name the chosen flow (`inline-driven-development` solo, or `subagent-driven-development` for mostly-independent tasks); task-by-task, test-first, commit after each green.
 5. **Go / No-go** — `GO` only if none of these No-go conditions fire; otherwise name the blocker(s): the plan is not approved (slot 1), the baseline is neither green nor isolated (slot 3), the first task *consumes* an `UNVERIFIED` contract (slot 2), or the plan leaves a truncated task / missing type / undefined field. An `UNVERIFIED` contract the first task only *produces* is not a blocker — resolve it at its first read.
 
+```text
+Readiness — PATH A:
+1. Plan/spec: <plan path> (approved) ← <spec path>
+2. Contracts (task 1): <signature> — <EXISTS path | NEW | UNVERIFIED>
+3. Verification: <exact commands>; baseline: <green | failures isolated: ...>
+4. Execution: <chosen flow: inline-/subagent-driven-development>; task-by-task, test-first, commit per green
+5. Go/No-go: <GO, or blocker(s): not-approved | baseline | UNVERIFIED consumed | plan gap>
+```
+
 Then hand off to execution.
 
 ## PATH B — no plan, no spec
@@ -45,19 +52,6 @@ The block is a routing decision plus a minimal pre-flight:
 1. **Request** — restate it in one line with its success condition. If your restatement is wider than the request, you are about to over-build; if narrower, under-build — flag which.
 2. **Route** — apply the small-change predicate: a change stays on PATH B (small) only when it is a single cohesive behavior, touches no shared/public contract, adds no new surface, spans no multiple components/services, and fits one test-first cycle (a source file plus its own test is one cycle, not "multi-file"). If it crosses any of those — a shared contract, a new surface, or multiple components/clients/services — the readiness verdict is "no plan exists; routing to the chain" → go to `grilling` → `writing-specs` → `writing-plans`, and stop here.
 3. **Minimal pre-flight** — only if the change is genuinely small and local: a layer map (`file:line` — `NONE`/`PARTIAL`/`FULL`), the contracts written as code, and the real verification commands. Then execute via `test-driven-development` (single-behavior, test-first).
-
-## Output format
-
-A short block in the response, before any code-editing tool call:
-
-```text
-Readiness — PATH A:
-1. Plan/spec: <plan path> (approved) ← <spec path>
-2. Contracts (task 1): <signature> — <EXISTS path | NEW | UNVERIFIED>
-3. Verification: <exact commands>; baseline: <green | failures isolated: ...>
-4. Execution: <chosen flow: inline-/subagent-driven-development>; task-by-task, test-first, commit per green
-5. Go/No-go: <GO, or blocker(s): not-approved | baseline | UNVERIFIED consumed | plan gap>
-```
 
 ```text
 Readiness — PATH B:
@@ -76,9 +70,6 @@ After the block, hand off.
 
 ## Slot checklist
 
-- [ ] Picked the path from what is actually on disk (plan/spec exists → A, else B).
-- [ ] PATH A: all five slots filled; every contract tagged exactly one of `EXISTS` (verified) / `NEW` / `UNVERIFIED` — none left untagged.
-- [ ] Verification commands came from the repo's config, not memory; baseline green or pre-existing failures named and isolated.
-- [ ] Go/No-go is `GO` only when no No-go condition fires (approved, baseline accounted for, no `UNVERIFIED` contract consumed by task 1, no plan gap).
-- [ ] PATH B: non-trivial change routed back to the chain rather than coded ad-hoc.
-- [ ] Block emitted before the first code edit; execution handed to the chosen flow (`inline-driven-development` / `subagent-driven-development`, or `test-driven-development` for a no-plan single-behavior change).
+- [ ] Path chosen from what is on disk; every slot for that path filled (PATH A: all five; PATH B: a non-trivial change routed back to the chain, not coded ad-hoc).
+- [ ] Every contract tagged exactly one of `EXISTS` / `NEW` / `UNVERIFIED` — none untagged; verification commands came from the repo's config, not memory; baseline green or pre-existing failures named and isolated.
+- [ ] Go/No-go is `GO` only when no No-go condition fires; block emitted before the first code edit, then execution handed to the chosen flow.

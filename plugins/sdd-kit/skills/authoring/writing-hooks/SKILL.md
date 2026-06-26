@@ -51,20 +51,9 @@ WARN is NOT a third exit code: it is `exit 0` + a stderr message (advisory, non-
   FORBIDDEN: `exit 1` as a "warn" — the harness treats it as a generic non-blocking error.
 ```
 
-Default to Form A. Reach for Form B only when the structured `permissionDecisionReason` is the point; do not emit both "to be safe" — that is the hedge RED reproduces.
-
 ## Block 2 — Fail-open, concretely
 
-Every parse is guarded and every path ends at `exit 0` unless a real, matched condition fires:
-
-```bash
-command -v jq >/dev/null 2>&1 || exit 0          # missing dep → allow
-INPUT=$(cat 2>/dev/null) || exit 0               # unreadable stdin → allow
-FIELD=$(printf '%s' "$INPUT" | jq -r '.tool_input.file_path // empty' 2>/dev/null)
-[ -z "$FIELD" ] && exit 0                          # empty target → allow
-```
-
-A logger's fail-open is the same shape, with "do nothing" instead of "allow". See [`assets/hook-template.sh`](./assets/hook-template.sh).
+Guard every parse; every path ends at `exit 0` unless a real, matched condition fires. The three own-error exits — missing dep (`jq`), unreadable stdin, empty target field — are the opening guards of [`assets/hook-template.sh`](./assets/hook-template.sh); copy them rather than re-deriving. A logger's fail-open is the same shape, with "do nothing" instead of "allow".
 
 ## Block 3 — Test-first: the fixture loop
 

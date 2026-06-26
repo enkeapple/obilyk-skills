@@ -15,6 +15,8 @@ Everything else: use the real implementation or an in-memory fake.
 
 The failure mode: asserting that a mock was called instead of that the system produced a result.
 
+_The examples below are TypeScript/Vitest — illustrative; apply the same shape in your stack._
+
 ```ts
 // BAD — proves the mock works, not the feature
 expect(fetchUser).toHaveBeenCalledWith("u1");

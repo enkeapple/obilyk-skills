@@ -57,7 +57,7 @@ git add <paths> && git commit -m "<message>"
 
 ## Filled example (one task)
 
-A concrete reference for the level of detail expected. Language is illustrative — match your repo's stack.
+A concrete reference for the level of detail expected. Language and commands are illustrative — match your repo's stack.
 
 ````markdown
 ### Task 1: listUsers cursor pagination

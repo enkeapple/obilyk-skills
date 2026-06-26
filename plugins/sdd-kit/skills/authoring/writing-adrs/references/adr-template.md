@@ -1,6 +1,8 @@
 # ADR Templates
 
-Match the repo's existing ADR **structure** first (location, numbering, status, sections) — but never copy a `path:line`-in-prose or embedded-rules habit from older ADRs; the readability discipline overrides it. When there is no convention, use one of the two shapes below — **pick the register** (see the skill body): **narrative** for a conceptual / approach decision where the reasoning is the value, **template** for a decision bound to one concrete mechanism. Both obey the same discipline: **be brief** (each section a few sentences, the whole ADR fits one screen — a record, not a walkthrough); **no `path:line` in the prose** (name code by file + symbol; line anchors live ONLY in a short `Related files` section, file → symbol, at most one short `path:line`, never ranges, never a long dump); **no embedded "developers MUST…" list** (link practices to the repo's conventions location). An optional **`Related`** header field carries provenance and cross-links — the originating ticket/issue id (illustrative: `PROJ-1234`), sibling ADRs, and the conventions doc that holds any practices this decision implies (this is where the "no embedded rules" link goes). `Deciders` is optional too. Resist only `Implementation Notes` or raw external-URL dumps — that bloat is a smaller model's tell.
+The two ADR **shapes** — this file is shape only. The readability discipline (be brief / one screen, `path:line` only in `Related files`, no embedded "developers MUST…" list) and convention-matching live in the skill body and are not restated here. **Pick the register** per the body's "Pick the register": **narrative** for a conceptual / approach decision, **template** for a decision bound to one concrete mechanism.
+
+Optional header fields both shapes share: **`Related`** carries provenance and cross-links — the originating ticket/issue id (illustrative: `PROJ-1234`), sibling ADRs, and the conventions doc that holds any practices the decision implies (the "no embedded rules" link goes here). **`Deciders`** is optional too. Resist `Implementation Notes` and raw external-URL dumps — that bloat is a smaller model's tell.
 
 ## Narrative shape
 
@@ -45,8 +47,7 @@ The problem, the constraints, the current state. What forced a decision. (≤ ~1
 ## Decision          (REQUIRED)
 The single choice made, in one short paragraph (≤ ~120 words). Name the code that
 implements it by file + symbol in plain text (`handleTokenRefresh` in `baseQuery.ts`)
-— NO `path:line` here; line anchors go in `Related files` only. Do not narrate every
-branch — state the choice, not the control flow.
+— NO `path:line` here; line anchors go in `Related files` only.
 
 ## Options considered (REQUIRED)
 - **Option A (chosen)** — why it won.
@@ -64,11 +65,8 @@ branch — state the choice, not the control flow.
 - `utils.ts` → `forceLogout` — <one-line what it is>
 ```
 
-## Notes
+## Shape-only notes
 
 - **`Status`** uses the repo's vocabulary. Default set: `Accepted`, `Superseded by ADR-MMM`, `Deprecated`. A brand-new ADR for a decision already in code is `Accepted`, not `Proposed`.
-- **Be brief.** Each section a few sentences; the whole ADR fits on one screen. A record states *what* and *why* — it does not narrate the code's control flow. If a section reads like a walkthrough, cut it.
-- **`path:line` ONLY in `Related files`.** Body prose names code by file + symbol with no line numbers. Collect the few important anchors in one short `Related files` section — file → symbol, at most one short `path:line` for the single anchor that pinpoints the decision. Never a range, never one per claim, never a long dump — that is the code-map anti-pattern that rots on the next commit. Every reference you write is one you opened this session; an unopened `path:line` is fabricated.
-- **No embedded rules.** Practices ("always import leaf files", "gitignore the cache artefact") are not ADR content. Record the decision and its consequences; put the practices in the repo's conventions location (a rule, a lint check, `CONTRIBUTING`) and link to it.
 - **Numbering.** `max(existing number) + 1`, zero-padded to the repo's width. Never backfill a gap, never reuse a number, never collide.
-- **The weighed alternatives are what justify the ADR existing** — they are the trade-off the Gate required (the `Options considered` slot in the template shape; the "why the chosen path won" paragraph in the narrative shape). If you cannot fill them with real alternatives, the decision probably failed the Gate.
+- **The weighed alternatives are what justify the ADR existing** — the `Options considered` slot (template) or the "why the chosen path won" paragraph (narrative) is the trade-off the Gate required. If you cannot fill it with real alternatives, the decision probably failed the Gate.

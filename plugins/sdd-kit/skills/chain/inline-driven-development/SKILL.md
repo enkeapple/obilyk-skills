@@ -13,7 +13,7 @@ description: >-
 
 Execute an approved plan **yourself, task by task, in this session**: review the plan critically first, then for each task verify and commit before moving on, and stop the moment something fails or is unclear.
 
-**Core principle:** your default pull is forward momentum — and every failure mode here comes from it. Batching tasks, testing at the end, guessing past a failure, and keeping progress in your head all feel faster and all cost more. This skill holds the line against momentum.
+**Core principle — hold the line against momentum.** Your default pull is forward momentum, and every failure mode here is a face of it: each shortcut feels faster and costs more. The Momentum traps table below is the canonical list; this skill exists to resist it.
 
 **Project-agnostic:** discover the repo's real test/build/commit commands and paths from the target repo — this skill names none. Each task's code is written test-first via `test-driven-development`; this skill governs *order and cadence*, not the test discipline itself.
 
@@ -37,11 +37,11 @@ Read the whole plan before touching anything, as an adversary, not for comprehen
 For each task, in order:
 
 1. Mark it `in_progress` in the ledger (below).
-2. Follow its steps exactly, test-first (`test-driven-development`): failing test → watch it fail → minimal code → green.
-3. **Verify before moving on:** run the repo's real test/build command and read the actual output. Pristine green, not "should pass". One task's failure stays localized to that task — that is the whole point of per-task cadence.
-4. **Commit this task** using the repo's conventions, then mark it `done`. Per-task commits give you clean history and a resume point.
+2. Follow its steps test-first (`test-driven-development`): failing test → watch it fail → minimal code → green.
+3. **Verify before moving on:** run the repo's real test/build command and read the actual output — pristine green, not "should pass".
+4. **Commit this task** using the repo's conventions, then mark it `done`.
 
-Do not batch: do not write task 2 before task 1 is verified and committed.
+Never batch: do not start task 2 before task 1 is verified and committed.
 
 ### 3. Complete
 
@@ -49,18 +49,17 @@ After the last task: full suite green, then run `spec-drift-audit` over the whol
 
 ## The durable ledger
 
-Progress kept in your head does not survive a context reset. Maintain an on-disk ledger as you go — your runtime's todo mechanism and/or status markers in the plan file (`pending` / `in_progress` / `done` per task), plus per-task commits as natural resume points. Never a per-user memory store. After a reset: re-read the ledger, re-run the suite to re-establish the baseline, resume at the first non-`done` task.
+Maintain an on-disk ledger as you go — your runtime's todo mechanism and/or status markers in the plan file (`pending` / `in_progress` / `done` per task), plus per-task commits as natural resume points. Never a per-user memory store. After a context reset: re-read the ledger, re-run the suite to re-establish the baseline, resume at the first non-`done` task.
 
-## When to STOP (do not push through)
+## When to STOP — diagnose, don't guess forward
 
-Stop the instant any of these happen — diagnose the root cause, ask if it is genuinely ambiguous, do **not** guess forward:
+Stop the instant any of these happen; find the root cause, ask only if it is genuinely ambiguous:
 
-- A step's command fails or a test won't go green.
-- An instruction is unclear or a path/name in the plan doesn't exist.
+- A step's command fails or a test won't go green — understand *why* before touching it; tweaking until green is guessing, not fixing.
+- An instruction is unclear, or a path/name in the plan doesn't exist.
 - A step contradicts what you found in the code.
-- Verification fails repeatedly.
 
-A failing test tempts you to tweak until green — that is guessing, not fixing. Understand *why* it failed first. If the plan itself is wrong, return to the plan with the owner; don't patch around it.
+If the plan itself is wrong, return to the plan with the owner; don't patch around it.
 
 ## Momentum traps
 
@@ -73,7 +72,7 @@ A failing test tempts you to tweak until green — that is guessing, not fixing.
 | "This is probably what they meant — keep going." | Compounding guesses drift far from intent. | Stop; ask when genuinely ambiguous. |
 | "I'll remember where I am." | A context reset loses all state. | Durable on-disk ledger + per-task commits. |
 
-## Red flags — STOP
+## Red flags — you are already in a trap, STOP
 
 - You've written more than one task without running the suite.
 - You're tweaking code to make a test pass without knowing why it failed.

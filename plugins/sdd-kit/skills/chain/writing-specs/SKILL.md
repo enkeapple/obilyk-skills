@@ -60,15 +60,7 @@ The copy-paste template lives in [assets/spec-template.md](./assets/spec-templat
 
 ## No Placeholders
 
-A spec is concrete or it is fiction. These are spec failures — filler reflexes, each a deferred decision dressed up as content:
-
-- "TBD" / "TODO" / "decide during implementation" — a cut is an Out-of-scope line, not a TODO.
-- A contract written as prose ("an object with the user's data") instead of a real type / signature / shape in a code block.
-- Vague edge cases ("handle errors appropriately") instead of the actual states — empty, error, loading, and the concrete mutation cases.
-- Guessed file paths instead of ones found by discovery (grep/read/glob) — every path real or marked NEW.
-- Invented verification commands instead of the repo's real ones (package.json / Makefile / CI).
-
-Remember: real file paths, real type/signature code in Contracts, real commands whose output proves the spec — and every cut recorded in Out-of-scope, never deferred to a TODO.
+A spec is concrete or it is fiction. Each Required section above defines what "concrete" means for it — real type/signature code in Contracts, discovered paths in Files touched, the repo's real commands in Verification, the actual states in Edge cases. The one rule those sections do not carry: **a deferred decision is never a placeholder.** No "TBD" / "TODO" / "decide during implementation" — a cut is an Out-of-scope line, not a TODO.
 
 ## Process
 
@@ -80,24 +72,21 @@ Remember: real file paths, real type/signature code in Contracts, real commands 
 
 ## Two-layer review — self first, then an independent cold pass
 
-The two layers catch **different** classes of defect; they are not the same check run twice. Keep their remits disjoint — self-review checks the artifact against itself (placeholders, internal consistency, completeness); the independent cold reviewer catches what the author cannot (conformance to source, ambiguity).
+The two layers catch **different** defect classes; keep their remits disjoint.
 
 ### Self-review (author pass — cheap, every time)
 
-Checks you can make against the spec **itself**, with the context you already hold — catch your own slips before you spend a dispatch:
+Checks you can make against the spec **itself**, with the context you already hold:
 
 - No Placeholders (above) — every contract, path, edge case, and command is concrete.
 - Out-of-scope list is non-empty.
 - All 8 required sections present and internally consistent.
 
-This pass cannot catch what you are blind to: a requirement you *misread* yields a spec that is internally clean and self-reviews green — the same wrong premise wrote it and checked it.
+This pass is blind to what you misread: a misread requirement yields a spec that is internally clean and self-reviews green — the same wrong premise wrote it and checked it.
 
 ### Independent cold reviewer (the author-blind pass)
 
-For anything beyond a small spec — **beyond small** = it touches more than one surface/module, defines or changes a shared contract (API, schema, interface), or includes a destructive/irreversible operation; a single-surface change with no shared contract is *small* — dispatch an **independent reviewer — a fresh subagent with zero shared context** — using [assets/spec-reviewer-prompt.md](./assets/spec-reviewer-prompt.md). Its remit is the class your self-review structurally cannot reach, so it is **not** a second run of the checklist above:
-
-- **Conformance to source:** hand it the original request / approved design *alongside* the spec. It re-derives what was asked from the source and flags where the spec diverges (the consistent-but-wrong misread). Without the source on its desk it cannot do this — pass it in.
-- **Ambiguity:** any requirement two engineers would build differently.
+Dispatch a fresh subagent with zero shared context for anything **beyond small** — touches more than one surface/module, defines or changes a shared contract (API, schema, interface), or includes a destructive/irreversible operation (a single-surface change with no shared contract is *small*). Use [assets/spec-reviewer-prompt.md](./assets/spec-reviewer-prompt.md), and hand it the original request / approved design *alongside* the spec — without the source it cannot judge conformance and collapses into a second self-review. Its remit is the class self-review structurally cannot reach: **conformance to source** (the consistent-but-wrong misread) and **ambiguity** (any requirement two engineers would build differently).
 
 Fix what it finds and re-review; do not code against a spec with open issues.
 

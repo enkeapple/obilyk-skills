@@ -45,7 +45,7 @@ Most turns produce no lesson — that is normal, not a skipped step. Do not capt
 
 Lessons must not nag every session. Two levels keep it quiet:
 
-- **`.claude/lessons-learned.md` is an on-demand backlog.** It is NOT loaded into every session. Read it only at capture time, or when you suspect you are repeating a past mistake. It stays small because promoted tags are deleted from it (git keeps the history).
+- **`.claude/lessons-learned.md` is an on-demand backlog.** It is NOT loaded into every session. Read it only at capture time, or when you suspect you are repeating a past mistake. It stays small because promoted clusters leave it (only a ledger line remains).
 - **`.claude/rules/` is the small always-on distillate.** Only a cluster that crossed the threshold gets promoted here. Promotion is the filter that keeps always-on guidance short — most lessons stay in the archive and never load by default.
 
 So "I've hit this before" comes from the few promoted **rules**, not from re-reading the whole log. This skill activates at a capture or recurrence moment — it is not a per-task gate.
@@ -77,13 +77,11 @@ Any tag with **count ≥ 3** that is NOT in the `## Promoted clusters` ledger is
 
 ## Promotion path: lesson → rule
 
-When the scan flags a cause-tag at the threshold with no ledger line, it is a pattern, not a one-off. Do not decide by gut: follow the full procedure in [references/promotion.md](./references/promotion.md) — it dispatches an independent reviewer ([assets/promotion-reviewer-prompt.md](./assets/promotion-reviewer-prompt.md)) and, on a **Promote** verdict, drives authoring the rule via `writing-rules`, deleting the contributing entry bodies, and recording the ledger line, all in one commit. The rule file is the durable artifact; never leave the rule inside the lessons log.
+When the scan flags a cause-tag at the threshold with no ledger line, it is a pattern, not a one-off. Do not decide by gut: follow the full procedure in [references/promotion.md](./references/promotion.md) — it dispatches an independent reviewer ([assets/promotion-reviewer-prompt.md](./assets/promotion-reviewer-prompt.md)) and, on a **Promote** verdict, drives authoring the rule via `writing-rules`, deleting the contributing entry bodies, and recording the ledger line, all in one commit.
 
 ## Always change behavior now
 
-Capturing a lesson that does not change what you do next is filler. Apply the Prevention in the current session before moving on.
-
-A lesson reads like an instruction (a check someone can run), not a journal entry — see the good-vs-bad examples in [assets/lessons-template.md](./assets/lessons-template.md).
+Capturing a lesson that does not change what you do next is filler. Apply the Prevention in the current session before moving on — a lesson is an instruction (a check someone runs), not a journal entry ([assets/lessons-template.md](./assets/lessons-template.md) shows the good-vs-bad split).
 
 ## Red Flags — STOP
 

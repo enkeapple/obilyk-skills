@@ -1,6 +1,6 @@
 ---
 name: writing-adrs
-description: Record an architectural decision as an immutable ADR — gate that it is worth one, pick a register (narrative or template), write it readably in the repo's own convention, maintain the index, and supersede (never edit) when a decision changes; also audit existing ADRs for drift. Use when the user wants to record or document an architectural decision, write an ADR, or check ADRs against the code. Triggers on "write an ADR", "record this decision", "document this decision", "architectural decision record", "запиши решение", "зафиксируй решение", "напиши ADR", "архитектурное решение".
+description: Record an architectural decision as an immutable ADR — gated, and superseded (never edited) when it changes — and audit existing ADRs for drift. Use when the user wants to record or document an architectural decision, write an ADR, or check ADRs against the code. Triggers on "write an ADR", "record this decision", "document this decision", "architectural decision record", "запиши решение", "зафиксируй решение", "напиши ADR", "архитектурное решение".
 ---
 
 # Writing ADRs

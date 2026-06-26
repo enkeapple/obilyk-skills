@@ -26,7 +26,7 @@ Execute an approved plan by dispatching a **fresh subagent per task**, with a tw
 
 ## When to use
 
-```dot
+```text
 digraph when_to_use {
     "Approved multi-task plan exists?" [shape=diamond];
     "Tasks mostly independent?" [shape=diamond];
@@ -47,7 +47,7 @@ digraph when_to_use {
 
 ## The process
 
-```dot
+```text
 digraph process {
     rankdir=TB;
 

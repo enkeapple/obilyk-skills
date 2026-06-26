@@ -71,15 +71,16 @@ The **Interfaces** block is how out-of-order readers learn neighboring tasks' na
 - **Consumes:** exact signatures this task uses from earlier tasks.
 - **Produces:** exact function names, parameter and return types later tasks rely on.
 
-## These are plan failures (the recipe above prevents them)
+## Plan failures — if you catch yourself here, STOP
 
-The baseline failure is not lazy "TODO" markers — it is *describing instead of showing*. Each of these means the step is not done:
+The baseline failure is not lazy "TODO" markers — it is *describing instead of showing*. Each of these means the step is not done; the recipe above prevents them:
 
 - A code step with prose instead of a code block ("pass the cursor to the data source", "add validation", "handle edge cases").
 - A test referenced but not written out ("write tests for the above").
 - "Similar to Task N" — repeat the code; the reader may not have seen Task N.
 - A type / function / command named but never defined or shown in any task.
-- "Find the command in the repo's manifest/CI" — look it up now and write the exact command.
+- "Find the command in the repo's manifest/CI" or "I'll fill in the code during implementation" — look it up now and write the exact command.
+- Coarse-bucket tasks ("build the API") with no test-first steps — right-size them (Process step 3).
 
 ## Two-layer review — self first, then an independent cold pass
 
@@ -94,12 +95,7 @@ Mechanical checks against the plan **text itself**, with the context you already
 
 ### Independent cold reviewer (the author-blind pass)
 
-For anything beyond a small plan — **beyond small** = more than ~2 tasks/files, a shared contract, or cross-task coupling; a single-task, single-file plan is *small* — dispatch an **independent reviewer — a fresh subagent with zero shared context, handed the spec** — using [assets/plan-reviewer-prompt.md](./assets/plan-reviewer-prompt.md). Its remit is what you cannot judge from inside your own context, so it is **not** a re-run of the scan above:
-
-- **Spec coverage, re-derived:** it reads the spec independently and checks each requirement maps to a task — you *believe* you covered it; it verifies you did. A gap you can't see is one you didn't know you left.
-- **Zero-context buildability:** could an engineer with no context follow this task-by-task, possibly out of order, without getting stuck or guessing? You hold the context, so you cannot feel its absence — only a cold reader can.
-
-Fix issues and re-review.
+For anything beyond a small plan — **beyond small** = more than ~2 tasks/files, a shared contract, or cross-task coupling; a single-task, single-file plan is *small* — dispatch an **independent reviewer: a fresh subagent with zero shared context, handed the spec** — using [assets/plan-reviewer-prompt.md](./assets/plan-reviewer-prompt.md). Its remit is the author-blind class, **not** a re-run of the self-review scan: it re-derives spec coverage from the spec itself (you *believe* you covered it — it verifies), and judges zero-context buildability (could a context-free engineer build this out of order without guessing — an absence you hold too much context to feel). The asset carries the full checklist. Fix issues and re-review.
 
 ## Execution handoff
 
@@ -109,13 +105,3 @@ After saving, the plan is ready to execute. Before the first code edit, run the 
 - **`inline-driven-development` (tightly-coupled tasks, or a small plan you hold solo):** execute task-by-task yourself in this session, verifying and committing per task.
 
 > REQUIRED SUB-SKILL: whichever flow, each task's code is written test-first via `test-driven-development` — the choice decides *who* runs the tasks and *how*, not *whether* they are test-first. One task at a time; commit after each passing test.
-
-## Red Flags — if you catch yourself here, STOP
-
-Fast trip-wires; the fix for each is in **plan failures** above (coarse tasks → right-size, Process step 3).
-
-- A step that shows no code block.
-- A test referenced but not written out.
-- A name used in a later task that no earlier task defined.
-- Coarse-bucket tasks ("build the API") with no test-first steps.
-- "I'll fill in the code during implementation."

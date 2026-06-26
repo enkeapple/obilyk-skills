@@ -11,7 +11,7 @@ allowed-tools: Read, Grep, Glob, Bash
 
 # Spec Drift Audit
 
-A read-only comparison between an approved spec and the current code. It produces a **drift report**, classifies each difference, and ends with decisions for the user. **It does not edit code.**
+A read-only comparison between an approved spec and the current code. It produces a **drift report**, classifies each difference, and ends with decisions for the user.
 
 **The audit is read-only. Reporting drift is the job; fixing it is a separate task the user authorizes after seeing the report.** Offering to "just fix it while I'm here" defeats the audit — the user cannot decide on drift they were never shown. Violating the letter of this (one quick edit) violates the spirit. (`Bash` is in `allowed-tools` only to **run** the spec's verification commands and read-only inspection — never to edit code; the read-only guarantee holds despite it.)
 
@@ -42,7 +42,7 @@ This pairs with a spec written via the **writing-specs** skill and assumes its s
 3. **Compare contracts field by field.** For each type / signature / shape in the spec, find its real definition and diff it. Note every added / removed / renamed / re-typed field.
 4. **Sweep out-of-scope (REQUIRED, this is where silent drift hides).** For *every* out-of-scope bullet, actively grep the codebase for evidence it was touched anyway. Do not stop at the first one — agents reliably catch the obvious violation and miss the second. Check each bullet.
 5. **Run verification and record real output.** Execute each command from the spec's Verification section; paste the actual result, not "should pass".
-6. **Trace to source (only if a Source block is present).** Confirm the cited `source`/`revision` is recorded and reachable, then check the shipped behavior against the *original* requirements that bundle carried — not just against the spec. A requirement present in the source but absent from both spec and code is **source drift** (the spec silently narrowed its own ticket); flag it. Omit this step when the spec has no Source block.
+6. **Trace to source (only if a Source block is present).** Confirm the cited `source`/`revision` is recorded and reachable, then check the shipped behavior against the *original* requirements that bundle carried — not just against the spec. A requirement present in the source but absent from both spec and code is **source drift** (the spec silently narrowed its own ticket); flag it.
 
 ## Drift classification
 
@@ -68,7 +68,7 @@ Produce a report with these sections, in order (see [assets/report-example.md](.
 
 ## Required decision after the report
 
-End with **one** decision, not edits and not a question per finding. Having recorded a recommended disposition per finding (Report item 6), present archetype **C-drift** as one batched picker (markdown-list fallback):
+End with **one** decision, not edits and not a question per finding. Having recorded a recommended disposition per finding (Report item 7), present archetype **C-drift** as one batched picker (markdown-list fallback):
 
 - `Apply recommended` → apply the per-finding recommended dispositions.
 - `Adjust per-finding` → walk findings one by one.

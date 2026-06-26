@@ -23,11 +23,11 @@ There are **two distinct documents** — do not merge them:
 | **Plan** (`plan-<slug>.md`) | the *contract*: goal, affected layers, contracts, out-of-scope | plan-file threshold met, after user approval | deleted after VERIFY + Checklist walk |
 | **Handoff** (`handoff-<slug>.md`) | the *state*: what's actually done, what compiles, what's next | turn ends incomplete OR context nears limit | consumed/overwritten by the next session |
 
-The plan is intent (pre-execution). The handoff is progress (mid-execution). A plan does not record which endpoints you already wrote or whether the build is green — that is the handoff's job.
+A plan does not record which endpoints you already wrote or whether the build is green — that is the handoff's job.
 
 ## Writing the plan doc
 
-When the threshold is met: write the approved plan to `<tmpdir>/plan-<slug>.md` (short kebab-case slug). Contents: Goal, Affected-layers table (NONE/PARTIAL/FULL), Contracts (API/slice/nav/zod), out-of-scope. Re-read it at the start of each tool-call burst (anti-amnesia). Update it **first** when scope expands. Delete it after VERIFY + the Completeness Checklist walk.
+When the threshold is met: write the approved plan to `<tmpdir>/plan-<slug>.md` (short kebab-case slug). Contents: Goal, Affected-layers table (NONE/PARTIAL/FULL), Contracts (API / data shape / route / schema — whatever the consumer repo's contracts are), out-of-scope. Re-read it at the start of each tool-call burst (anti-amnesia). Update it **first** when scope expands. Delete it after VERIFY + the Completeness Checklist walk.
 
 ## Writing the handoff doc
 
@@ -52,6 +52,5 @@ Then set the status-block `Next:` to the absolute path of the handoff doc.
 
 ## Common mistakes
 
-- Writing into the workspace, or to a bare `$TMPDIR` that may be unset, instead of the resolved `<tmpdir>`.
 - Dumping the whole conversation — keep it a resume contract, not a transcript.
 - A vague `Next:` ("continue where we left off") — name the exact file and edit.

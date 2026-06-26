@@ -14,15 +14,15 @@ description: >-
 
 The active front door for the spec-driven pipeline. On a build request, classify where it enters the chain, then drive the chain **one phase at a time, stopping for the user's explicit approval after every phase**.
 
-**Core principle:** the phase *order* is already forced by each skill's own hand-offs — that is not what this skill adds. What it adds is the **gate between phases: advance only on the user's explicit approval of the phase you just finished.** A design sign-off is NOT blanket approval for the spec, the plan, or "start coding". Each artifact is approved on its own.
+This skill owns the **cross-phase gate, the entry classification, and the controls**. It routes into the phase skills and never restates their work; it names no stack, path, or command.
 
-This skill owns the **cross-phase gate + the controls** — it does NOT restate what each phase skill does; it routes into them. Project-agnostic: it names no stack, path, or command.
+**What it adds is the gate, not the order.** The phase order is already forced by each skill's own hand-offs. What this skill adds is the **stop between phases: advance only on the user's explicit approval of the phase you just finished.** A design sign-off is NOT blanket approval for the spec, the plan, or "start coding" — each artifact is approved on its own.
 
 ## When to use / when not
 
 - Use when the user wants the whole gated pipeline run on a non-trivial change.
+- A bare "build X" with no lifecycle request enters the chain at `grilling` directly — invoke this skill only when the user wants the full orchestrated, gated run.
 - **Do NOT run the pipeline for a one-line or cosmetic change** — the overhead is wrong-sized; make the change directly (still test-first).
-- A bare "build X" with no lifecycle request enters the chain at `grilling` directly. Invoke this skill only when the user wants the full orchestrated, gated run.
 
 ## Entry classification (where the chain starts)
 
@@ -37,15 +37,14 @@ Route the input to its entry phase, then gate from there:
 | A spec exists, no plan | `writing-plans` |
 | An approved plan | `pre-implementation-protocol` |
 
-(`spec-drift-audit` is not an entry — it is the terminal verify phase, below. A standalone audit of already-shipped code *outside* a full run invokes `spec-drift-audit` directly.)
+(`spec-drift-audit` is not an entry — it is the terminal verify phase (see The phases). A standalone audit of already-shipped code *outside* a full run invokes `spec-drift-audit` directly.)
 
 ## The phases
 
-`resolving-requirements → grilling → writing-specs → writing-plans → pre-implementation-protocol → (inline-driven-development \| subagent-driven-development) → writing-adrs (optional ADR gate) → spec-drift-audit`. Each phase produces one artifact and hands to the next; invoke the phase skill — do not re-derive its work here.
+`resolving-requirements → grilling → writing-specs → writing-plans → pre-implementation-protocol → (inline-driven-development \| subagent-driven-development) → writing-adrs (optional) → spec-drift-audit`. Each phase produces one artifact and hands to the next; invoke the phase skill — do not re-derive its work here. Two phases are special:
 
-The `writing-adrs` step is an **optional gate**, not a core spec artifact: after implementation and before verify it asks whether the build made an architectural decision worth recording (see "Optional ADR gate" below). It is frequently skipped and never blocks the chain.
-
-The chain **closes** on `spec-drift-audit` — the **verify** phase: after implementation (and after the optional ADR gate) and before the commit, it checks the shipped code against the approved spec. It is the terminal step, never an entry into a build.
+- **`writing-adrs` is an optional gate** (item 7), not a core artifact — after implementation, before verify, it asks whether the build made an architectural decision worth recording. Frequently skipped, never blocks the chain. See "Optional ADR gate".
+- **`spec-drift-audit` closes the chain** — the verify phase: after implementation (and the optional ADR gate) and before the commit, it checks shipped code against the approved spec. Terminal, never an entry into a build; the human owns the commit.
 
 ## Progress list
 
@@ -82,9 +81,9 @@ After the plan is approved and before execution, present the inline-vs-subagent 
 
 ## Optional ADR gate (before verify)
 
-After implementation is approved and **before** `spec-drift-audit`, check whether the build made an **architectural decision worth recording**. Invoke `writing-adrs`; it applies its own Gate (hard to reverse + surprising without context + a genuine trade-off). This step is **optional and frequently skipped** — most changes record nothing.
+After implementation is approved and **before** `spec-drift-audit`, check whether the build made an **architectural decision worth recording**. Invoke `writing-adrs`; it applies its own Gate (hard to reverse + surprising without context + a genuine trade-off).
 
-Present the call as a picker (numbered-list fallback when no picker tool) and **argue the recommendation explicitly, either way**: `Record ADR` — *"this decision qualifies because it is hard to reverse / surprising without context / a real trade-off"* (name the tests it passes) — vs `Skip` — *"nothing here qualifies: reversible, unsurprising, no weighed alternative"*. The user owns the choice: **never record silently and never skip silently** — state the argument before the pick. A skipped gate stays listed, marked skipped (never dropped); recording hands off to `writing-adrs` for the ADR(s) + index, then advance to verify. The gate never blocks the chain — `spec-drift-audit` runs whether or not an ADR was recorded.
+Present the call as a picker (numbered-list fallback when no picker tool) and **argue the recommendation explicitly, either way**: `Record ADR` — *"this decision qualifies because it is hard to reverse / surprising without context / a real trade-off"* (name the tests it passes) — vs `Skip` — *"nothing here qualifies: reversible, unsurprising, no weighed alternative"*. The user owns the choice: **never record silently and never skip silently** — state the argument before the pick. A skipped gate stays listed, marked skipped; recording hands off to `writing-adrs` for the ADR(s) + index. Either way, advance to verify.
 
 ## Rationalizations
 
@@ -104,9 +103,3 @@ Present the call as a picker (numbered-list fallback when no picker tool) and **
 - Restating a phase skill's internals instead of invoking it.
 - Auto-advancing "because the chain order is obvious".
 - Reaching `spec-drift-audit` without the optional ADR gate — recording an ADR silently, or skipping it without arguing the call.
-
-## Integration
-
-- **Routes into** the chain skills; each phase skill owns its own work and its own hand-off to the next. This skill adds only the cross-phase approval gate, the entry classification, and the controls — it replaces no phase.
-- **Per phase:** hand to the entry skill for the classified input, let it produce its artifact, gate on approval, then advance.
-- **Terminal:** the pipeline ends at `spec-drift-audit`; the human owns the commit.

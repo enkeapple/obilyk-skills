@@ -31,7 +31,7 @@ Pairs with `bootstrapping-glossary`, which creates the foundational docs this sk
 ## Process
 
 1. **Enumerate every concrete claim.** Walk the doc and list each verifiable assertion: every path, route/constant, type/enum, command, and ownership-table cell. The unflagged majority matters as much as anything that "looks" stale.
-2. **Verify each against current code.** `grep`/`read` for the real symbol/path/command — do not stop at the one obvious drift. Record the result per claim. Also flag **placeholder-key drift** against [references/placeholder-keys.md](./references/placeholder-keys.md): an unresolved `<key>` token left in a generated glossary/charter, or a registry example-noun in a generator-owned slot, is drift; cautionary prose naming a noun is not.
+2. **Verify each against current code.** `grep`/`read` for the real symbol/path/command — do not stop at the one obvious drift. Record the result per claim. Also flag **placeholder-key drift** against [references/placeholder-keys.md](../shared/placeholder-keys.md): an unresolved `<key>` token left in a generated glossary/charter, or a registry example-noun in a generator-owned slot, is drift; cautionary prose naming a noun is not.
 3. **Classify each claim:**
    - **Confirmed** — matches the code.
    - **Stale doc** — code is correct, the doc is out of date (renamed route, moved path, changed command).
@@ -56,12 +56,12 @@ Produce a report before editing (see [assets/audit-report-example.md](./assets/a
 
 ## Red Flags — STOP
 
-- "I read it, it looks consistent" — no per-claim verification = the audit did not happen.
-- Verifying only the claim that was pointed out, leaving the rest of the doc unchecked.
-- Assuming every disagreement means the doc is stale — it can mean the code drifted from the rule.
-- Silently rewriting the rule to match drifted code instead of surfacing the decision.
-- Rewriting the whole doc when two cells were wrong.
-- "I remember this symbol exists" — verify by read, or it is unverified.
+Symptoms you can catch yourself in (the table below is the *excuse* behind each):
+
+- The doc "passed" but you ran no grep/read this session — that is a reading, not an audit.
+- Your edit changes a claim you never enumerated in step 1 — you checked only the flagged cell.
+- The diff rewrites whole paragraphs to correct a single wrong cell.
+- A rule now matches drifted code and you never surfaced the revert-or-change choice.
 
 ## Rationalizations
 
