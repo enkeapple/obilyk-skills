@@ -12,7 +12,7 @@ STOP and search the codebase first whenever you are about to (a) write a new fun
 
 ## Why
 
-AI agents do not scan the codebase before writing; a shared utility or wrapper that exists elsewhere is invisible to them unless they look. The result is duplicated implementations that drift apart over time, and raw-library calls that bypass the logging, retries, auth, and error-handling a project deliberately centralizes in its own wrapper. Two visible faces, one root cause: code written without first searching for what already exists. Searching first is what keeps a codebase one implementation deep instead of four.
+AI agents do not scan the codebase before writing; a shared utility or wrapper that exists elsewhere is invisible to them unless they look. The result is duplicated implementations that drift apart over time, and raw-library calls that bypass the logging, retries, auth, and error-handling a project deliberately centralizes in its own wrapper. Two visible faces, one root cause: code written without first searching for what already exists. Searching first is what keeps a codebase one implementation deep instead of four. This is the *operational* form of the DRY principle — concretely "search for and reuse what exists", not the over-broad "never repeat anything" reading that drives premature abstraction.
 
 ## Implementation
 
