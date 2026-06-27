@@ -4,6 +4,15 @@ Transient backlog of un-promoted candidate rules — newest at the top of `## En
 
 ## Entries
 
+## 2026-06-27 — Persisted hook-fixture suite shipped its `.cases` inside the plugin but its runner/CI stayed vault-root; spec over-claimed consumer regression value
+
+- **Cause-tag**: plugin-boundary-infra-reach
+- **Symptom**: spec Risk claimed the guardrails-kit fixtures "travel to consumers — regression value"; owner asked how the plugin pulls the root runner. The runner (`scripts/run-hook-fixtures.sh`) + CI are vault-root and never ship with the plugin, so a consumer gets inert `.cases`.
+- **Root cause**: conflated "the data ships" with "the gate ships" across the plugin boundary — assumed a vault-root runner/CI reaches the consumer because the `.cases` it consumes are co-located inside the shipped plugin.
+- **Wrong approach**: wrote a spec Risk asserting consumer regression value without tracing whether the runner/workflow (not just the data) crosses the plugin boundary.
+- **Correct approach**: amended spec Risk + ADR-0002 to scope the suite vault-only (correct — the vault authors/edits these hooks; consumers install read-only and never edit them).
+- **Prevention**: when a persisted test/CI artifact is tied to plugin-shipped code, trace EACH piece across the boundary (does `plugin.json`/the plugin dir carry the runner + workflow, not only the data?) before claiming a consumer benefits; else scope it vault-only explicitly. Kin: `dev-source-vs-consumer-routing`, `skill-path-source-vs-symlink` (dev-tree reality ≠ consumer reach) — watch for a unified promotion if the family recurs.
+
 ## 2026-06-27 — RED'd two external superpowers ports in-vault (sonnet+haiku); both no-op, nearly flat-cut an export-bound discipline skill
 
 - **Cause-tag**: export-baseline-mismatch

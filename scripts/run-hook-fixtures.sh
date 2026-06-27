@@ -21,6 +21,7 @@ for cases in "$ROOT"/plugins/guardrails-kit/hooks/tests/*.sh.cases \
     [ "$got" = "$want_exit" ] || { ok=0; why="$why [exit]"; }
     sj=$(jq -r '.expect_stdout_jq // empty' <<<"$line"); if [ -n "$sj" ]; then printf '%s' "$out" | jq -e "$sj" >/dev/null 2>&1 || { ok=0; why="$why [stdout_jq]"; }; fi
     sg=$(jq -r '.expect_stderr_grep // empty' <<<"$line"); if [ -n "$sg" ]; then printf '%s' "$err" | grep -qE "$sg" || { ok=0; why="$why [stderr_grep]"; }; fi
+    se=$(jq -r '.expect_stdout_empty // empty' <<<"$line"); if [ "$se" = "true" ]; then [ -z "$out" ] || { ok=0; why="$why [stdout_empty]"; }; fi
     if [ "$ok" = 1 ]; then echo "PASS $(basename "$hook") :: $name"; else echo "FAIL $(basename "$hook") :: $name (exit $got want $want_exit)$why"; fail=1; fi
   done < "$cases"
 done

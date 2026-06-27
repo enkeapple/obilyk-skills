@@ -1,0 +1,4 @@
+{"name":"auto-handoff-nudges","stdin":{"hook_event_name":"PreCompact","trigger":"auto"},"expect_exit":0,"expect_stdout_jq":"(.hookSpecificOutput.hookEventName==\"PreCompact\") and (.hookSpecificOutput.additionalContext | test(\"handoff\"))"}
+{"name":"manual-silent","stdin":{"hook_event_name":"PreCompact","trigger":"manual"},"expect_exit":0,"expect_stdout_empty":true}
+{"name":"no-trigger-silent","stdin":{"hook_event_name":"PreCompact"},"expect_exit":0,"expect_stdout_empty":true}
+{"name":"garbage-fail-open","stdin_raw":"not json","expect_exit":0,"expect_stdout_empty":true}
