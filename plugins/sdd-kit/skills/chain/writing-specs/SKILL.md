@@ -72,21 +72,10 @@ A spec is concrete or it is fiction. Each Required section above defines what "c
 
 ## Two-layer review — self first, then an independent cold pass
 
-The two layers catch **different** defect classes; keep their remits disjoint.
+Two passes with **disjoint remits** — why each is needed and why they must not overlap: [references/review-layers.md](./references/review-layers.md).
 
-### Self-review (author pass — cheap, every time)
-
-Checks you can make against the spec **itself**, with the context you already hold:
-
-- No Placeholders (above) — every contract, path, edge case, and command is concrete.
-- Out-of-scope list is non-empty.
-- All 8 required sections present and internally consistent.
-
-This pass is blind to what you misread: a misread requirement yields a spec that is internally clean and self-reviews green — the same wrong premise wrote it and checked it.
-
-### Independent cold reviewer (the author-blind pass)
-
-Dispatch a fresh subagent with zero shared context for anything **beyond small** — touches more than one surface/module, defines or changes a shared contract (API, schema, interface), or includes a destructive/irreversible operation (a single-surface change with no shared contract is *small*). Use [assets/spec-reviewer-prompt.md](./assets/spec-reviewer-prompt.md), and hand it the original request / approved design *alongside* the spec — without the source it cannot judge conformance and collapses into a second self-review. Its remit is the class self-review structurally cannot reach: **conformance to source** (the consistent-but-wrong misread) and **ambiguity** (any requirement two engineers would build differently).
+- **Self-review** (author pass, every time): No Placeholders (above), Out-of-scope list non-empty, all 8 required sections present and internally consistent. This pass is blind to what you misread.
+- **Independent cold reviewer** (anything **beyond small** — more than one surface/module, a shared contract, or a destructive/irreversible op): dispatch a fresh zero-context subagent ([assets/spec-reviewer-prompt.md](./assets/spec-reviewer-prompt.md)); hand it the original request / approved design *alongside* the spec — without the source it collapses into a second self-review. Its remit is the author-blind class: **conformance to source** and **ambiguity** (any requirement two engineers would build differently).
 
 Fix what it finds and re-review; do not code against a spec with open issues.
 
