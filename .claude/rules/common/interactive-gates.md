@@ -16,7 +16,7 @@ description: >-
 At any SDD-chain decision point that needs an **explicit, non-derivable user choice**:
 
 - each phase **approval gate**;
-- the **execution-mode fork** after plan approval (inline vs subagent);
+- the **execution-mode fork** after plan approval (direct-TDD vs inline vs subagent);
 - the **readiness verdict** before implementation;
 - the **post-report disposition** after a drift audit.
 
@@ -51,7 +51,7 @@ The archetype letters (A, B, C-readiness, C-drift) are a **stable contract** —
 | Archetype | Fires | Options (label → description) |
 | --- | --- | --- |
 | **A — approval gate** | after each phase | `Approve` → approve this artifact, advance · `Request changes` → revise this same artifact (user says what) · `Redo a previous phase` → defect upstream, return and rework (user names the phase) |
-| **B — execution-mode fork** | after plan approval | `Inline (solo)` → coupled tasks / small plan, execute in-session · `Subagents` → independent tasks, fresh subagent per task + review gates |
+| **B — execution-mode fork** | after plan approval | `Direct TDD` → single-behavior / trivial plan, run RED→GREEN directly (no orchestration wrapper) · `Inline (solo)` → coupled tasks / small plan, execute in-session · `Subagents` → independent tasks, fresh subagent per task + review gates |
 | **C-readiness** | readiness check | `Proceed` → readiness confirmed, begin implementation · `Not ready` → gaps remain, list them and return to the plan |
 | **C-drift** | after the audit report (ONE picker) | `Apply recommended` → apply the per-finding recommended dispositions · `Adjust per-finding` → walk findings one by one · `Stop` → take no action now |
 

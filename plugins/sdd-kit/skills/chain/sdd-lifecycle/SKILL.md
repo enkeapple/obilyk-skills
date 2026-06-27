@@ -41,7 +41,7 @@ Route the input to its entry phase, then gate from there:
 
 ## The phases
 
-`resolving-requirements → grilling → writing-specs → writing-plans → pre-implementation-protocol → (inline-driven-development \| subagent-driven-development) → writing-adrs (optional) → spec-drift-audit`. Each phase produces one artifact and hands to the next; invoke the phase skill — do not re-derive its work here. Two phases are special:
+`resolving-requirements → grilling → writing-specs → writing-plans → pre-implementation-protocol → (test-driven-development \| inline-driven-development \| subagent-driven-development) → writing-adrs (optional) → spec-drift-audit`. Each phase produces one artifact and hands to the next; invoke the phase skill — do not re-derive its work here. Two phases are special:
 
 - **`writing-adrs` is an optional gate** (item 7), not a core artifact — after implementation, before verify, it asks whether the build made an architectural decision worth recording. Frequently skipped, never blocks the chain. See "Optional ADR gate".
 - **`spec-drift-audit` closes the chain** — the verify phase: after implementation (and the optional ADR gate) and before the commit, it checks shipped code against the approved spec. Terminal, never an entry into a build; the human owns the commit.
@@ -56,7 +56,7 @@ Before the first phase, seed a single harness task list with these **canonical p
 3. Write the spec (writing-specs)
 4. Write the plan (writing-plans)
 5. Readiness check (pre-implementation-protocol)
-6. Implement test-first (inline-/subagent-driven-development)
+6. Implement test-first (test-/inline-/subagent-driven-development)
 7. Record architectural decisions — optional (writing-adrs)
 8. Audit against the spec (spec-drift-audit)
 ```
@@ -77,7 +77,13 @@ If a later phase reveals an earlier artifact is wrong, **loop back**: return to 
 
 ## Execution-mode fork
 
-After the plan is approved and before execution, present the inline-vs-subagent choice as archetype **B** (a picker of labeled options; markdown-list fallback): `inline-driven-development` (coupled tasks / small plan) vs `subagent-driven-development` (independent tasks). This is a presentation point only — the chosen flow owns the execution.
+After the plan is approved and before execution, present the execution-mode choice as archetype **B** (a picker of labeled options; markdown-list fallback). The plan's shape selects the path:
+
+- `test-driven-development` — a single-behavior change / trivial plan (one behavior, nothing to orchestrate): skip the inline/subagent wrapper and run RED→GREEN directly.
+- `inline-driven-development` — coupled tasks / small multi-task plan: execute solo, in-session.
+- `subagent-driven-development` — independent tasks: a fresh subagent per task.
+
+This is a presentation point only — the chosen flow owns the execution.
 
 ## Optional ADR gate (before verify)
 
