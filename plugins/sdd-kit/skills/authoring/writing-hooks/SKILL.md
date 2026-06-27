@@ -80,6 +80,10 @@ Three moves, all required; a hook that exists but is unwired (or mis-matched) si
 2. **Discovery** — whatever the harness reads (in this vault, a flat symlink `.claude/hooks/<name>.sh` → the source); `chmod +x`.
 3. **Register** in `settings.json` under the **correct event** with the **correct matcher**: a tool-name regex like `"Bash"` or `"Edit|Write|MultiEdit"`, or `".*"`; `UserPromptSubmit` and `Stop` take **no** matcher. A wrong matcher fires on the wrong tool — or never. Verify the wiring, not just that an entry exists.
 
+### Authoring-time fixtures vs the persisted CI suite
+
+The fixture loop above is authoring-time scaffolding — run it to prove the decision logic, then discard it. Separately, hooks are deterministic code with a **persisted regression suite** the CI runs: each hook has a `tests/<hook>.sh.cases` file (declarative cases) executed by the repo's hook-fixture runner (`scripts/run-hook-fixtures.sh`). When you add or change a hook's decision logic, update its `.cases` file in the same change so the committed suite stays green — an edited hook with a stale suite is the leaked hand-off this note prevents.
+
 ## VALIDATE
 
 The hook fixture run (Block 3) is the behavioral test. Plus: the script is executable, the discovery path resolves, and `settings.json` is valid and registers the right event + matcher.

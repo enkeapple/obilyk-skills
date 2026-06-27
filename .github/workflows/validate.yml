@@ -94,3 +94,8 @@ jobs:
         run: |
           bash scripts/run-hook-fixtures.sh
           echo "HOOK_FIXTURES_OK"
+
+      - name: Skill body validators
+        run: |
+          bash scripts/validate-skill-bodies.sh
+          echo "BODY_VALIDATORS_OK"
