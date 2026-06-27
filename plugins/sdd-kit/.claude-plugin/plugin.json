@@ -1,7 +1,7 @@
 {
   "name": "sdd-kit",
   "description": "Gated spec-driven-development chain plus skill/hook/rule authoring and foundation bootstrapping.",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "skills": [
     "./skills/aliases/adr",
     "./skills/aliases/audit",

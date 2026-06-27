@@ -1,7 +1,7 @@
 {
   "name": "craft-kit",
   "description": "Deep-module design vocabulary, architecture review, and prose tightening/humanizing.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "skills": [
     "./skills/design/codebase-design",
     "./skills/design/improve-codebase-architecture",
