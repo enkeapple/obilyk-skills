@@ -28,6 +28,7 @@
     "./skills/setup/adopting-framework",
     "./skills/setup/auditing-claude-md",
     "./skills/setup/auditing-glossary",
+    "./skills/setup/auditing-hooks",
     "./skills/setup/auditing-readme",
     "./skills/setup/auditing-conflicts",
     "./skills/setup/bootstrapping-claude-md",

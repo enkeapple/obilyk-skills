@@ -346,6 +346,21 @@
         "правила устарел"
       ]
     },
+    "auditing-hooks": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "auditing-hooks",
+      "triggers": [
+        "audit the hooks",
+        "are the hooks wired correctly",
+        "hook wiring drift",
+        "check (the )?hook config",
+        "orphan hook",
+        "проверить хуки",
+        "аудит хуков",
+        "дрейф хуков"
+      ]
+    },
     "handoff": {
       "kind": "ref",
       "plugin": "sdd-kit",
