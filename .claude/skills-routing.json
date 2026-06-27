@@ -493,6 +493,24 @@
         "противоречия между (скиллами|правилами)"
       ]
     },
+    "reviewing-telemetry": {
+      "kind": "ref",
+      "plugin": "sdd-kit",
+      "name": "reviewing-telemetry",
+      "triggers": [
+        "review (the )?telemetry",
+        "telemetry digest",
+        "routing health",
+        "what'?s misfiring",
+        "bypass rate",
+        "noisy triggers",
+        "проверь телеметри",
+        "здоровье роутинга",
+        "что мисфайрит",
+        "шумные триггеры",
+        "дайджест телеметри"
+      ]
+    },
     "writing-skills": {
       "kind": "ref",
       "plugin": "sdd-kit",
