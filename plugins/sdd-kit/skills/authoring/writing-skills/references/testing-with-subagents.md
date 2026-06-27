@@ -47,6 +47,29 @@ an ordinary project, still cited "this vault's Suspicion Protocol #4". To measur
 baseline, run WITHOUT that injection (a controlled system prompt, or a real consumer repo). Output-
 *shape* failures stay measurable in-repo regardless.
 
+### Export-bound vs in-vault-discipline — a green in-vault RED is not a cut
+
+Before reading a green in-vault RED as "no-op, cut it", classify the skill by **whose** discipline it
+exists to enforce:
+
+- **in-vault-discipline** — its value is enforcing discipline on THIS strong, tool-equipped agent. A
+  green in-vault RED genuinely means no-op: the agent you are protecting already complies, so there is
+  nothing to teach. Cut or re-aim.
+- **export-bound** — its value is for weaker / non-agentic consumer harnesses in other repos. A
+  tool-equipped agent recons, verifies, and self-checks by default at EVERY tier (Haiku included), so a
+  green in-vault RED across tiers says nothing about the export target — it only shows that *this*
+  agent does not need the skill. That is **not** a cut signal.
+
+For an export-bound skill with a green in-vault RED, do ONE of:
+
+1. **RED against a representative export floor** — a weaker / non-agentic harness: a controlled system
+   prompt stripped of agentic recon, or a real consumer repo at the target's tier. Reproduce the
+   failure where the skill's real consumers live.
+2. **Ship on the policy basis** — record the in-vault no-op explicitly as an Edge Case and skip the
+   in-vault GREEN gate, because the in-vault run cannot exercise the export target.
+
+Record which basis you used. A green in-vault RED is "no-op here / valuable there", never a cut.
+
 ## Reps and reading
 
 - **5+ reps per variant.** A single sample lies; variance across reps is itself a signal — five different shapes means the wording isn't binding yet.

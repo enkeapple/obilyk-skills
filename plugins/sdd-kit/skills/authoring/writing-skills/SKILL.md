@@ -31,7 +31,9 @@ it. Start over. No exception for "simple additions", "just a section", or "it's 
    rationalizations verbatim. For a *discipline* skill, suppress any injected operating manual
    (else the baseline is contaminated — see
    [`testing-with-subagents.md`](./references/testing-with-subagents.md)). No failure reproduces →
-   there is nothing to fix; stop.
+   before cutting, classify in-vault-discipline vs export-bound (see
+   [`testing-with-subagents.md`](./references/testing-with-subagents.md)); a green in-vault RED is not
+   a cut for an export-bound skill. In-vault-discipline with no failure → there is nothing to fix; stop.
 2. **Match the form to the failure** (table below) before writing.
 3. **GREEN (author check).** Write the minimal skill addressing those exact failures — in the form
    the failure calls for. Re-run the scenarios WITH the skill; confirm compliance. This is YOUR

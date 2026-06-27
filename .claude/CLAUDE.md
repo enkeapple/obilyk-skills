@@ -57,7 +57,7 @@ Not complete until each row is `[x]` or `[N/A]`-with-reason, evidence pasted:
 
 | # | Item | Done when |
 | --- | --- | --- |
-| 1 | RED observed | Baseline subagent run failed as expected (or `[N/A]` — control showed no failure, so no skill written) |
+| 1 | RED observed | The baseline run failed as expected (or `[N/A]` — control showed no failure); for an **export-bound** skill (value is for weaker/non-agentic consumer harnesses), a green in-vault RED across tiers is NOT an `[N/A]`-cut — RED against a representative export floor, or ship on the policy basis and record which (see-also `rules/common/fair-red-baseline.md`, `rules/common/scoping-skill-value.md`, `rules/common/scoping-rule-value.md`) |
 | 2 | GREEN + independent Layer-2 verdict | (a) your own with-skill run complies on the same scenarios AND (b) a fresh validation subagent ran the cases staged for the gate (a temporary file, deleted after the run — not a persisted `test-cases.md`), inverted each case, and returned PASS with verbatim evidence — your GREEN run does NOT satisfy (b) |
 | 3 | Form matches failure | Discipline → prohibition+table+red-flags; shaping → positive recipe |
 | 4 | Validators pass | Frontmatter ≤1024, name regex, links resolve, fences balanced, word count — output pasted |
