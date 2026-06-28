@@ -23,6 +23,22 @@
     {
       "name": "saleizo-react-native",
       "source": "./plugins/saleizo-react-native"
+    },
+    {
+      "name": "saleizo-commands",
+      "source": "./plugins/saleizo-commands"
+    },
+    {
+      "name": "saleizo-authoring",
+      "source": "./plugins/saleizo-authoring"
+    },
+    {
+      "name": "saleizo-foundation",
+      "source": "./plugins/saleizo-foundation"
+    },
+    {
+      "name": "saleizo-prose",
+      "source": "./plugins/saleizo-prose"
     }
   ]
 }

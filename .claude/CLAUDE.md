@@ -18,7 +18,7 @@ These survive context pressure and are model-agnostic. If the rest of this file 
 
 ## Behavioral baseline
 
-This vault has **opted into** the default conduct set (the canonical source is [bootstrapping-claude-md/references/behavioral-baseline.md](../plugins/saleizo-core/skills/setup/bootstrapping-claude-md/references/behavioral-baseline.md); `auditing-claude-md` verifies this section against it). It shapes every change *on top of* the Non-negotiables above — where the two overlap, the Non-negotiable is the enforced form and this is the conduct lens; do not treat them as separate mandates.
+This vault has **opted into** the default conduct set (the canonical source is [bootstrapping-claude-md/references/behavioral-baseline.md](../plugins/saleizo-foundation/skills/bootstrapping-claude-md/references/behavioral-baseline.md); `auditing-claude-md` verifies this section against it). It shapes every change *on top of* the Non-negotiables above — where the two overlap, the Non-negotiable is the enforced form and this is the conduct lens; do not treat them as separate mandates.
 
 - **Think Before Coding** — surface assumptions and tradeoffs before implementing; when interpretations diverge, present them rather than picking silently; when unclear, stop and ask. (Here: the Implementation/Suspicion protocols in [framework.md](./rules/domains/framework.md).)
 - **Simplicity First** — write the minimum that solves the stated problem; no speculative features, single-use abstractions, or unrequested configurability.

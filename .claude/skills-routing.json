@@ -4,7 +4,9 @@
     "_comment": "Path-or-prompt-triggered MANDATORY reads. skill-gate.sh (Pass 2) DENIES an Edit/Write until 'rule' was Read this turn. Unlike skills (which carry rules in their body), these gate plain rule files that must be loaded before touching the domain. Start narrow; add gates as lessons accrue.",
     "routing-sync": {
       "rule": ".claude/rules/common/skill-routing-sync.md",
-      "editGlobs": [".claude/skills-routing.json"]
+      "editGlobs": [
+        ".claude/skills-routing.json"
+      ]
     }
   },
   "skills": {
@@ -214,7 +216,7 @@
     },
     "writing-rules": {
       "kind": "ref",
-      "plugin": "saleizo-core",
+      "plugin": "saleizo-authoring",
       "name": "writing-rules",
       "triggers": [
         "write a rule",
@@ -234,7 +236,7 @@
     },
     "writing-hooks": {
       "kind": "ref",
-      "plugin": "saleizo-core",
+      "plugin": "saleizo-authoring",
       "name": "writing-hooks",
       "triggers": [
         "write a hook",
@@ -252,7 +254,7 @@
     },
     "writing-lessons": {
       "kind": "ref",
-      "plugin": "saleizo-core",
+      "plugin": "saleizo-authoring",
       "name": "writing-lessons",
       "triggers": [
         "lesson learned",
@@ -271,7 +273,7 @@
     },
     "adopting-framework": {
       "kind": "ref",
-      "plugin": "saleizo-core",
+      "plugin": "saleizo-foundation",
       "name": "adopting-framework",
       "triggers": [
         "adopt the framework",
@@ -283,7 +285,7 @@
     },
     "bootstrapping-claude-md": {
       "kind": "ref",
-      "plugin": "saleizo-core",
+      "plugin": "saleizo-foundation",
       "name": "bootstrapping-claude-md",
       "triggers": [
         "set up CLAUDE.md",
@@ -299,7 +301,7 @@
     },
     "auditing-claude-md": {
       "kind": "ref",
-      "plugin": "saleizo-core",
+      "plugin": "saleizo-foundation",
       "name": "auditing-claude-md",
       "triggers": [
         "audit CLAUDE.md",
@@ -315,7 +317,7 @@
     },
     "bootstrapping-glossary": {
       "kind": "ref",
-      "plugin": "saleizo-core",
+      "plugin": "saleizo-foundation",
       "name": "bootstrapping-glossary",
       "triggers": [
         "set up the base rules",
@@ -331,7 +333,7 @@
     },
     "auditing-glossary": {
       "kind": "ref",
-      "plugin": "saleizo-core",
+      "plugin": "saleizo-foundation",
       "name": "auditing-glossary",
       "triggers": [
         "audit the rules",
@@ -348,7 +350,7 @@
     },
     "auditing-hooks": {
       "kind": "ref",
-      "plugin": "saleizo-core",
+      "plugin": "saleizo-foundation",
       "name": "auditing-hooks",
       "triggers": [
         "audit the hooks",
@@ -385,7 +387,7 @@
     },
     "tightening-prose": {
       "kind": "ref",
-      "plugin": "saleizo-design",
+      "plugin": "saleizo-prose",
       "name": "tightening-prose",
       "triggers": [
         "tighten (this|the|it)",
@@ -401,7 +403,7 @@
     },
     "humanizing-prose": {
       "kind": "ref",
-      "plugin": "saleizo-design",
+      "plugin": "saleizo-prose",
       "name": "humanizing-prose",
       "triggers": [
         "polish (this|it) for (the )?(article|post|blog|publication)",
@@ -418,7 +420,7 @@
     },
     "drafting-release-notes": {
       "kind": "ref",
-      "plugin": "saleizo-design",
+      "plugin": "saleizo-prose",
       "name": "drafting-release-notes",
       "triggers": [
         "write the release notes",
@@ -450,7 +452,7 @@
     },
     "writing-adrs": {
       "kind": "ref",
-      "plugin": "saleizo-core",
+      "plugin": "saleizo-authoring",
       "name": "writing-adrs",
       "triggers": [
         "write an? ADR",
@@ -469,7 +471,7 @@
     },
     "bootstrapping-readme": {
       "kind": "ref",
-      "plugin": "saleizo-core",
+      "plugin": "saleizo-foundation",
       "name": "bootstrapping-readme",
       "triggers": [
         "set up the README",
@@ -482,7 +484,7 @@
     },
     "auditing-readme": {
       "kind": "ref",
-      "plugin": "saleizo-core",
+      "plugin": "saleizo-foundation",
       "name": "auditing-readme",
       "triggers": [
         "audit the README",
@@ -496,7 +498,7 @@
     },
     "auditing-conflicts": {
       "kind": "ref",
-      "plugin": "saleizo-core",
+      "plugin": "saleizo-foundation",
       "name": "auditing-conflicts",
       "triggers": [
         "audit conflicts",
@@ -510,7 +512,7 @@
     },
     "reviewing-telemetry": {
       "kind": "ref",
-      "plugin": "saleizo-core",
+      "plugin": "saleizo-foundation",
       "name": "reviewing-telemetry",
       "triggers": [
         "review (the )?telemetry",
@@ -528,7 +530,7 @@
     },
     "writing-skills": {
       "kind": "ref",
-      "plugin": "saleizo-core",
+      "plugin": "saleizo-authoring",
       "name": "writing-skills",
       "triggers": [
         "write a skill",

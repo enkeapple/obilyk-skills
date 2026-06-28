@@ -1,0 +1,12 @@
+{
+  "name": "saleizo-authoring",
+  "description": "Test-first authoring of the framework's own artifacts: skills, hooks, rules, lessons, and ADRs.",
+  "version": "1.0.0",
+  "skills": [
+    "./skills/writing-adrs",
+    "./skills/writing-hooks",
+    "./skills/writing-lessons",
+    "./skills/writing-rules",
+    "./skills/writing-skills"
+  ]
+}

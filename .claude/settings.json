@@ -12,7 +12,8 @@
       "Bash(git clean -f*)",
       "Bash(rm -rf /*)",
       "Bash(rm -rf ~*)"
-    ]
+    ],
+    "ask": []
   },
   "hooks": {
     "PreToolUse": [

@@ -1,0 +1,17 @@
+{
+  "name": "saleizo-foundation",
+  "description": "Adopt, bootstrap, and audit the SDD framework in a consumer repo (CLAUDE.md, glossary, README, hooks), plus routing/telemetry review.",
+  "version": "1.0.0",
+  "skills": [
+    "./skills/adopting-framework",
+    "./skills/bootstrapping-claude-md",
+    "./skills/bootstrapping-glossary",
+    "./skills/bootstrapping-readme",
+    "./skills/auditing-claude-md",
+    "./skills/auditing-glossary",
+    "./skills/auditing-readme",
+    "./skills/auditing-hooks",
+    "./skills/auditing-conflicts",
+    "./skills/reviewing-telemetry"
+  ]
+}

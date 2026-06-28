@@ -1,0 +1,10 @@
+{
+  "name": "saleizo-prose",
+  "description": "De-slop and humanize prose, and turn a release diff into user-facing store release notes.",
+  "version": "1.0.0",
+  "skills": [
+    "./skills/tightening-prose",
+    "./skills/humanizing-prose",
+    "./skills/drafting-release-notes"
+  ]
+}
