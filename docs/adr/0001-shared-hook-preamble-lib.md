@@ -5,11 +5,11 @@ Status: Accepted
 
 ## Context
 
-The guardrails-kit ships 8 bash hooks (`plugins/guardrails-kit/hooks/`). Seven of them re-derived the same session id and per-session state dir inline — an identical ~6-line preamble (`jq -r '.session_id // empty' | tr -cd …`, `default` fallback, `${CLAUDE_PROJECT_DIR:-.}/.claude/state/$SID`) copied 7×, plus the strict `jq -e . || exit 0` fail-open guard copied in 3. Every hook is launched as a fresh child process (`"${CLAUDE_PLUGIN_ROOT}"/hooks/<name>.sh`), and **fail-open is a hard invariant** — a guard must never disrupt real work on its own error. The duplication was a maintenance and drift risk; the constraint was that any de-duplication must not weaken fail-open.
+The saleizo-controls ships 8 bash hooks (`plugins/saleizo-controls/hooks/`). Seven of them re-derived the same session id and per-session state dir inline — an identical ~6-line preamble (`jq -r '.session_id // empty' | tr -cd …`, `default` fallback, `${CLAUDE_PROJECT_DIR:-.}/.claude/state/$SID`) copied 7×, plus the strict `jq -e . || exit 0` fail-open guard copied in 3. Every hook is launched as a fresh child process (`"${CLAUDE_PLUGIN_ROOT}"/hooks/<name>.sh`), and **fail-open is a hard invariant** — a guard must never disrupt real work on its own error. The duplication was a maintenance and drift risk; the constraint was that any de-duplication must not weaken fail-open.
 
 ## Decision
 
-Extract the shared preamble into a sourced function library `plugins/guardrails-kit/hooks/lib/common.sh` exposing three pure functions — `hook_sid` (`common.sh:15`), `hook_state_dir` (`common.sh:23`), `hook_require_json` (`common.sh:31`) — and migrate the 7 SID-deriving hooks to source it. `quality.sh` is excluded (it derives no session id). Hooks locate and load the lib with a **readability-guarded** source, the idiom documented at `common.sh:6-11`:
+Extract the shared preamble into a sourced function library `plugins/saleizo-controls/hooks/lib/common.sh` exposing three pure functions — `hook_sid` (`common.sh:15`), `hook_state_dir` (`common.sh:23`), `hook_require_json` (`common.sh:31`) — and migrate the 7 SID-deriving hooks to source it. `quality.sh` is excluded (it derives no session id). Hooks locate and load the lib with a **readability-guarded** source, the idiom documented at `common.sh:6-11`:
 
 ```bash
 GUARDRAILS_LIB="${BASH_SOURCE[0]%/*}/lib/common.sh"

@@ -1,8 +1,8 @@
 # `.claude/state/` — runtime state contract
 
-What the guardrails-kit hooks write under `.claude/state/`, who owns each file, and how long it lives. The **whole directory is gitignored** (`.gitignore` → `.claude/state`) — it is runtime scratch + telemetry, never committed. This doc is the durable record of that layout (build 3d); it is reference, not a rule or skill.
+What the saleizo-controls hooks write under `.claude/state/`, who owns each file, and how long it lives. The **whole directory is gitignored** (`.gitignore` → `.claude/state`) — it is runtime scratch + telemetry, never committed. This doc is the durable record of that layout (build 3d); it is reference, not a rule or skill.
 
-Source of truth is the hooks themselves in `plugins/guardrails-kit/hooks/`; if this doc and a hook disagree, the hook wins — fix this doc. Reconciled against the hooks as of build 3b/3c-gate (2026-06-24).
+Source of truth is the hooks themselves in `plugins/saleizo-controls/hooks/`; if this doc and a hook disagree, the hook wins — fix this doc. Reconciled against the hooks as of build 3b/3c-gate (2026-06-24).
 
 ## Two layers
 

@@ -37,7 +37,7 @@ On clone/pull failure (auth, network, missing/expired Azure DevOps PAT) or an ID
 
 ## Edge Cases
 
-- **Not this repo's product code** — these FLIBCO values are deliberately here in repo-local config, NOT in the agnostic `resolving-requirements` skill (which ships via the `sdd-kit` plugin). Editing the skill to hard-code them is the project-leakage defect this rule exists to avoid.
+- **Not this repo's product code** — these FLIBCO values are deliberately here in repo-local config, NOT in the agnostic `resolving-requirements` skill (which ships via the `saleizo-core` plugin). Editing the skill to hard-code them is the project-leakage defect this rule exists to avoid.
 - **When NOT to apply** — the input is not a `^FLIBCO-\d+$` ID: it is free-text/URL, the skill's `direct` mode, and no fetch happens.
 - The `*FLIBCO-<id>*` glob uses the concrete ID from the input (e.g. `FLIBCO-1234`), never the literal `<id>`.
 

@@ -1,0 +1,3 @@
+{"name":"happy-transcript-present","stdin":{"session_id":"fixturetest","transcript_path":"plugins/saleizo-controls/hooks/tests/_transcript_no_errors.jsonl"},"expect_exit":0}
+{"name":"no-prompt-no-transcript","stdin":{"session_id":"fixturetest"},"expect_exit":0}
+{"name":"garbage-fail-open","stdin_raw":"not json","expect_exit":0}

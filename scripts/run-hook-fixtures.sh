@@ -5,7 +5,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"   # hooks resolve ${CLAUDE_PROJECT_DIR:-.} and repo-root-relative transcript_path against cwd; pin it so the suite is deterministic from any invocation cwd
 fail=0; total=0
 ERRF="$(mktemp)"; trap 'rm -f "$ERRF"' EXIT
-for cases in "$ROOT"/plugins/guardrails-kit/hooks/tests/*.sh.cases \
+for cases in "$ROOT"/plugins/saleizo-controls/hooks/tests/*.sh.cases \
              "$ROOT"/hooks/guards/tests/*.sh.cases; do
   [ -e "$cases" ] || continue
   hook="$(dirname "$(dirname "$cases")")/$(basename "$cases" .cases)"   # tests/x.sh.cases -> ../x.sh

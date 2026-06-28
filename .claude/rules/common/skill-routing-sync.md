@@ -47,7 +47,7 @@ The **entry key** is always the skill's canonical name (bare — no plugin prefi
 // detect-bypass never matches its triggers; the routed plugin skill is unroutable.
 {
   "skills": {
-    "grilling": { "kind": "ref", "plugin": "sdd-kit", "name": "grilling",
+    "grilling": { "kind": "ref", "plugin": "saleizo-core", "name": "grilling",
                   "triggers": ["grill me", "brainstorm"],
                   "files": [".claude/skills/grilling/SKILL.md"] }
   }
@@ -56,7 +56,7 @@ The **entry key** is always the skill's canonical name (bare — no plugin prefi
 // ✅ CORRECT — ref has no files; local has a files path; key === canonical name.
 {
   "skills": {
-    "grilling":      { "kind": "ref",   "plugin": "sdd-kit",  "name": "grilling",
+    "grilling":      { "kind": "ref",   "plugin": "saleizo-core",  "name": "grilling",
                        "triggers": ["grill me", "brainstorm", "help me think this through"] },
     "my-own-skill":  { "kind": "local", "triggers": ["my trigger phrase"],
                        "files": [".claude/skills/my-own-skill/SKILL.md"] }
@@ -76,7 +76,7 @@ The **entry key** is always the skill's canonical name (bare — no plugin prefi
 ## Edge Cases
 
 - When NOT to apply: editing a skill's prose, examples, or `references/*.md` / `assets/*.md` without touching its name or trigger phrases — internal reference files are not listed and need no change.
-- **Any skill with `disable-model-invocation: true` is not trigger-routed — do NOT add an entry for it.** This covers two sub-kinds: a **reference/methodology** skill (e.g. `improve-codebase-architecture`) and an **alias-facade** skill under `plugins/sdd-kit/skills/aliases/` (`/sdd`, `/grill`, …) that delegates to a canonical skill. Absence from `skills-routing.json` is correct for both, not a gap.
+- **Any skill with `disable-model-invocation: true` is not trigger-routed — do NOT add an entry for it.** This covers two sub-kinds: a **reference/methodology** skill (e.g. `improve-codebase-architecture`) and an **alias-facade** skill under `plugins/saleizo-core/skills/aliases/` (`/sdd`, `/grill`, …) that delegates to a canonical skill. Absence from `skills-routing.json` is correct for both, not a gap.
 - This rule governs only the `skills` map. Leave `version` and `ruleGates` alone unless a separate task requires them.
 - Trigger phrases are bilingual where the skill declares them — include Russian triggers if the skill lists them (e.g. `handoff` lists «передать сессию»).
 - A `_`-prefixed path under `.claude/state/` or the project root (e.g. `_metrics.jsonl`) is runtime state, not a skill — do not add routing entries for it.

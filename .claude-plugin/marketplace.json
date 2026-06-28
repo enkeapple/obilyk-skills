@@ -1,28 +1,28 @@
 {
-  "name": "obilyk-skills",
+  "name": "saleizo",
   "owner": {
     "name": "Oleksandr Bilyk"
   },
   "plugins": [
     {
-      "name": "sdd-kit",
-      "source": "./plugins/sdd-kit"
+      "name": "saleizo-core",
+      "source": "./plugins/saleizo-core"
     },
     {
-      "name": "learning-kit",
-      "source": "./plugins/learning-kit"
+      "name": "saleizo-learning",
+      "source": "./plugins/saleizo-learning"
     },
     {
-      "name": "craft-kit",
-      "source": "./plugins/craft-kit"
+      "name": "saleizo-design",
+      "source": "./plugins/saleizo-design"
     },
     {
-      "name": "guardrails-kit",
-      "source": "./plugins/guardrails-kit"
+      "name": "saleizo-controls",
+      "source": "./plugins/saleizo-controls"
     },
     {
-      "name": "react-native-kit",
-      "source": "./plugins/react-native-kit"
+      "name": "saleizo-react-native",
+      "source": "./plugins/saleizo-react-native"
     }
   ]
 }

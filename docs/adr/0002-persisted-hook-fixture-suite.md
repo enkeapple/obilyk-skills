@@ -22,12 +22,12 @@ Hooks get a **persisted** regression suite, deliberately departing from the ephe
 - **Positive:** the recurring hook-bug class is now a CI regression gate; a hook edit that breaks a contract fails the suite before merge. The fixture format is declarative data, not executable shell, so a case cannot itself introduce a bug.
 - **Negative (the cost accepted):** two test-persistence philosophies now coexist in one vault (ephemeral for skills, persisted for hooks). Without this record a future reader would read the persisted `.cases` as a violation of the ephemeral rule. Mitigated by the kind distinction above and the `writing-hooks` reconciling note.
 - **Negative:** the suite can drift from a hook if an author edits hook logic without updating its `.cases`. Mitigated by the `writing-hooks` instruction; a future `auditing-hooks` skill could enforce it.
-- **Scope — the gate is vault-only by design.** The runner and the CI step live at the vault root (not in the plugin) and the runner also covers the vault-local `hooks/guards/`, so it runs only in this vault against the in-tree hooks. The `.cases` co-located under `plugins/guardrails-kit/hooks/tests/` ride along in a consumer's plugin install cache but are **inert there** — no runner, no CI. This is correct, not a gap: the vault authors and edits these hooks; a consumer installs the plugin read-only and never edits them, so the regression net belongs where the edits happen. The records therefore do not claim consumer-side regression value.
+- **Scope — the gate is vault-only by design.** The runner and the CI step live at the vault root (not in the plugin) and the runner also covers the vault-local `hooks/guards/`, so it runs only in this vault against the in-tree hooks. The `.cases` co-located under `plugins/saleizo-controls/hooks/tests/` ride along in a consumer's plugin install cache but are **inert there** — no runner, no CI. This is correct, not a gap: the vault authors and edits these hooks; a consumer installs the plugin read-only and never edits them, so the regression net belongs where the edits happen. The records therefore do not claim consumer-side regression value.
 - **Follow-ups:** new hooks ship with a `.cases` file (happy + the empty/no-match branch + a distinct garbage→fail-open case); guard hooks additionally get one case per distinct blocking rule plus a benign-substring non-block.
 
 ## Related files
 
 - `scripts/run-hook-fixtures.sh` — the runner (derives the hook path from each `tests/<hook>.sh.cases`, asserts exit/stdout/stderr).
-- `plugins/guardrails-kit/hooks/tests/` and `hooks/guards/tests/` — the per-hook `.cases` suites.
+- `plugins/saleizo-controls/hooks/tests/` and `hooks/guards/tests/` — the per-hook `.cases` suites.
 - `.github/workflows/validate.yml` — the "Hook fixtures" step that runs the suite in CI.
-- `plugins/sdd-kit/skills/authoring/writing-hooks/SKILL.md` — the authoring-time-vs-persisted reconciling note.
+- `plugins/saleizo-core/skills/authoring/writing-hooks/SKILL.md` — the authoring-time-vs-persisted reconciling note.

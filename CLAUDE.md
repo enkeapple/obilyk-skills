@@ -1,6 +1,6 @@
 # SDD Workflow — marketplace & Claude entry point
 
-A **Claude Code skill marketplace** and the in-place dev vault that develops it. The repo publishes 5 plugins via `.claude-plugin/marketplace.json` — **sdd-kit** (the gated Spec-Driven-Development chain plus skill/hook/rule authoring and foundation bootstrapping), **learning-kit** (user-invoked learning skills), **craft-kit** (deep-module design, architecture review, prose), **guardrails-kit** (the routing-bypass detection, telemetry, session, and quality hooks that the harness reads from `.claude/skills-routing.json`), and **react-native-kit** (React Native accessibility / WCAG auditing). The product is not an app — it is the skills themselves and *how they interact*. The goal is a flexible system that surfaces its own bottlenecks (a misfiring skill, a leaky hand-off, an over-rigid step), which become lessons → rules → skill edits.
+A **Claude Code skill marketplace** and the in-place dev vault that develops it. The repo publishes 5 plugins via `.claude-plugin/marketplace.json` — **saleizo-core** (the gated Spec-Driven-Development chain plus skill/hook/rule authoring and foundation bootstrapping), **saleizo-learning** (user-invoked learning skills), **saleizo-design** (deep-module design, architecture review, prose), **saleizo-controls** (the routing-bypass detection, telemetry, session, and quality hooks that the harness reads from `.claude/skills-routing.json`), and **saleizo-react-native** (React Native accessibility / WCAG auditing). The product is not an app — it is the skills themselves and *how they interact*. The goal is a flexible system that surfaces its own bottlenecks (a misfiring skill, a leaky hand-off, an over-rigid step), which become lessons → rules → skill edits.
 
 ## How to work here (read first)
 
@@ -16,7 +16,7 @@ Authoring or changing a skill runs through **RED → GREEN → REFACTOR → VALI
 
 ## What this project is
 
-Agnostic skills authored under `plugins/<kit>/skills/<category>/<name>/` across the five kits (`sdd-kit`, `learning-kit`, `craft-kit`, `guardrails-kit`, `react-native-kit`, each with its own `.claude-plugin/plugin.json`) and discovered by Claude Code via the installed marketplace plugins, plus the harness around them: the marketplace manifest `.claude-plugin/marketplace.json`, guard hooks in `hooks/guards/` surfaced via `.claude/hooks/` symlinks (wired by root `settings.json`), routing/metric/session/quality hooks in `plugins/guardrails-kit/hooks/` (wired by its `hooks.json`), `.claude/rules/domains/` (framework + domain glossary) and `.claude/rules/common/` (cross-cutting rules), `.claude/skills-routing.json`, `.claude/state/`. No application code, no `package.json`, no build.
+Agnostic skills authored under `plugins/<kit>/skills/<category>/<name>/` across the five kits (`saleizo-core`, `saleizo-learning`, `saleizo-design`, `saleizo-controls`, `saleizo-react-native`, each with its own `.claude-plugin/plugin.json`) and discovered by Claude Code via the installed marketplace plugins, plus the harness around them: the marketplace manifest `.claude-plugin/marketplace.json`, guard hooks in `hooks/guards/` surfaced via `.claude/hooks/` symlinks (wired by root `settings.json`), routing/metric/session/quality hooks in `plugins/saleizo-controls/hooks/` (wired by its `hooks.json`), `.claude/rules/domains/` (framework + domain glossary) and `.claude/rules/common/` (cross-cutting rules), `.claude/skills-routing.json`, `.claude/state/`. No application code, no `package.json`, no build.
 
 The vault's own design docs follow a single convention: **specs live in `docs/specs/YYYY-MM-DD-<topic>.md`, plans in `docs/plans/YYYY-MM-DD-<topic>.md`** — never bare `specs/` or `plans/` at the root. This is the convention `writing-specs`/`writing-plans` detect via "where the project keeps design docs"; keeping it single-valued is what makes the output path deterministic.
 
@@ -57,7 +57,7 @@ No build / dev / test pipeline — this is a skills vault, not an app. Verificat
 | Approaching the context limit / ending with unfinished work | `handoff` |
 | Short user-typed aliases (deterministic entry; same skills) | `/sdd`→`sdd-lifecycle`, `/grill`→`grilling`, `/spec`→`writing-specs`, `/audit`→`verifying-implementation`, `/adr`→`writing-adrs` |
 
-When a user prompt contains a registered trigger and the corresponding skill is not invoked within a few tool calls, `detect-bypass.sh` (from `guardrails-kit`) warns and logs the event to `.claude/state/_metrics.jsonl` (gitignored). Triggers are listed in [.claude/skills-routing.json](./.claude/skills-routing.json).
+When a user prompt contains a registered trigger and the corresponding skill is not invoked within a few tool calls, `detect-bypass.sh` (from `saleizo-controls`) warns and logs the event to `.claude/state/_metrics.jsonl` (gitignored). Triggers are listed in [.claude/skills-routing.json](./.claude/skills-routing.json).
 
 ## Where rules live
 

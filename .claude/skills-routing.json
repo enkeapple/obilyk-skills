@@ -10,7 +10,7 @@
   "skills": {
     "resolving-requirements": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "resolving-requirements",
       "triggers": [
         "[A-Z][A-Z0-9]+-[0-9]+",
@@ -27,7 +27,7 @@
     },
     "sdd-lifecycle": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "sdd-lifecycle",
       "triggers": [
         "lifecycle",
@@ -44,7 +44,7 @@
     },
     "grilling": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "grilling",
       "triggers": [
         "help me think (this )?through",
@@ -71,7 +71,7 @@
     },
     "writing-specs": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "writing-specs",
       "triggers": [
         "write a spec",
@@ -89,7 +89,7 @@
     },
     "writing-plans": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "writing-plans",
       "triggers": [
         "write a plan",
@@ -107,7 +107,7 @@
     },
     "pre-implementation-protocol": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "pre-implementation-protocol",
       "triggers": [
         "start the work",
@@ -123,7 +123,7 @@
     },
     "systematic-debugging": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "systematic-debugging",
       "triggers": [
         "debug this",
@@ -143,7 +143,7 @@
     },
     "test-driven-development": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "test-driven-development",
       "triggers": [
         "fix (this|the) bug",
@@ -163,7 +163,7 @@
     },
     "inline-driven-development": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "inline-driven-development",
       "triggers": [
         "inline[- ]driven",
@@ -180,7 +180,7 @@
     },
     "subagent-driven-development": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "subagent-driven-development",
       "triggers": [
         "subagent[- ]driven",
@@ -195,7 +195,7 @@
     },
     "verifying-implementation": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "verifying-implementation",
       "triggers": [
         "audit the spec",
@@ -214,7 +214,7 @@
     },
     "writing-rules": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "writing-rules",
       "triggers": [
         "write a rule",
@@ -234,7 +234,7 @@
     },
     "writing-hooks": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "writing-hooks",
       "triggers": [
         "write a hook",
@@ -252,7 +252,7 @@
     },
     "writing-lessons": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "writing-lessons",
       "triggers": [
         "lesson learned",
@@ -271,7 +271,7 @@
     },
     "adopting-framework": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "adopting-framework",
       "triggers": [
         "adopt the framework",
@@ -283,7 +283,7 @@
     },
     "bootstrapping-claude-md": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "bootstrapping-claude-md",
       "triggers": [
         "set up CLAUDE.md",
@@ -299,7 +299,7 @@
     },
     "auditing-claude-md": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "auditing-claude-md",
       "triggers": [
         "audit CLAUDE.md",
@@ -315,7 +315,7 @@
     },
     "bootstrapping-glossary": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "bootstrapping-glossary",
       "triggers": [
         "set up the base rules",
@@ -331,7 +331,7 @@
     },
     "auditing-glossary": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "auditing-glossary",
       "triggers": [
         "audit the rules",
@@ -348,7 +348,7 @@
     },
     "auditing-hooks": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "auditing-hooks",
       "triggers": [
         "audit the hooks",
@@ -363,7 +363,7 @@
     },
     "handoff": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "handoff",
       "triggers": [
         "handoff",
@@ -385,7 +385,7 @@
     },
     "tightening-prose": {
       "kind": "ref",
-      "plugin": "craft-kit",
+      "plugin": "saleizo-design",
       "name": "tightening-prose",
       "triggers": [
         "tighten (this|the|it)",
@@ -401,7 +401,7 @@
     },
     "humanizing-prose": {
       "kind": "ref",
-      "plugin": "craft-kit",
+      "plugin": "saleizo-design",
       "name": "humanizing-prose",
       "triggers": [
         "polish (this|it) for (the )?(article|post|blog|publication)",
@@ -418,7 +418,7 @@
     },
     "drafting-release-notes": {
       "kind": "ref",
-      "plugin": "craft-kit",
+      "plugin": "saleizo-design",
       "name": "drafting-release-notes",
       "triggers": [
         "write the release notes",
@@ -433,7 +433,7 @@
     },
     "codebase-design": {
       "kind": "ref",
-      "plugin": "craft-kit",
+      "plugin": "saleizo-design",
       "name": "codebase-design",
       "triggers": [
         "design (a |the )?(module|interface)",
@@ -450,7 +450,7 @@
     },
     "writing-adrs": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "writing-adrs",
       "triggers": [
         "write an? ADR",
@@ -469,7 +469,7 @@
     },
     "bootstrapping-readme": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "bootstrapping-readme",
       "triggers": [
         "set up the README",
@@ -482,7 +482,7 @@
     },
     "auditing-readme": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "auditing-readme",
       "triggers": [
         "audit the README",
@@ -496,7 +496,7 @@
     },
     "auditing-conflicts": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "auditing-conflicts",
       "triggers": [
         "audit conflicts",
@@ -510,7 +510,7 @@
     },
     "reviewing-telemetry": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "reviewing-telemetry",
       "triggers": [
         "review (the )?telemetry",
@@ -528,7 +528,7 @@
     },
     "writing-skills": {
       "kind": "ref",
-      "plugin": "sdd-kit",
+      "plugin": "saleizo-core",
       "name": "writing-skills",
       "triggers": [
         "write a skill",
@@ -546,7 +546,7 @@
     },
     "accessibility": {
       "kind": "ref",
-      "plugin": "react-native-kit",
+      "plugin": "saleizo-react-native",
       "name": "accessibility",
       "triggers": [
         "accessibility audit",

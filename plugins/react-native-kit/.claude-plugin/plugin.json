@@ -1,8 +1,0 @@
-{
-  "name": "react-native-kit",
-  "description": "React Native domain skills. Each skill is independent and self-contained; the first audits a screen or component against WCAG 2.2 AA (expressed as RN-checkable rules) and fixes the gaps after you approve them.",
-  "version": "1.0.0",
-  "skills": [
-    "./skills/accessibility"
-  ]
-}
