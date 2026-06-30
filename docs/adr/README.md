@@ -10,3 +10,7 @@ Convention (established with ADR-0001, since the repo had no prior ADRs): `docs/
 
 - [ADR-0001 — Share the guardrail-hook session/state preamble via a sourced lib](0001-shared-hook-preamble-lib.md)
 - [ADR-0002 — Hooks get a persisted CI fixture suite, not ephemeral test cases](0002-persisted-hook-fixture-suite.md)
+
+### Marketplace / packaging
+
+- [ADR-0003 — Flat, per-concern plugins instead of a nested monolith](0003-flat-per-concern-plugin-architecture.md)
