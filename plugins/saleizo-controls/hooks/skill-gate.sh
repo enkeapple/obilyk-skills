@@ -40,13 +40,13 @@ TURN_READS_FILE="$STATE_DIR/turn-reads.json"
 LAST_PROMPT_FILE="$STATE_DIR/last-prompt.txt"
 mkdir -p "$STATE_DIR" 2>/dev/null || true
 [[ -f "$ROUTING" ]] || exit 0
-TOOL=$(printf '%s' "$INPUT" | jq -r '.tool_name // ""' 2>/dev/null) || exit 0
+TOOL=$(hook_field "$INPUT" '.tool_name // ""')
 case "$TOOL" in
   Edit|Write|MultiEdit) ;;
   *) exit 0 ;;
 esac
 
-FILE_PATH=$(printf '%s' "$INPUT" | jq -r '.tool_input.file_path // ""' 2>/dev/null) || exit 0
+FILE_PATH=$(hook_field "$INPUT" '.tool_input.file_path // ""')
 [[ -n "$FILE_PATH" ]] || exit 0
 
 PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$(pwd)}"

@@ -31,3 +31,21 @@ hook_state_dir() {
 hook_require_json() {
   printf '%s' "${1:-}" | jq -e . >/dev/null 2>&1 || exit 0
 }
+
+# hook_field <raw-json-string> <jq-filter> -> echoes the extracted value (jq -r).
+# Fail-safe: empty/garbage input or jq absent -> empty string, never errors.
+hook_field() {
+  printf '%s' "${1:-}" | jq -r "${2:-empty}" 2>/dev/null || printf ''
+}
+
+# hook_json_update <file> [jq-args...] <filter>
+# Atomic in-place read-modify-write: jq reads <file>, result replaces <file>. Last positional
+# arg is the jq filter; args between <file> and it pass to jq verbatim (--arg/--argjson, any count).
+# mv happens ONLY on jq success -> <file> untouched on failure. Returns jq's exit status.
+# Self-contained: does NOT rely on the caller's `set -e`. Callers wanting fail-open write `|| exit 0`.
+hook_json_update() {
+  local file="$1"; shift
+  local filter="${*: -1}"           # last positional = jq filter
+  set -- "${@:1:$(($#-1))}"         # remaining = jq args
+  jq "$@" "$filter" "$file" > "$file.tmp" 2>/dev/null && mv "$file.tmp" "$file"
+}

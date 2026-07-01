@@ -35,7 +35,7 @@ rm -f "$STATE_DIR/turn-lessons-nudged.flag"
 # Save prompt for Stop hook (skill usage analysis). INPUT was read at the top for session_id.
 # Fail open: per-turn state was already reset above; non-JSON stdin just skips caching.
 printf '%s' "$INPUT" | jq -e . >/dev/null 2>&1 || exit 0
-PROMPT=$(echo "$INPUT" | jq -r '.prompt // .user_prompt // ""')
+PROMPT=$(hook_field "$INPUT" '.prompt // .user_prompt // ""')
 printf '%s' "$PROMPT" > "$STATE_DIR/last-prompt.txt"
 
 # Open the prompt-corpus record (finalized at Stop by log-skill-usage). Monotone session-turn

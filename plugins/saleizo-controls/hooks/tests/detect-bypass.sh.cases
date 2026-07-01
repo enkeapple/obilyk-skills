@@ -2,3 +2,4 @@
 {"name":"no-match-read-nonskill","stdin":{"session_id":"fixturetest","tool_name":"Read","tool_input":{"file_path":"/x/README.md"}},"expect_exit":0}
 {"name":"warn-direct-edit-lessons-log","stdin":{"session_id":"fixturebypass","tool_name":"Edit","tool_input":{"file_path":"/x/.claude/lessons-learned.md"}},"expect_exit":0,"expect_stderr_grep":"SKILL-BYPASS warn:.*writing-lessons"}
 {"name":"garbage-fail-open","stdin_raw":"not json","expect_exit":0}
+{"name":"non-skill tool bumps counter, exits 0","stdin":{"session_id":"fixture-t2","tool_name":"Grep","tool_input":{}},"expect_exit":0,"expect_stdout_empty":true}

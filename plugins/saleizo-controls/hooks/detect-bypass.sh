@@ -30,14 +30,14 @@ mkdir -p "$STATE_DIR" "$(dirname "$METRICS")"
 [[ -f "$TURN_SKILLS_FILE" ]] || echo '[]' > "$TURN_SKILLS_FILE"
 [[ -f "$TURN_TOOL_COUNT_FILE" ]] || echo '{"count":0}' > "$TURN_TOOL_COUNT_FILE"
 
-TOOL=$(echo "$INPUT" | jq -r '.tool_name // ""')
+TOOL=$(hook_field "$INPUT" '.tool_name // ""')
 
 # Track Skill invocations -- reset bypass-warned flag, record skill name, exit.
 if [[ "$TOOL" == "Skill" ]]; then
-  SKILL_NAME=$(echo "$INPUT" | jq -r '.tool_input.skill // ""')
+  SKILL_NAME=$(hook_field "$INPUT" '.tool_input.skill // ""')
   SKILL_NAME="${SKILL_NAME##*:}"   # strip <plugin>: namespace -> bare key (key === skill dir name)
   if [[ -n "$SKILL_NAME" ]]; then
-    jq --arg s "$SKILL_NAME" '. + [$s] | unique' "$TURN_SKILLS_FILE" > "$TURN_SKILLS_FILE.tmp" && mv "$TURN_SKILLS_FILE.tmp" "$TURN_SKILLS_FILE"
+    hook_json_update "$TURN_SKILLS_FILE" --arg s "$SKILL_NAME" '. + [$s] | unique'
   fi
   exit 0
 fi
@@ -45,24 +45,23 @@ fi
 # Bump non-Skill tool counter.
 COUNT=$(jq -r '.count' "$TURN_TOOL_COUNT_FILE")
 NEW_COUNT=$(( COUNT + 1 ))
-jq --argjson c "$NEW_COUNT" '.count=$c' "$TURN_TOOL_COUNT_FILE" > "$TURN_TOOL_COUNT_FILE.tmp" && mv "$TURN_TOOL_COUNT_FILE.tmp" "$TURN_TOOL_COUNT_FILE"
+hook_json_update "$TURN_TOOL_COUNT_FILE" --argjson c "$NEW_COUNT" '.count=$c'
 
 # Record every Read's relative path this turn so skill-gate.sh can verify a gated
 # rule file was actually loaded before allowing an edit (ruleGates barrier, gap #2).
 if [[ "$TOOL" == "Read" ]]; then
-  RP=$(echo "$INPUT" | jq -r '.tool_input.file_path // ""')
+  RP=$(hook_field "$INPUT" '.tool_input.file_path // ""')
   if [[ -n "$RP" ]]; then
     PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$(pwd)}"
     RP_REL="${RP#$PROJECT_DIR/}"
     [[ -f "$TURN_READS_FILE" ]] || echo '[]' > "$TURN_READS_FILE"
-    jq --arg p "$RP_REL" '. + [$p] | unique' "$TURN_READS_FILE" > "$TURN_READS_FILE.tmp" 2>/dev/null \
-      && mv "$TURN_READS_FILE.tmp" "$TURN_READS_FILE"
+    hook_json_update "$TURN_READS_FILE" --arg p "$RP_REL" '. + [$p] | unique'
   fi
 fi
 
 # (1) Read-on-skill-body check (original behavior).
 if [[ "$TOOL" == "Read" ]]; then
-  READ_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // ""')
+  READ_PATH=$(hook_field "$INPUT" '.tool_input.file_path // ""')
   if [[ -n "$READ_PATH" ]]; then
     PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$(pwd)}"
     REL_PATH="${READ_PATH#$PROJECT_DIR/}"
@@ -86,7 +85,7 @@ fi
 # (1b) Direct-write-to-lessons-log check: editing lessons-learned.md without first invoking
 # the writing-lessons skill bypasses its cause-tag discipline + promotion-debt scan.
 if [[ "$TOOL" == "Edit" || "$TOOL" == "Write" || "$TOOL" == "MultiEdit" ]]; then
-  WRITE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // ""')
+  WRITE_PATH=$(hook_field "$INPUT" '.tool_input.file_path // ""')
   if [[ "$WRITE_PATH" == *lessons-learned.md ]]; then
     INVOKED=$(jq -r 'index("writing-lessons") // empty' "$TURN_SKILLS_FILE" 2>/dev/null || true)
     if [[ -z "$INVOKED" ]]; then

@@ -24,8 +24,33 @@ command -v jq >/dev/null 2>&1 || exit 0
 INPUT=$(cat 2>/dev/null) || exit 0
 hook_require_json "$INPUT"   # non-JSON → exits 0 (bare statement, terminates the hook)
 
+# --- Finalize prior sessions' unresolved trigger ledgers -> bypass (session-level reconciliation).
+# There is no session-END harness event; the next SessionStart is our signal that OTHER sessions have
+# ended. log-skill-usage.sh (Stop) leaves a pending-triggers.json per session listing triggers that
+# matched but whose skill was never invoked. Here we emit one bypass per leftover entry (tagged with
+# that session's id, so it stays attributable) and clear the file. The CURRENT session is skipped —
+# it is still active and may yet resolve its pending. Runs for every source (incl. clear/resume; a
+# resumed session keeps its own SID so it is skipped). Stdout-silent and fully fail-open so the
+# digest's output contract below is untouched. Caveat: a concurrent still-live peer session could be
+# finalized early — acceptable for best-effort telemetry; the emitted events are genuine bypasses.
+CUR_SID=$(hook_sid "$INPUT")
+STATE_BASE="${CLAUDE_PROJECT_DIR:-.}/.claude/state"
+FIN_METRICS="$STATE_BASE/metrics/$(date -u +%F).jsonl"
+mkdir -p "$(dirname "$FIN_METRICS")" 2>/dev/null || true
+for pf in "$STATE_BASE"/*/pending-triggers.json; do
+  [ -f "$pf" ] || continue
+  sdir=$(basename "$(dirname "$pf")")
+  [ "$sdir" = "$CUR_SID" ] && continue
+  while IFS= read -r skill; do
+    [ -n "$skill" ] || continue
+    jq -cn --arg ts "$(date -u +%FT%TZ)" --arg sid "$sdir" --arg s "$skill" \
+      '{v:1, type:"skill_event", ts:$ts, session:$sid, skill:$s, event:"bypass"}' >> "$FIN_METRICS" 2>/dev/null || true
+  done < <(jq -r '.[]?' "$pf" 2>/dev/null || true)
+  echo '[]' > "$pf" 2>/dev/null || true
+done
+
 # Gate 1: only a fresh startup (silent on resume/clear/compact and missing source).
-SRC=$(printf '%s' "$INPUT" | jq -r '.source // ""' 2>/dev/null) || exit 0
+SRC=$(hook_field "$INPUT" '.source // ""')
 [ "$SRC" = "startup" ] || exit 0
 
 # Reuse the repo's metrics-report script for canonical aggregates; absent → silent (fail-open).

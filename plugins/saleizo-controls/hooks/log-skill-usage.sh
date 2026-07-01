@@ -20,7 +20,7 @@ mkdir -p "$STATE_DIR" "$(dirname "$METRICS")"
 [[ -f "$ROUTING" ]] || exit 0
 
 # Stop hook receives session info. Read transcript_path if provided.
-TRANSCRIPT=$(echo "$INPUT" | jq -r '.transcript_path // ""')
+TRANSCRIPT=$(hook_field "$INPUT" '.transcript_path // ""')
 
 # Recover last user prompt (stored by reset-turn-budget if we extend it; otherwise best-effort from transcript)
 USER_PROMPT=""
@@ -37,30 +37,41 @@ PROMPT_HASH=$(printf '%s' "$USER_PROMPT" | shasum -a 256 | cut -c1-16)
 
 INVOKED_SKILLS=$([[ -f "$TURN_SKILLS_FILE" ]] && cat "$TURN_SKILLS_FILE" || echo '[]')
 
-# For each skill in routing, check triggers against prompt
-jq -r '.skills // {} | to_entries[] | "\(.key)\t\(.value.triggers // [] | join("|"))"' "$ROUTING" | while IFS=$'\t' read -r skill trigger_union; do
-  [[ -n "$trigger_union" ]] || continue
-  MATCHED=""
-  if echo "$USER_PROMPT" | grep -qiE "$trigger_union"; then
-    MATCHED="yes"
-  fi
-  INVOKED=$(echo "$INVOKED_SKILLS" | jq -r --arg s "$skill" 'index($s) // "null"')
+# --- Session-level skill-routing reconciliation (replaces the old per-turn bypass/used_correctly) ---
+# Real skill use is CROSS-turn: a trigger fires on one turn, the Skill is invoked on a later one
+# (e.g. "go"/"next"), so a per-turn matched∩invoked intersection is structurally ~0 — the old logic
+# made bypass-rate a constant 100% and used_correctly never fired. Instead keep a SESSION-scoped
+# ledger of triggers that matched but whose skill is not yet invoked. Invoking that skill on any
+# later turn resolves the pending trigger -> used_correctly. A trigger still pending when the session
+# ends is a bypass, emitted by session-telemetry-digest.sh (SessionStart) — NOT here: emitting bypass
+# per-turn would double-count a trigger that is invoked a turn later. The ledger deliberately survives
+# the per-turn reset in reset-turn-budget.sh (which clears turn-skills-invoked.json, not this file).
+PENDING_FILE="$STATE_DIR/pending-triggers.json"
+[[ -f "$PENDING_FILE" ]] || echo '[]' > "$PENDING_FILE"
+PENDING=$(jq -c . "$PENDING_FILE" 2>/dev/null || echo '[]')
 
-  if [[ "$MATCHED" == "yes" && "$INVOKED" == "null" ]]; then
-    EVENT="bypass"
-  elif [[ "$MATCHED" == "yes" && "$INVOKED" != "null" ]]; then
-    EVENT="used_correctly"
-  else
-    continue
-  fi
+# Skills whose trigger union matched THIS turn's prompt (case-insensitive, same match as detect-bypass).
+# if/then/fi (not `grep -q && printf`): under pipefail a non-matching grep on the LAST routing entry
+# would make the loop exit 1 -> the $() exits 1 -> set -e kills the hook. `if` keeps the exit 0.
+MATCHED=$(jq -r '.skills // {} | to_entries[] | "\(.key)\t\(.value.triggers // [] | join("|"))"' "$ROUTING" \
+  | while IFS=$'\t' read -r skill trig; do
+      [[ -n "$trig" ]] || continue
+      if echo "$USER_PROMPT" | grep -qiE "$trig"; then printf '%s\n' "$skill"; fi
+    done | jq -R . | jq -cs 'map(select(length>0))')
 
-  jq -cn --arg ts "$(date -u +%FT%TZ)" \
-         --arg sid "$SID" \
-         --arg h "$PROMPT_HASH" \
-         --arg s "$skill" \
-         --arg e "$EVENT" \
-         '{v:1, type:"skill_event", ts:$ts, session:$sid, prompt_hash:$h, skill:$s, event:$e}' >> "$METRICS"
+# new pending = (old pending ∪ matched-this-turn)
+PENDING=$(jq -cn --argjson a "$PENDING" --argjson b "$MATCHED" '($a + $b) | unique')
+
+# resolved = pending ∩ invoked-this-turn  -> emit used_correctly, then drop from pending
+RESOLVED=$(jq -cn --argjson pend "$PENDING" --argjson inv "$INVOKED_SKILLS" \
+  '$pend | map(select(. as $s | $inv | index($s)))')
+printf '%s' "$RESOLVED" | jq -r '.[]' | while IFS= read -r skill; do
+  [[ -n "$skill" ]] || continue
+  jq -cn --arg ts "$(date -u +%FT%TZ)" --arg sid "$SID" --arg h "$PROMPT_HASH" --arg s "$skill" \
+    '{v:1, type:"skill_event", ts:$ts, session:$sid, prompt_hash:$h, skill:$s, event:"used_correctly"}' >> "$METRICS"
 done
+PENDING=$(jq -cn --argjson pend "$PENDING" --argjson res "$RESOLVED" '$pend - $res')
+printf '%s' "$PENDING" > "$PENDING_FILE"
 
 # --- Prompt-corpus finalize (single writer). Only if reset-turn-budget opened a record. ---
 PENDING="$STATE_DIR/pending-prompt.json"

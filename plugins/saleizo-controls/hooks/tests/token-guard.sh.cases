@@ -1,3 +1,4 @@
 {"name":"happy-small-response","stdin":{"session_id":"fixturetest","tool_name":"Read","tool_response":"abc"},"expect_exit":0}
 {"name":"empty-response","stdin":{"session_id":"fixturetest","tool_name":"Read","tool_response":""},"expect_exit":0}
 {"name":"garbage-fail-open","stdin_raw":"not json","expect_exit":0}
+{"name":"string tool_response accounted, exit 0","stdin":{"session_id":"fixture-t3","tool_name":"Read","tool_response":"hello"},"expect_exit":0}

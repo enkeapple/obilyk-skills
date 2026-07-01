@@ -23,7 +23,7 @@ INPUT=$(cat 2>/dev/null) || exit 0
 hook_require_json "$INPUT"   # non-JSON → exits 0 (bare statement, terminates the hook)
 
 # Gate 1: only auto-compaction (silent on manual /compact and missing/garbage trigger).
-TRIGGER=$(printf '%s' "$INPUT" | jq -r '.trigger // ""' 2>/dev/null) || exit 0
+TRIGGER=$(hook_field "$INPUT" '.trigger // ""')
 [ "$TRIGGER" = "auto" ] || exit 0
 
 # Gate 2: only when the consumer has a `handoff` skill routed (else the nudge is pointless).

@@ -55,6 +55,13 @@ WARN is NOT a third exit code: it is `exit 0` + a stderr message (advisory, non-
 
 Guard every parse; every path ends at `exit 0` unless a real, matched condition fires. The three own-error exits — missing dep (`jq`), unreadable stdin, empty target field — are the opening guards of [`assets/hook-template.sh`](./assets/hook-template.sh); copy them rather than re-deriving. A logger's fail-open is the same shape, with "do nothing" instead of "allow".
 
+## Shared helpers — don't hand-roll what the lib already gives you
+
+Source the repo's shared hook lib (guard `[ -r ]` first, fail-open on absent) and reach for two helpers instead of re-deriving their logic inline:
+
+- **`hook_field <json> <jq-filter>`** — extracts one field from the stdin JSON string via `jq -r`; empty on absent `jq`/garbage input, never errors. Use this for every stdin-field extraction instead of a bare `echo "$INPUT" | jq -r '...'`.
+- **`hook_json_update <file> [jq-args...] <filter>`** — atomic in-place read-modify-write of a JSON state file (last positional arg is the jq filter, the rest pass through to jq); `mv` only on jq success, so the file is untouched on failure; returns jq's exit status. Use this for every in-place JSON state update instead of a hand-rolled `jq ... > f.tmp && mv f.tmp f`.
+
 ## Block 3 — Test-first: the fixture loop
 
 RED a crafted stdin, run the script, assert the decision — per contract form. Full worked oracle: [`assets/fixture-example.md`](./assets/fixture-example.md).

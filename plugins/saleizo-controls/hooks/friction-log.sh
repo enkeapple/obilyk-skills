@@ -29,7 +29,7 @@ STATE_DIR="$PROJECT_DIR/.claude/state/$SID"
 METRICS="$PROJECT_DIR/.claude/state/metrics/$(date -u +%F).jsonl"
 SEEN_FILE="$STATE_DIR/friction-seen.json"
 
-TRANSCRIPT=$(printf '%s' "$INPUT" | jq -r '.transcript_path // empty' 2>/dev/null) || exit 0
+TRANSCRIPT=$(hook_field "$INPUT" '.transcript_path // empty')
 [ -n "$TRANSCRIPT" ] && [ -f "$TRANSCRIPT" ] || exit 0
 
 mkdir -p "$STATE_DIR" "$(dirname "$METRICS")" 2>/dev/null || exit 0
